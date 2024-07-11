@@ -8,17 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var courseManager = CourseManager()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            List {
+                NavigationLink(destination: StartRoundView()) {
+                    Label("Start Round", systemImage: "play")
+                }
+                NavigationLink(destination: Text("Past Rounds")) {
+                    Label("Past Rounds", systemImage: "list.bullet")
+                }
+                NavigationLink(destination: Text("Statistics")) {
+                    Label("Statistics", systemImage: "chart.bar")
+                }
+                NavigationLink(destination: Text("Handicap Index")) {
+                    Label("Handicap Index", systemImage: "number")
+                }
+            }
+            .navigationTitle("Simplify Golf")
         }
-        .padding()
+        .environmentObject(courseManager)
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }

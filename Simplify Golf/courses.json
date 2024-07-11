@@ -1,0 +1,33 @@
+[
+  {
+    "id": "1",
+    "name": "Sample Golf Course",
+    "location": "Sample City, State",
+    "courseRating": 72.0,
+    "slopeRating": 113,
+    "holes": [
+      {
+        "number": 1,
+        "par": 4,
+        "yardage": 400,
+        "teeBox": {"latitude": 37.7749, "longitude": -122.4194},
+        "green": {
+          "front": {"latitude": 37.7748, "longitude": -122.4192},
+          "center": {"latitude": 37.7747, "longitude": -122.4191},
+          "back": {"latitude": 37.7746, "longitude": -122.4190}
+        }
+      },
+      {
+        "number": 2,
+        "par": 3,
+        "yardage": 180,
+        "teeBox": {"latitude": 37.7750, "longitude": -122.4195},
+        "green": {
+          "front": {"latitude": 37.7751, "longitude": -122.4193},
+          "center": {"latitude": 37.7752, "longitude": -122.4192},
+          "back": {"latitude": 37.7753, "longitude": -122.4191}
+        }
+      }
+    ]
+  }
+]
