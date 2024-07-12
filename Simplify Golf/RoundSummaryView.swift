@@ -12,35 +12,29 @@ struct RoundSummaryView: View {
     
     var body: some View {
         List {
-            Section(header: Text("Round Summary")) {
-                Text("Course: \(round.courseName)")
-                Text("Date: \(formatDate(round.date))")
-                Text("Total Score: \(calculateTotalScore())")
+            Section(header: Text("Round Information")) {
+                InfoRow(title: "Course", value: round.courseName)
+                InfoRow(title: "Date", value: formatDate(round.date))
+                InfoRow(title: "Total Score", value: "\(round.totalScore)")
+                InfoRow(title: "To Par", value: scoreToPar())
             }
             
             Section(header: Text("Hole Scores")) {
                 ForEach(round.holes) { hole in
-                    HStack {
-                        Text("Hole \(hole.number)")
-                        Spacer()
-                        Text("Par \(hole.par)")
-                        Spacer()
-                        Text("Score: \(hole.score ?? 0)")
-                    }
+                    HoleScoreRow(hole: hole)
                 }
             }
-        }
-        .navigationTitle("Round Summary")
-        .onAppear {
-            print("Round Summary: \(round.courseName), Holes: \(round.holes.count)")
-            round.holes.forEach { hole in
-                print("Hole: \(hole.number), Par: \(hole.par), Score: \(hole.score ?? 0)")
+            
+            Section(header: Text("Statistics")) {
+                InfoRow(title: "Pars", value: "\(countScores(equalTo: 0))")
+                InfoRow(title: "Birdies", value: "\(countScores(equalTo: -1))")
+                InfoRow(title: "Eagles", value: "\(countScores(equalTo: -2))")
+                InfoRow(title: "Bogeys", value: "\(countScores(equalTo: 1))")
+                InfoRow(title: "Double Bogeys+", value: "\(countScores(greaterThan: 1))")
             }
         }
-    }
-    
-    private func calculateTotalScore() -> Int {
-        round.holes.reduce(0) { $0 + ($1.score ?? 0) }
+        .listStyle(GroupedListStyle())
+        .navigationTitle("Round Summary")
     }
     
     private func formatDate(_ date: Date) -> String {
@@ -48,5 +42,53 @@ struct RoundSummaryView: View {
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
         return formatter.string(from: date)
+    }
+    
+    private func scoreToPar() -> String {
+        let toPar = round.totalScore - round.holes.reduce(0) { $0 + $1.par }
+        if toPar == 0 {
+            return "Even"
+        } else if toPar > 0 {
+            return "+\(toPar)"
+        } else {
+            return "\(toPar)"
+        }
+    }
+    
+    private func countScores(equalTo value: Int) -> Int {
+        round.holes.filter { ($0.score ?? 0) - $0.par == value }.count
+    }
+    
+    private func countScores(greaterThan value: Int) -> Int {
+        round.holes.filter { ($0.score ?? 0) - $0.par > value }.count
+    }
+}
+
+struct InfoRow: View {
+    let title: String
+    let value: String
+    
+    var body: some View {
+        HStack {
+            Text(title)
+            Spacer()
+            Text(value)
+                .fontWeight(.semibold)
+        }
+    }
+}
+
+struct HoleScoreRow: View {
+    let hole: Hole
+    
+    var body: some View {
+        HStack {
+            Text("Hole \(hole.number)")
+            Spacer()
+            Text("Par \(hole.par)")
+            Spacer()
+            Text("Score: \(hole.score ?? 0)")
+                .fontWeight(.semibold)
+        }
     }
 }

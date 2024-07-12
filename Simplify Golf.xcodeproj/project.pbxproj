@@ -28,6 +28,10 @@
 		30F9ED522C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED502C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodeld */; };
 		30F9ED542C40AFB700F3AC55 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED532C40AFB700F3AC55 /* DataController.swift */; };
 		30F9ED562C40AFD400F3AC55 /* PastRoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED552C40AFD400F3AC55 /* PastRoundsView.swift */; };
+		30F9ED582C416E3E00F3AC55 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED572C416E3E00F3AC55 /* StatisticsView.swift */; };
+		30F9ED5A2C416EF300F3AC55 /* HandicapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED592C416EF300F3AC55 /* HandicapView.swift */; };
+		30F9ED5C2C4170D200F3AC55 /* EditRoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED5B2C4170D200F3AC55 /* EditRoundView.swift */; };
+		30F9ED5E2C4173A600F3AC55 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED5D2C4173A600F3AC55 /* ThemeColors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +81,10 @@
 		30F9ED512C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GolfRoundModel.xcdatamodel; sourceTree = "<group>"; };
 		30F9ED532C40AFB700F3AC55 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		30F9ED552C40AFD400F3AC55 /* PastRoundsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastRoundsView.swift; sourceTree = "<group>"; };
+		30F9ED572C416E3E00F3AC55 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		30F9ED592C416EF300F3AC55 /* HandicapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandicapView.swift; sourceTree = "<group>"; };
+		30F9ED5B2C4170D200F3AC55 /* EditRoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRoundView.swift; sourceTree = "<group>"; };
+		30F9ED5D2C4173A600F3AC55 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +142,10 @@
 				30F9ED4E2C40ACC400F3AC55 /* RoundSummaryView.swift */,
 				30F9ED532C40AFB700F3AC55 /* DataController.swift */,
 				30F9ED552C40AFD400F3AC55 /* PastRoundsView.swift */,
+				30F9ED572C416E3E00F3AC55 /* StatisticsView.swift */,
+				30F9ED592C416EF300F3AC55 /* HandicapView.swift */,
+				30F9ED5B2C4170D200F3AC55 /* EditRoundView.swift */,
+				30F9ED5D2C4173A600F3AC55 /* ThemeColors.swift */,
 			);
 			path = "Simplify Golf";
 			sourceTree = "<group>";
@@ -271,14 +283,18 @@
 				30C97FF82C408CB6009BF89E /* StartRoundView.swift in Sources */,
 				30F9ED542C40AFB700F3AC55 /* DataController.swift in Sources */,
 				30C97FEC2C408A37009BF89E /* Course.swift in Sources */,
+				30F9ED582C416E3E00F3AC55 /* StatisticsView.swift in Sources */,
 				30C97FEE2C408A78009BF89E /* Hole.swift in Sources */,
 				30C97FF62C408C8D009BF89E /* CourseSelectionView.swift in Sources */,
 				30C97FF42C408B50009BF89E /* LocationManager.swift in Sources */,
+				30F9ED5C2C4170D200F3AC55 /* EditRoundView.swift in Sources */,
 				30C97FF02C408ABC009BF89E /* CourseManager.swift in Sources */,
+				30F9ED5A2C416EF300F3AC55 /* HandicapView.swift in Sources */,
 				308BE26E2BF534F200C3246C /* ContentView.swift in Sources */,
 				308BE26C2BF534F200C3246C /* Simplify_GolfApp.swift in Sources */,
 				30F9ED4F2C40ACC400F3AC55 /* RoundSummaryView.swift in Sources */,
 				30C97FFA2C408D73009BF89E /* HoleDetailView.swift in Sources */,
+				30F9ED5E2C4173A600F3AC55 /* ThemeColors.swift in Sources */,
 				30F9ED522C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodeld in Sources */,
 				30F9ED562C40AFD400F3AC55 /* PastRoundsView.swift in Sources */,
 			);

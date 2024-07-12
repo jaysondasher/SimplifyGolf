@@ -9,12 +9,12 @@ import Foundation
 import CoreLocation
 
 struct Hole: Identifiable {
-    let id: UUID
-    let number: Int
-    let par: Int
+    var id: UUID
+    var number: Int
+    var par: Int
     var score: Int?
-    let teeBox: CLLocationCoordinate2D
-    let green: GreenCoordinates
+    var teeBox: CLLocationCoordinate2D
+    var green: GreenCoordinates
     
     var distanceToFront: Double?
     var distanceToCenter: Double?
@@ -28,14 +28,14 @@ struct GreenCoordinates {
 }
 
 struct GolfRound: Identifiable {
-    let id: UUID
-    let date: Date
-    let courseName: String
-    let courseRating: Double
-    let slopeRating: Int
+    var id: UUID
+    var date: Date
+    var courseName: String
+    var courseRating: Double
+    var slopeRating: Int
     var holes: [Hole]
     
     var totalScore: Int {
-        holes.compactMap { $0.score }.reduce(0, +)
+        holes.reduce(0) { $0 + ($1.score ?? 0) }
     }
 }
