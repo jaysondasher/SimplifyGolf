@@ -8,10 +8,13 @@
 import SwiftUI
 
 @main
-struct Simplify_GolfApp: App {
+struct SimplifyGolfApp: App {
+    @StateObject private var dataController = DataController()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(dataController)
         }
     }
 }

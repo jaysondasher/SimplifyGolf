@@ -9,11 +9,27 @@ import SwiftUI
 import CoreLocation
 
 struct HoleDetailView: View {
-    @Binding var hole: Hole
+    @Binding var round: GolfRound
+    @Binding var currentHoleIndex: Int
     @ObservedObject var locationManager: LocationManager
     @State private var distanceToFront: Double = 0
     @State private var distanceToCenter: Double = 0
     @State private var distanceToBack: Double = 0
+    @State private var score: Int
+    @Environment(\.presentationMode) var presentationMode
+    var onFinishRound: () -> Void
+    
+    var hole: Hole {
+        round.holes[currentHoleIndex]
+    }
+    
+    init(round: Binding<GolfRound>, currentHoleIndex: Binding<Int>, locationManager: LocationManager, onFinishRound: @escaping () -> Void) {
+        self._round = round
+        self._currentHoleIndex = currentHoleIndex
+        self.locationManager = locationManager
+        self._score = State(initialValue: round.wrappedValue.holes[currentHoleIndex.wrappedValue].score ?? round.wrappedValue.holes[currentHoleIndex.wrappedValue].par)
+        self.onFinishRound = onFinishRound
+    }
     
     var body: some View {
         VStack(spacing: 20) {
@@ -34,40 +50,45 @@ struct HoleDetailView: View {
             
             Spacer()
             
-            HStack {
-                Button("-") {
-                    if let score = hole.score, score > 1 {
-                        hole.score = score - 1
-                    } else {
-                        hole.score = 1
+            VStack {
+                Text("Your Score")
+                    .font(.headline)
+                
+                HStack {
+                    Button(action: {
+                        score = max(1, score - 1)
+                    }) {
+                        Image(systemName: "minus.circle")
+                            .font(.title)
+                    }
+                    
+                    Text("\(score)")
+                        .font(.title)
+                        .frame(width: 50)
+                    
+                    Button(action: {
+                        score += 1
+                    }) {
+                        Image(systemName: "plus.circle")
+                            .font(.title)
                     }
                 }
-                .padding()
-                .background(Color.red)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                
-                Text("\(hole.score ?? hole.par)")
-                    .font(.title)
-                    .frame(width: 50)
-                
-                Button("+") {
-                    if let score = hole.score {
-                        hole.score = score + 1
-                    } else {
-                        hole.score = hole.par + 1
-                    }
-                }
-                .padding()
-                .background(Color.green)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+            }
+            .padding()
+            
+            Button(action: saveAndAdvance) {
+                Text(currentHoleIndex == round.holes.count - 1 ? "Finish Round" : "Next Hole")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.green)
+                    .cornerRadius(10)
             }
             
             Spacer()
         }
         .padding()
-                .navigationTitle("Hole \(hole.number)")
+        .navigationTitle("Hole \(hole.number)")
                 .onAppear {
                     updateDistances()
                 }
@@ -75,28 +96,20 @@ struct HoleDetailView: View {
                     updateDistances()
                 }
             }
-            
-            private func updateDistances() {
-                print("Updating distances for Hole \(hole.number)")
-                print("Current location: \(locationManager.location?.coordinate ?? CLLocationCoordinate2D())")
-                
-                print("Front coordinates: \(hole.green.front)")
-                print("Center coordinates: \(hole.green.center)")
-                print("Back coordinates: \(hole.green.back)")
-                
-                if let frontDistance = locationManager.calculateDistance(to: hole.green.front) {
-                    distanceToFront = frontDistance
-                    print("Distance to front: \(distanceToFront) meters")
-                }
-                
-                if let centerDistance = locationManager.calculateDistance(to: hole.green.center) {
-                    distanceToCenter = centerDistance
-                    print("Distance to center: \(distanceToCenter) meters")
-                }
-                
-                if let backDistance = locationManager.calculateDistance(to: hole.green.back) {
-                    distanceToBack = backDistance
-                    print("Distance to back: \(distanceToBack) meters")
-                }
+    
+    private func updateDistances() {
+        distanceToFront = locationManager.calculateDistance(to: hole.green.front) ?? 0
+        distanceToCenter = locationManager.calculateDistance(to: hole.green.center) ?? 0
+        distanceToBack = locationManager.calculateDistance(to: hole.green.back) ?? 0
+    }
+    
+    private func saveAndAdvance() {
+            round.holes[currentHoleIndex].score = score
+            if currentHoleIndex < round.holes.count - 1 {
+                currentHoleIndex += 1
+            } else {
+                onFinishRound()
+                presentationMode.wrappedValue.dismiss()
             }
         }
+}

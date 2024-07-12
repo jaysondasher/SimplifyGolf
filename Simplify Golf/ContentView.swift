@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var courseManager = CourseManager()
+    @StateObject private var dataController = DataController()
     
     var body: some View {
         NavigationView {
@@ -16,7 +17,7 @@ struct ContentView: View {
                 NavigationLink(destination: StartRoundView()) {
                     Label("Start Round", systemImage: "play")
                 }
-                NavigationLink(destination: Text("Past Rounds")) {
+                NavigationLink(destination: PastRoundsView()) {
                     Label("Past Rounds", systemImage: "list.bullet")
                 }
                 NavigationLink(destination: Text("Statistics")) {
@@ -29,9 +30,9 @@ struct ContentView: View {
             .navigationTitle("Simplify Golf")
         }
         .environmentObject(courseManager)
+        .environmentObject(dataController)
     }
 }
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

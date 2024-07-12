@@ -11,13 +11,64 @@ import CoreLocation
 struct StartRoundView: View {
     @State private var activeRound: GolfRound?
     @State private var showingCourseSelection = false
+    @State private var showingRoundSummary = false
+    @State private var currentHoleIndex = 0
     @StateObject private var locationManager = LocationManager()
     @EnvironmentObject var courseManager: CourseManager
+    @EnvironmentObject var dataController: DataController
     
     var body: some View {
         VStack {
             if let round = activeRound {
-                RoundInProgressView(round: $activeRound, locationManager: locationManager)
+                Text(round.courseName)
+                    .font(.title)
+                    .padding()
+                
+                Text("Total Score: \(round.totalScore)")
+                    .font(.headline)
+                    .padding()
+                
+                List {
+                    ForEach(round.holes.indices, id: \.self) { index in
+                        NavigationLink(destination: HoleDetailView(
+                            round: Binding(
+                                get: { round },
+                                set: { newValue in
+                                    self.activeRound = newValue
+                                }
+                            ),
+                            currentHoleIndex: Binding(
+                                get: { self.currentHoleIndex },
+                                set: { newValue in
+                                    if newValue < round.holes.count {
+                                        self.currentHoleIndex = newValue
+                                    } else {
+                                        self.finishRound()
+                                    }
+                                }
+                            ),
+                            locationManager: locationManager,
+                            onFinishRound: finishRound
+                        )) {
+                            HoleRowView(hole: round.holes[index], currentHole: currentHoleIndex + 1)
+                        }
+                    }
+                }
+                
+                Button("View Round Summary") {
+                    showingRoundSummary = true
+                }
+                .padding()
+                .sheet(isPresented: $showingRoundSummary) {
+                    if let round = activeRound {
+                        RoundSummaryView(round: round)
+                    }
+                }
+                
+                Button("End Round") {
+                    finishRound()
+                }
+                .padding()
             } else {
                 VStack {
                     Image(systemName: "flag.fill")
@@ -47,76 +98,45 @@ struct StartRoundView: View {
             CourseSelectionView(activeRound: $activeRound)
         }
     }
-}
-
-struct RoundInProgressView: View {
-    @Binding var round: GolfRound?
-    @ObservedObject var locationManager: LocationManager
     
-    var body: some View {
-        VStack {
-            Text(round?.courseName ?? "")
-                .font(.title)
-                .padding()
-            
-            Text("Total Score: \(round?.totalScore ?? 0)")
-                .font(.headline)
-                .padding()
-            
-            List {
-                ForEach(round?.holes ?? [], id: \.id) { hole in
-                    NavigationLink(destination: HoleDetailView(hole: binding(for: hole), locationManager: locationManager)) {
-                        HoleRowView(hole: hole, currentHole: round?.holes.firstIndex(where: { $0.id == hole.id }) ?? 0 + 1)
-                    }
-                }
-            }
-            
-            Button(action: {
-                // End round logic here
-                round = nil
-            }) {
-                Text("End Round")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10)
-            }
-            .padding()
-        }
-    }
-    
-    private func binding(for hole: Hole) -> Binding<Hole> {
-        Binding<Hole>(
-            get: { hole },
-            set: { newValue in
-                if let index = round?.holes.firstIndex(where: { $0.id == hole.id }) {
-                    round?.holes[index] = newValue
-                }
-            }
+    private func binding(for index: Int) -> Binding<Hole> {
+        return Binding(
+            get: { self.activeRound!.holes[index] },
+            set: { self.activeRound!.holes[index] = $0 }
         )
     }
-}
-
-struct HoleRowView: View {
-    let hole: Hole
-    let currentHole: Int
     
-    var body: some View {
-        HStack {
-            Text("Hole \(hole.number)")
-            Spacer()
-            Text("Par \(hole.par)")
-            Spacer()
-            if let score = hole.score {
-                Text("Score: \(score)")
-            } else {
-                Text("Not played")
-            }
-            if hole.number == currentHole {
-                Image(systemName: "location.fill")
-                    .foregroundColor(.blue)
+    private func finishRound() {
+        if let round = activeRound {
+            dataController.saveRound(round)
+            showingRoundSummary = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.activeRound = nil
+                self.currentHoleIndex = 0
             }
         }
     }
 }
+    
+    struct HoleRowView: View {
+        let hole: Hole
+        let currentHole: Int
+        
+        var body: some View {
+            HStack {
+                Text("Hole \(hole.number)")
+                Spacer()
+                Text("Par \(hole.par)")
+                Spacer()
+                if let score = hole.score {
+                    Text("Score: \(score)")
+                } else {
+                    Text("Not played")
+                }
+                if hole.number == currentHole {
+                    Image(systemName: "location.fill")
+                        .foregroundColor(.blue)
+                }
+            }
+        }
+    }

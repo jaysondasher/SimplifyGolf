@@ -24,6 +24,10 @@
 		30C97FF62C408C8D009BF89E /* CourseSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C97FF52C408C8D009BF89E /* CourseSelectionView.swift */; };
 		30C97FF82C408CB6009BF89E /* StartRoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C97FF72C408CB6009BF89E /* StartRoundView.swift */; };
 		30C97FFA2C408D73009BF89E /* HoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C97FF92C408D73009BF89E /* HoleDetailView.swift */; };
+		30F9ED4F2C40ACC400F3AC55 /* RoundSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED4E2C40ACC400F3AC55 /* RoundSummaryView.swift */; };
+		30F9ED522C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED502C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodeld */; };
+		30F9ED542C40AFB700F3AC55 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED532C40AFB700F3AC55 /* DataController.swift */; };
+		30F9ED562C40AFD400F3AC55 /* PastRoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED552C40AFD400F3AC55 /* PastRoundsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +73,10 @@
 		30C97FF52C408C8D009BF89E /* CourseSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseSelectionView.swift; sourceTree = "<group>"; };
 		30C97FF72C408CB6009BF89E /* StartRoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartRoundView.swift; sourceTree = "<group>"; };
 		30C97FF92C408D73009BF89E /* HoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailView.swift; sourceTree = "<group>"; };
+		30F9ED4E2C40ACC400F3AC55 /* RoundSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSummaryView.swift; sourceTree = "<group>"; };
+		30F9ED512C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GolfRoundModel.xcdatamodel; sourceTree = "<group>"; };
+		30F9ED532C40AFB700F3AC55 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		30F9ED552C40AFD400F3AC55 /* PastRoundsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastRoundsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +129,11 @@
 				30C97FF32C408B50009BF89E /* LocationManager.swift */,
 				30C97FF52C408C8D009BF89E /* CourseSelectionView.swift */,
 				30C97FF72C408CB6009BF89E /* StartRoundView.swift */,
+				30F9ED502C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodeld */,
 				30C97FF92C408D73009BF89E /* HoleDetailView.swift */,
+				30F9ED4E2C40ACC400F3AC55 /* RoundSummaryView.swift */,
+				30F9ED532C40AFB700F3AC55 /* DataController.swift */,
+				30F9ED552C40AFD400F3AC55 /* PastRoundsView.swift */,
 			);
 			path = "Simplify Golf";
 			sourceTree = "<group>";
@@ -257,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				30C97FF82C408CB6009BF89E /* StartRoundView.swift in Sources */,
+				30F9ED542C40AFB700F3AC55 /* DataController.swift in Sources */,
 				30C97FEC2C408A37009BF89E /* Course.swift in Sources */,
 				30C97FEE2C408A78009BF89E /* Hole.swift in Sources */,
 				30C97FF62C408C8D009BF89E /* CourseSelectionView.swift in Sources */,
@@ -264,7 +277,10 @@
 				30C97FF02C408ABC009BF89E /* CourseManager.swift in Sources */,
 				308BE26E2BF534F200C3246C /* ContentView.swift in Sources */,
 				308BE26C2BF534F200C3246C /* Simplify_GolfApp.swift in Sources */,
+				30F9ED4F2C40ACC400F3AC55 /* RoundSummaryView.swift in Sources */,
 				30C97FFA2C408D73009BF89E /* HoleDetailView.swift in Sources */,
+				30F9ED522C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodeld in Sources */,
+				30F9ED562C40AFD400F3AC55 /* PastRoundsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,6 +576,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		30F9ED502C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				30F9ED512C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodel */,
+			);
+			currentVersion = 30F9ED512C40AE1C00F3AC55 /* GolfRoundModel.xcdatamodel */;
+			path = GolfRoundModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 308BE2602BF534F200C3246C /* Project object */;
 }

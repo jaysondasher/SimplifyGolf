@@ -1,33 +1,45 @@
 [
   {
     "id": "1",
-    "name": "Sample Golf Course",
-    "location": "Sample City, State",
-    "courseRating": 72.0,
-    "slopeRating": 113,
+    "name": "Augusta National Golf Club",
+    "location": "Augusta, Georgia",
+    "courseRating": 75.1,
+    "slopeRating": 137,
     "holes": [
       {
         "number": 1,
         "par": 4,
-        "yardage": 400,
-        "teeBox": {"latitude": 37.7749, "longitude": -122.4194},
+        "yardage": 445,
+        "teeBox": {"latitude": 33.5035, "longitude": -82.0209},
         "green": {
-          "front": {"latitude": 37.7748, "longitude": -122.4192},
-          "center": {"latitude": 37.7747, "longitude": -122.4191},
-          "back": {"latitude": 37.7746, "longitude": -122.4190}
+          "front": {"latitude": 33.5061, "longitude": -82.0213},
+          "center": {"latitude": 33.5062, "longitude": -82.0212},
+          "back": {"latitude": 33.5063, "longitude": -82.0211}
         }
       },
       {
         "number": 2,
-        "par": 3,
-        "yardage": 180,
-        "teeBox": {"latitude": 37.7750, "longitude": -122.4195},
+        "par": 5,
+        "yardage": 575,
+        "teeBox": {"latitude": 33.5067, "longitude": -82.0218},
         "green": {
-          "front": {"latitude": 37.7751, "longitude": -122.4193},
-          "center": {"latitude": 37.7752, "longitude": -122.4192},
-          "back": {"latitude": 37.7753, "longitude": -122.4191}
+          "front": {"latitude": 33.5088, "longitude": -82.0221},
+          "center": {"latitude": 33.5089, "longitude": -82.0220},
+          "back": {"latitude": 33.5090, "longitude": -82.0219}
+        }
+      },
+      {
+        "number": 3,
+        "par": 4,
+        "yardage": 350,
+        "teeBox": {"latitude": 33.5095, "longitude": -82.0224},
+        "green": {
+          "front": {"latitude": 33.5112, "longitude": -82.0226},
+          "center": {"latitude": 33.5113, "longitude": -82.0225},
+          "back": {"latitude": 33.5114, "longitude": -82.0224}
         }
       }
     ]
   }
 ]
+
