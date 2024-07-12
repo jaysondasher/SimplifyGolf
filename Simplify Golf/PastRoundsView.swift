@@ -20,28 +20,29 @@ struct PastRoundsView: View {
             ScrollView {
                 LazyVStack(spacing: 15) {
                     ForEach(rounds) { round in
-                        PastRoundRow(round: round)
-                            .contextMenu {
-                                Button(action: {
-                                    roundToEdit = round
-                                    showingEditView = true
-                                }) {
-                                    Label("Edit", systemImage: "pencil")
-                                }
-                                
-                                Button(role: .destructive, action: {
-                                    deleteRound(round)
-                                }) {
-                                    Label("Delete", systemImage: "trash")
-                                }
+                        NavigationLink(destination: RoundSummaryView(round: round)) {
+                            PastRoundRow(round: round)
+                        }
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                deleteRound(round)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
                             }
+                            
+                            Button {
+                                roundToEdit = round
+                                showingEditView = true
+                            } label: {
+                                Label("Edit", systemImage: "pencil")
+                            }
+                        }
                     }
                 }
                 .padding()
             }
         }
         .navigationTitle("Past Rounds")
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             loadRounds()
         }
@@ -68,24 +69,21 @@ struct PastRoundRow: View {
     let round: GolfRound
     
     var body: some View {
-        NavigationLink(destination: RoundSummaryView(round: round)) {
-            VStack(alignment: .leading, spacing: 5) {
-                Text(round.courseName)
-                    .font(.headline)
-                    .foregroundColor(.white)
-                Text("Date: \(formatDate(round.date))")
-                    .font(.subheadline)
-                    .foregroundColor(.white.opacity(0.8))
-                Text("Total Score: \(round.totalScore)")
-                    .font(.subheadline)
-                    .foregroundColor(.white.opacity(0.8))
-            }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.white.opacity(0.1))
-            .cornerRadius(10)
+        VStack(alignment: .leading, spacing: 5) {
+            Text(round.courseName)
+                .font(.headline)
+                .foregroundColor(.white)
+            Text("Date: \(formatDate(round.date))")
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.8))
+            Text("Total Score: \(round.totalScore)")
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.8))
         }
-        .buttonStyle(PlainButtonStyle())
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.white.opacity(0.1))
+        .cornerRadius(10)
     }
     
     private func formatDate(_ date: Date) -> String {
