@@ -10,7 +10,6 @@ import SwiftUI
 struct PastRoundsView: View {
     @EnvironmentObject var dataController: DataController
     @State private var rounds: [GolfRound] = []
-    @State private var showingEditView = false
     @State private var roundToEdit: GolfRound?
     
     var body: some View {
@@ -31,8 +30,8 @@ struct PastRoundsView: View {
                             }
                             
                             Button {
-                                roundToEdit = round
-                                showingEditView = true
+                                self.roundToEdit = round
+                                print("Edit button tapped for round: \(round.id)")
                             } label: {
                                 Label("Edit", systemImage: "pencil")
                             }
@@ -46,11 +45,9 @@ struct PastRoundsView: View {
         .onAppear {
             loadRounds()
         }
-        .sheet(isPresented: $showingEditView, onDismiss: loadRounds) {
-            if let roundToEdit = roundToEdit {
-                NavigationView {
-                    EditRoundView(round: roundToEdit)
-                }
+        .fullScreenCover(item: $roundToEdit, onDismiss: loadRounds) { round in
+            NavigationView {
+                EditRoundView(round: round)
             }
         }
     }

@@ -83,9 +83,10 @@ struct HoleDetailView: View {
     }
     
     private func saveAndNavigate(to index: Int) {
-        saveCurrentHoleScore()
-        currentHoleIndex = index
-    }
+            saveCurrentHoleScore()
+            currentHoleIndex = index
+            score = round?.holes[safe: index]?.par ?? 0
+        }
     
     private func saveAndFinish() {
         saveCurrentHoleScore()
