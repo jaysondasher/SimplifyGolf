@@ -27,8 +27,8 @@ struct HoleDetailView: View {
         self._round = round
         self._currentHoleIndex = currentHoleIndex
         self.locationManager = locationManager
-        self._score = State(initialValue: round.wrappedValue?.holes[safe: currentHoleIndex.wrappedValue]?.par ?? 0)
         self.onFinishRound = onFinishRound
+        self._score = State(initialValue: round.wrappedValue?.holes[safe: currentHoleIndex.wrappedValue]?.par ?? 0)
     }
     
     var body: some View {
@@ -75,18 +75,20 @@ struct HoleDetailView: View {
     }
     
     private func updateDistances() {
-        if let hole = hole {
-            distanceToFront = locationManager.calculateDistance(to: hole.green.front) ?? 0
-            distanceToCenter = locationManager.calculateDistance(to: hole.green.center) ?? 0
-            distanceToBack = locationManager.calculateDistance(to: hole.green.back) ?? 0
+        if let hole = hole, let location = locationManager.location {
+            distanceToFront = locationManager.calculateDistance(from: location, to: hole.green.front) ?? 0
+            distanceToCenter = locationManager.calculateDistance(from: location, to: hole.green.center) ?? 0
+            distanceToBack = locationManager.calculateDistance(from: location, to: hole.green.back) ?? 0
         }
     }
     
     private func saveAndNavigate(to index: Int) {
-            saveCurrentHoleScore()
-            currentHoleIndex = index
-            score = round?.holes[safe: index]?.par ?? 0
+        saveCurrentHoleScore()
+        currentHoleIndex = index
+        if let newPar = round?.holes[safe: index]?.par {
+            score = newPar
         }
+    }
     
     private func saveAndFinish() {
         saveCurrentHoleScore()

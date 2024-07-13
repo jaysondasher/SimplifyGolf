@@ -12,7 +12,7 @@ struct StartRoundView: View {
     @State private var activeRound: GolfRound?
     @State private var showingCourseSelection = false
     @State private var showingRoundSummary = false
-    @StateObject private var locationManager = LocationManager()
+    @StateObject private var locationManager = LocationManager.shared
     @EnvironmentObject var courseManager: CourseManager
     @EnvironmentObject var dataController: DataController
     

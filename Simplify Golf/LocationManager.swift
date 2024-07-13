@@ -9,45 +9,32 @@ import Foundation
 import CoreLocation
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    static let shared = LocationManager()
     private let locationManager = CLLocationManager()
     @Published var location: CLLocation?
-    @Published var authorizationStatus: CLAuthorizationStatus?
     
-    override init() {
+    private override init() {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 2 // Update location every 2 meters
+    }
+    
+    func requestAuthorization() {
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        DispatchQueue.main.async {
-            self.location = locations.last
-            print("Location updated: \(String(describing: self.location))")
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error: \(error.localizedDescription)")
+        location = locations.last
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        DispatchQueue.main.async {
-            self.authorizationStatus = manager.authorizationStatus
-            print("Location authorization status: \(manager.authorizationStatus.rawValue)")
+        if manager.authorizationStatus == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
         }
     }
     
-    func calculateDistance(to coordinate: CLLocationCoordinate2D) -> Double? {
-        guard let currentLocation = location else {
-            print("Current location is nil")
-            return nil
-        }
-        let targetLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        let distance = currentLocation.distance(from: targetLocation)
-        print("Calculated distance: \(distance) meters")
-        return distance
+    func calculateDistance(from location: CLLocation, to coordinate: CLLocationCoordinate2D) -> CLLocationDistance? {
+        let destinationLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        return location.distance(from: destinationLocation)
     }
 }

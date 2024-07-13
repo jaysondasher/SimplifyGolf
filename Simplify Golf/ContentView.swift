@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var courseManager = CourseManager()
-    @StateObject private var dataController = DataController()
+    @EnvironmentObject var courseManager: CourseManager
+    @EnvironmentObject var dataController: DataController
     
     var body: some View {
         NavigationView {
@@ -48,8 +48,6 @@ struct ContentView: View {
             }
             .navigationBarHidden(true)
         }
-        .environmentObject(courseManager)
-        .environmentObject(dataController)
     }
 }
 
@@ -124,5 +122,7 @@ struct GolfAppBackground: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(CourseManager(userManager: UserManager()))
+            .environmentObject(DataController())
     }
 }
