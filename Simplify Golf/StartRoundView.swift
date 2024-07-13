@@ -52,6 +52,8 @@ struct StartRoundView: View {
                 .padding()
                 .background(Color.white.opacity(0.1))
                 .cornerRadius(20)
+                .padding()
+                .padding()
             }
         }
         .navigationTitle("Start Round")
