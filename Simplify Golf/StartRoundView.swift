@@ -2,69 +2,72 @@
 //  StartRoundView.swift
 //  Simplify Golf
 //
-//  Created by Jayson Dasher on 7/11/24.
+//  Created by Jayson Dasher on 7/18/24.
 //
 
+
 import SwiftUI
-import CoreLocation
 
 struct StartRoundView: View {
+    @StateObject private var viewModel = StartRoundViewModel()
+    @State private var showingRoundInProgress = false
     @State private var activeRound: GolfRound?
-    @State private var showingCourseSelection = false
-    @State private var showingRoundSummary = false
-    @StateObject private var locationManager = LocationManager.shared
-    @EnvironmentObject var courseManager: CourseManager
-    @EnvironmentObject var dataController: DataController
     
     var body: some View {
         ZStack {
-            GolfAppBackground()
+            MainMenuBackground()
             
-            if let round = activeRound {
-                RoundInProgressView(
-                    activeRound: $activeRound,
-                    locationManager: locationManager,
-                    dataController: dataController
-                )
-            } else {
-                VStack(spacing: 30) {
-                    Image(systemName: "flag.fill")
-                        .font(.system(size: 60))
+            VStack(spacing: 20) {
+                Text("Select a Course")
+                    .font(.title)
+                    .foregroundColor(.white)
+                
+                if viewModel.isLoading {
+                    ProgressView()
+                } else if !viewModel.courses.isEmpty {
+                    List(viewModel.courses) { course in
+                        CourseRow(course: course)
+                            .onTapGesture {
+                                viewModel.selectedCourse = course
+                            }
+                    }
+                    .listStyle(PlainListStyle())
+                    .background(Color.clear)
+                } else if let error = viewModel.error {
+                    Text(error)
+                        .foregroundColor(.red)
+                } else {
+                    Text("No courses available")
                         .foregroundColor(.white)
-                    
-                    Text("Ready to start a new round?")
-                        .font(.title2)
-                        .fontWeight(.medium)
-                        .foregroundColor(.white)
-                    
-                    Button(action: {
-                        showingCourseSelection = true
-                    }) {
-                        Text("Start New Round")
-                            .font(.headline)
-                            .foregroundColor(.green)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.white)
-                            .cornerRadius(10)
+                }
+                
+                Button("Start Round") {
+                    viewModel.startRound { result in
+                        switch result {
+                        case .success(let round):
+                            activeRound = round
+                            showingRoundInProgress = true
+                        case .failure(let error):
+                            viewModel.error = error.localizedDescription
+                        }
                     }
                 }
+                .disabled(viewModel.selectedCourse == nil)
                 .padding()
-                .background(Color.white.opacity(0.1))
-                .cornerRadius(20)
-                .padding()
-                .padding()
+                .background(Color.green)
+                .foregroundColor(.white)
+                .cornerRadius(10)
             }
+            .padding()
         }
-        .navigationTitle("Start Round")
-        .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showingCourseSelection) {
-            CourseSelectionView(activeRound: $activeRound)
+        .onAppear {
+            viewModel.fetchCourses()
         }
-        .sheet(isPresented: $showingRoundSummary) {
+        .fullScreenCover(isPresented: $showingRoundInProgress, content: {
             if let round = activeRound {
-                RoundSummaryView(round: round)
+                RoundInProgressView(round: round)
             }
-        }
+        })
     }
 }
+

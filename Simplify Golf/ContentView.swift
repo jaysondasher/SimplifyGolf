@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var courseManager: CourseManager
-    @EnvironmentObject var dataController: DataController
+    @StateObject private var viewModel = ContentViewModel()
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     
     var body: some View {
         NavigationView {
@@ -27,6 +27,10 @@ struct ContentView: View {
                             MenuButton(title: "Start Round", icon: "flag.fill")
                         }
                         
+                        NavigationLink(destination: CourseManagementView()) {
+                            MenuButton(title: "Manage Courses", icon: "list.bullet.indent")
+                        }
+                        
                         NavigationLink(destination: PastRoundsView()) {
                             MenuButton(title: "Past Rounds", icon: "list.bullet")
                         }
@@ -36,13 +40,27 @@ struct ContentView: View {
                         }
                         
                         NavigationLink(destination: HandicapView()) {
-                            MenuButton(title: "Handicap Index", icon: "number")
+                            MenuButton(title: "Handicap", icon: "number")
                         }
                     }
                     .padding()
                     .background(Color.white.opacity(0.1))
                     .cornerRadius(20)
                     .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 5)
+                    
+                    Spacer()
+                    
+                    Button("Sign Out") {
+                        viewModel.signOut { success in
+                            if success {
+                                authViewModel.isAuthenticated = false
+                            }
+                        }
+                    }
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
                 .padding()
             }
@@ -78,29 +96,6 @@ struct MenuButton: View {
 struct MainMenuBackground: View {
     var body: some View {
         ZStack {
-            // Base gradient
-            LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.1568627451, green: 0.3137254902, blue: 0.1882352941, alpha: 1)), Color(#colorLiteral(red: 0.2352941176, green: 0.4705882353, blue: 0.2823529412, alpha: 1))]),
-                           startPoint: .topLeading,
-                           endPoint: .bottomTrailing)
-            
-            // Subtle pattern overlay
-            GeometryReader { geometry in
-                Path { path in
-                    for index in stride(from: 0, to: geometry.size.width, by: 30) {
-                        path.move(to: CGPoint(x: index, y: 0))
-                        path.addLine(to: CGPoint(x: index + geometry.size.height, y: geometry.size.height))
-                    }
-                }
-                .stroke(Color.white.opacity(0.1), lineWidth: 1)
-            }
-        }
-        .ignoresSafeArea()
-    }
-}
-
-struct GolfAppBackground: View {
-    var body: some View {
-        ZStack {
             LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.1568627451, green: 0.3137254902, blue: 0.1882352941, alpha: 1)), Color(#colorLiteral(red: 0.2352941176, green: 0.4705882353, blue: 0.2823529412, alpha: 1))]),
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing)
@@ -122,7 +117,6 @@ struct GolfAppBackground: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(CourseManager(userManager: UserManager()))
-            .environmentObject(DataController())
+            .environmentObject(AuthenticationViewModel())
     }
 }

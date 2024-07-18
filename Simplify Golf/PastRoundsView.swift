@@ -2,63 +2,43 @@
 //  PastRoundsView.swift
 //  Simplify Golf
 //
-//  Created by Jayson Dasher on 7/11/24.
+//  Created by Jayson Dasher on 7/18/24.
 //
+
 
 import SwiftUI
 
 struct PastRoundsView: View {
-    @EnvironmentObject var dataController: DataController
-    @State private var rounds: [GolfRound] = []
-    @State private var roundToEdit: GolfRound?
+    @StateObject private var viewModel = PastRoundsViewModel()
     
     var body: some View {
         ZStack {
-            GolfAppBackground()
+            MainMenuBackground()
             
-            ScrollView {
-                LazyVStack(spacing: 15) {
-                    ForEach(rounds) { round in
-                        NavigationLink(destination: RoundSummaryView(round: round)) {
+            VStack {
+                if viewModel.isLoading {
+                    ProgressView()
+                } else if !viewModel.rounds.isEmpty {
+                    List(viewModel.rounds) { round in
+                        NavigationLink(destination: RoundDetailView(round: round)) {
                             PastRoundRow(round: round)
                         }
-                        .contextMenu {
-                            Button(role: .destructive) {
-                                deleteRound(round)
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                            }
-                            
-                            Button {
-                                self.roundToEdit = round
-                                print("Edit button tapped for round: \(round.id)")
-                            } label: {
-                                Label("Edit", systemImage: "pencil")
-                            }
-                        }
+                        .listRowBackground(Color.clear)
                     }
+                    .listStyle(PlainListStyle())
+                } else if let error = viewModel.error {
+                    Text(error)
+                        .foregroundColor(.red)
+                } else {
+                    Text("No past rounds found")
+                        .foregroundColor(.white)
                 }
-                .padding()
             }
+            .navigationTitle("Past Rounds")
         }
-        .navigationTitle("Past Rounds")
         .onAppear {
-            loadRounds()
+            viewModel.fetchPastRounds()
         }
-        .fullScreenCover(item: $roundToEdit, onDismiss: loadRounds) { round in
-            NavigationView {
-                EditRoundView(round: round)
-            }
-        }
-    }
-    
-    private func loadRounds() {
-        rounds = dataController.fetchRounds().sorted(by: { $0.date > $1.date })
-    }
-    
-    private func deleteRound(_ round: GolfRound) {
-        dataController.deleteRound(round)
-        loadRounds()
     }
 }
 
@@ -66,27 +46,61 @@ struct PastRoundRow: View {
     let round: GolfRound
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text(round.courseName)
-                .font(.headline)
-                .foregroundColor(.white)
+        VStack(alignment: .leading) {
             Text("Date: \(formatDate(round.date))")
-                .font(.subheadline)
-                .foregroundColor(.white.opacity(0.8))
+                .font(.headline)
             Text("Total Score: \(round.totalScore)")
                 .font(.subheadline)
-                .foregroundColor(.white.opacity(0.8))
         }
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.white.opacity(0.1))
-        .cornerRadius(10)
+        .foregroundColor(.white)
+        .padding(.vertical, 8)
     }
     
     private func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
-        formatter.timeStyle = .none
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
+    }
+}
+
+struct RoundDetailView: View {
+    let round: GolfRound
+    
+    var body: some View {
+        ZStack {
+            MainMenuBackground()
+            
+            VStack {
+                Text("Round Details")
+                    .font(.title)
+                    .foregroundColor(.white)
+                
+                Text("Date: \(formatDate(round.date))")
+                    .foregroundColor(.white)
+                
+                Text("Total Score: \(round.totalScore)")
+                    .foregroundColor(.white)
+                
+                List(round.scores.indices, id: \.self) { index in
+                    HStack {
+                        Text("Hole \(index + 1)")
+                        Spacer()
+                        Text("Score: \(round.scores[index] ?? 0)")
+                    }
+                    .foregroundColor(.white)
+                    .listRowBackground(Color.clear)
+                }
+                .listStyle(PlainListStyle())
+            }
+            .padding()
+        }
+    }
+    
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
         return formatter.string(from: date)
     }
 }
