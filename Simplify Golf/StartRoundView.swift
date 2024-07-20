@@ -1,35 +1,42 @@
-//
-//  StartRoundView.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/18/24.
-//
-
-
 import SwiftUI
 
 struct StartRoundView: View {
     @StateObject private var viewModel = StartRoundViewModel()
     @State private var showingRoundInProgress = false
     @State private var activeRound: GolfRound?
-    
+
     var body: some View {
         ZStack {
             MainMenuBackground()
-            
+
             VStack(spacing: 20) {
                 Text("Select a Course")
                     .font(.title)
                     .foregroundColor(.white)
-                
+
+                SearchBar(text: $viewModel.searchText, onCommit: viewModel.fetchCourses)
+
                 if viewModel.isLoading {
                     ProgressView()
-                } else if !viewModel.courses.isEmpty {
-                    List(viewModel.courses) { course in
-                        CourseRow(course: course)
-                            .onTapGesture {
-                                viewModel.selectedCourse = course
+                } else if !viewModel.filteredCourses.isEmpty {
+                    List(viewModel.filteredCourses) { course in
+                        CourseRow(course: course, isDownloaded: viewModel.isCourseDownloaded(course)) {
+                            if viewModel.isCourseDownloaded(course) {
+                                // Do nothing or show an alert that the course is already downloaded
+                            } else {
+                                viewModel.downloadCourse(course) { result in
+                                    switch result {
+                                    case .success:
+                                        print("Course downloaded successfully")
+                                    case .failure(let error):
+                                        print("Error downloading course: \(error.localizedDescription)")
+                                    }
+                                }
                             }
+                        }
+                        .onTapGesture {
+                            viewModel.selectedCourse = course
+                        }
                     }
                     .listStyle(PlainListStyle())
                     .background(Color.clear)
@@ -40,7 +47,7 @@ struct StartRoundView: View {
                     Text("No courses available")
                         .foregroundColor(.white)
                 }
-                
+
                 Button("Start Round") {
                     viewModel.startRound { result in
                         switch result {
@@ -54,7 +61,7 @@ struct StartRoundView: View {
                 }
                 .disabled(viewModel.selectedCourse == nil)
                 .padding()
-                .background(Color.green)
+                .background(viewModel.selectedCourse == nil ? Color.gray : Color.green)
                 .foregroundColor(.white)
                 .cornerRadius(10)
             }
@@ -63,11 +70,10 @@ struct StartRoundView: View {
         .onAppear {
             viewModel.fetchCourses()
         }
-        .fullScreenCover(isPresented: $showingRoundInProgress, content: {
+        .fullScreenCover(isPresented: $showingRoundInProgress) {
             if let round = activeRound {
                 RoundInProgressView(round: round)
             }
-        })
+        }
     }
 }
-

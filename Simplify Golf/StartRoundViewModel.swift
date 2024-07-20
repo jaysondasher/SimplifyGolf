@@ -1,26 +1,26 @@
-//
-//  StartRoundViewModel.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/18/24.
-//
-
-
 import Foundation
 import Firebase
 
 class StartRoundViewModel: ObservableObject {
     @Published var courses: [Course] = []
+    @Published var searchText: String = ""
     @Published var selectedCourse: Course?
-    @Published var isLoading = false
+    @Published var isLoading: Bool = false
     @Published var error: String?
-    
-    private let db = Firestore.firestore()
-    
+
+    var filteredCourses: [Course] {
+        if searchText.isEmpty {
+            return courses
+        } else {
+            return courses.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+    }
+
     func fetchCourses() {
         isLoading = true
         error = nil
         
+        let db = Firestore.firestore()
         db.collection("courses").getDocuments { [weak self] (querySnapshot, err) in
             DispatchQueue.main.async {
                 self?.isLoading = false
@@ -35,7 +35,34 @@ class StartRoundViewModel: ObservableObject {
             }
         }
     }
-    
+
+    func isCourseDownloaded(_ course: Course) -> Bool {
+        return LocalStorageManager.shared.isCourseDownloaded(course.id)
+    }
+
+    func downloadCourse(_ course: Course, completion: @escaping (Result<Void, Error>) -> Void) {
+        let db = Firestore.firestore()
+        db.collection("courses").document(course.id).getDocument { (document, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let document = document, document.exists, let courseData = document.data() else {
+                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Course not found"])))
+                return
+            }
+            
+            do {
+                let downloadedCourse = Course.fromFirestore(courseData)!
+                LocalStorageManager.shared.saveCourse(downloadedCourse)
+                completion(.success(()))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+
     func startRound(completion: @escaping (Result<GolfRound, Error>) -> Void) {
         guard let course = selectedCourse else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No course selected"])))
@@ -50,7 +77,8 @@ class StartRoundViewModel: ObservableObject {
             scores: Array(repeating: nil, count: course.holes.count)
         )
         
-        db.collection("rounds").addDocument(data: newRound.toFirestore()) { error in
+        let db = Firestore.firestore()
+        db.collection("rounds").document(newRound.id).setData(newRound.toFirestore()) { error in
             if let error = error {
                 completion(.failure(error))
             } else {
