@@ -53,6 +53,7 @@ struct StartRoundView: View {
                         switch result {
                         case .success(let round):
                             activeRound = round
+                            print("About to show RoundInProgressView for round ID: \(round.id)")
                             showingRoundInProgress = true
                         case .failure(let error):
                             viewModel.error = error.localizedDescription
@@ -73,7 +74,13 @@ struct StartRoundView: View {
         .fullScreenCover(isPresented: $showingRoundInProgress) {
             if let round = activeRound {
                 RoundInProgressView(round: round)
+            } else {
+                Text("Error: No active round")
+                    .foregroundColor(.red)
             }
+        }
+        .onChange(of: showingRoundInProgress) { newValue in
+            print("showingRoundInProgress changed to: \(newValue)")
         }
     }
 }

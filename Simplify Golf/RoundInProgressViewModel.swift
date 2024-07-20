@@ -7,32 +7,31 @@ class RoundInProgressViewModel: ObservableObject {
     @Published var course: Course?
     @Published var isLoading = false
     @Published var error: String?
+    @Published var selectedHoleIndex: Int?
 
     private let db = Firestore.firestore()
 
     init(round: GolfRound) {
         self.round = round
+        print("RoundInProgressViewModel initialized with round ID: \(round.id), CourseID: \(round.courseId)")
         fetchCourse()
     }
 
     func fetchCourse() {
+        print("Attempting to fetch course with ID: \(round.courseId)")
         isLoading = true
         error = nil
 
-        db.collection("courses").document(round.courseId).getDocument { [weak self] (document, error) in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                if let error = error {
-                    self?.error = "Error fetching course: \(error.localizedDescription)"
-                } else if let document = document, document.exists {
-                    self?.course = Course.fromFirestore(document.data() ?? [:])
-                } else {
-                    self?.error = "Course not found"
-                }
-            }
+        if let course = LocalStorageManager.shared.getCourse(by: round.courseId) {
+            self.course = course
+            isLoading = false
+            print("Course fetch result: Success - Course name: \(course.name), Holes: \(course.holes.count)")
+        } else {
+            error = "Course not found in local storage"
+            isLoading = false
+            print("Course fetch result: Failure - Course not found in local storage")
         }
     }
-
     func finishRound() {
         round.isCompleted = true
         saveRound()
@@ -68,17 +67,23 @@ class RoundInProgressViewModel: ObservableObject {
     }
 
     func updateScore(for holeIndex: Int, score: Int) {
-        round.scores[holeIndex] = score
-        saveRound()
-    }
+            round.scores[holeIndex] = score
+            objectWillChange.send()
+            saveRound()
+        }
 
-    private func saveRound() {
-        db.collection("rounds").document(round.id).setData(round.toFirestore()) { [weak self] error in
-            if let error = error {
-                self?.error = "Error saving round: \(error.localizedDescription)"
+        private func saveRound() {
+            LocalStorageManager.shared.saveRound(round)
+            
+            db.collection("rounds").document(round.id).setData(round.toFirestore()) { [weak self] error in
+                if let error = error {
+                    self?.error = "Error saving round: \(error.localizedDescription)"
+                    print("Error saving round to Firestore: \(error.localizedDescription)")
+                } else {
+                    print("Round successfully saved to Firestore")
+                }
             }
         }
-    }
 
     func moveToNextHole() {
         if currentHoleIndex < (course?.holes.count ?? 0) - 1 {

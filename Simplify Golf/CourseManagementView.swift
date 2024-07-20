@@ -96,7 +96,7 @@ struct CourseRow: View {
     var course: Course
     var isDownloaded: Bool
     var action: () -> Void
-    
+
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -124,6 +124,8 @@ struct CourseRow: View {
         .padding(.vertical, 4)
     }
 }
+
+
 
 
 

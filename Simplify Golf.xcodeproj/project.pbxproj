@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3062D6492C4C3A0500F8AD34 /* LocalCourseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062D6482C4C3A0500F8AD34 /* LocalCourseStorage.swift */; };
+		3062D6492C4C3A0500F8AD34 /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062D6482C4C3A0500F8AD34 /* LocalStorageManager.swift */; };
+		3062D64B2C4C57C400F8AD34 /* Hole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062D64A2C4C57C400F8AD34 /* Hole.swift */; };
 		3065A1082C4C2AF100028D15 /* HoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A1072C4C2AF100028D15 /* HoleDetailView.swift */; };
 		3065A10A2C4C2AF800028D15 /* HoleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A1092C4C2AF800028D15 /* HoleDetailViewModel.swift */; };
 		3065A10C2C4C2C6A00028D15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B2C4C2C6A00028D15 /* SearchBar.swift */; };
@@ -78,7 +79,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3062D6482C4C3A0500F8AD34 /* LocalCourseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCourseStorage.swift; sourceTree = "<group>"; };
+		3062D6482C4C3A0500F8AD34 /* LocalStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
+		3062D64A2C4C57C400F8AD34 /* Hole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hole.swift; sourceTree = "<group>"; };
 		3065A1072C4C2AF100028D15 /* HoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailView.swift; sourceTree = "<group>"; };
 		3065A1092C4C2AF800028D15 /* HoleDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailViewModel.swift; sourceTree = "<group>"; };
 		3065A10B2C4C2C6A00028D15 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				30F9ED6B2C499DDF00F3AC55 /* Course.swift */,
 				30F9EDA52C49DEEE00F3AC55 /* CourseManagementView.swift */,
 				30F9EDA32C49DEE500F3AC55 /* CourseManagementViewModel.swift */,
+				3062D64A2C4C57C400F8AD34 /* Hole.swift */,
 				30F9EDAD2C4BF0E200F3AC55 /* CourseRatingInputView.swift */,
 				30C97FF12C408AD5009BF89E /* courses.json */,
 				30F9ED802C49A0EB00F3AC55 /* CourseViewModel.swift */,
@@ -188,7 +191,7 @@
 				3065A1072C4C2AF100028D15 /* HoleDetailView.swift */,
 				3065A1092C4C2AF800028D15 /* HoleDetailViewModel.swift */,
 				30F9ED902C49A42E00F3AC55 /* PastRoundsView.swift */,
-				3062D6482C4C3A0500F8AD34 /* LocalCourseStorage.swift */,
+				3062D6482C4C3A0500F8AD34 /* LocalStorageManager.swift */,
 				30F9ED9D2C49DA8000F3AC55 /* PastRoundsViewModel.swift */,
 				308BE2712BF534F300C3246C /* Preview Content */,
 				30F9ED992C49ABEB00F3AC55 /* RoundInProgressView.swift */,
@@ -363,9 +366,10 @@
 				30F9ED832C49A0FC00F3AC55 /* RoundViewModel.swift in Sources */,
 				30F9EDA62C49DEEE00F3AC55 /* CourseManagementView.swift in Sources */,
 				30F9EDA22C49DD4E00F3AC55 /* HandicapViewModel.swift in Sources */,
+				3062D64B2C4C57C400F8AD34 /* Hole.swift in Sources */,
 				30F9ED982C49AA4700F3AC55 /* StartRoundViewModel.swift in Sources */,
 				3065A10C2C4C2C6A00028D15 /* SearchBar.swift in Sources */,
-				3062D6492C4C3A0500F8AD34 /* LocalCourseStorage.swift in Sources */,
+				3062D6492C4C3A0500F8AD34 /* LocalStorageManager.swift in Sources */,
 				30F9ED6C2C499DE000F3AC55 /* Course.swift in Sources */,
 				30F9ED892C49A14800F3AC55 /* AuthenticationView.swift in Sources */,
 				30F9ED952C49A43C00F3AC55 /* HandicapView.swift in Sources */,
