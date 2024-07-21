@@ -1,279 +1,140 @@
-//
-//  HoleDetailView.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/11/24.
-//
-
 import SwiftUI
 import CoreLocation
 
 struct HoleDetailView: View {
-    @Binding var round: GolfRound?
+    @ObservedObject var viewModel: RoundInProgressViewModel
     @Binding var currentHoleIndex: Int
-    @ObservedObject var locationManager: LocationManager
-    @State private var distanceToFront: Double = 0
-    @State private var distanceToCenter: Double = 0
-    @State private var distanceToBack: Double = 0
-    @State private var score: Int
-    var onFinishRound: () -> Void
-    @Environment(\.presentationMode) var presentationMode
+    @State private var currentScore: Int
     
-    var hole: Hole? {
-        round?.holes[safe: currentHoleIndex]
+    var hole: Hole {
+        viewModel.course?.holes[currentHoleIndex] ?? Hole(number: 0, par: 0, yardage: 0, teeBox: Coordinate(latitude: 0, longitude: 0), green: Hole.Green(front: Coordinate(latitude: 0, longitude: 0), center: Coordinate(latitude: 0, longitude: 0), back: Coordinate(latitude: 0, longitude: 0)))
     }
     
-    init(round: Binding<GolfRound?>, currentHoleIndex: Binding<Int>, locationManager: LocationManager, onFinishRound: @escaping () -> Void) {
-        self._round = round
+    init(viewModel: RoundInProgressViewModel, currentHoleIndex: Binding<Int>) {
+        self.viewModel = viewModel
         self._currentHoleIndex = currentHoleIndex
-        self.locationManager = locationManager
-        self.onFinishRound = onFinishRound
-        self._score = State(initialValue: round.wrappedValue?.holes[safe: currentHoleIndex.wrappedValue]?.par ?? 0)
+        let holeIndex = currentHoleIndex.wrappedValue
+        let initialScore = viewModel.round.scores[holeIndex] ?? viewModel.course?.holes[holeIndex].par ?? 0
+        self._currentScore = State(initialValue: initialScore)
     }
     
     var body: some View {
         ZStack {
-            GolfAppBackground()
+            MainMenuBackground()
             
-            if let hole = hole, let round = round {
-                VStack(spacing: 24) {
-                    HoleInfoView(holeNumber: hole.number, par: hole.par)
-                    
-                    ScoreView(score: $score)
-                    
-                    DistanceView(front: distanceToFront, center: distanceToCenter, back: distanceToBack)
-                    
-                    Spacer()
-                    
-                    NavigationButtons(
-                        currentHoleIndex: currentHoleIndex,
-                        totalHoles: round.holes.count,
-                        onPrevious: { saveAndNavigate(to: currentHoleIndex - 1) },
-                        onNext: {
-                            if currentHoleIndex == round.holes.count - 1 {
-                                saveAndFinish()
-                            } else {
-                                saveAndNavigate(to: currentHoleIndex + 1)
-                            }
+            VStack(spacing: 20) {
+                VStack(spacing: 5) {
+                    Text("Hole \(hole.number)")
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                    Text("Par \(hole.par)")
+                        .font(.title)
+                        .foregroundColor(.white)
+                }
+
+                VStack(alignment: .center, spacing: 30) {
+                    Text("Distances to Green")
+                        .font(.title)
+                        .foregroundColor(.white)
+                    VStack(spacing: 20) {
+                        VStack {
+                            Text("Front")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            Text("\(calculateDistance(to: hole.green.front)) yards")
+                                .font(.system(size: 40, weight: .bold))
+                                .foregroundColor(.white)
                         }
-                    )
-                }
-                .padding()
-            } else {
-                Text("Hole data not available")
-                    .foregroundColor(.white)
-            }
-        }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: BackButton(action: {
-            saveCurrentHoleScore()
-            presentationMode.wrappedValue.dismiss()
-        }))
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear { updateDistances() }
-        .onReceive(locationManager.$location) { _ in updateDistances() }
-    }
-    
-    private func updateDistances() {
-        if let hole = hole, let location = locationManager.location {
-            distanceToFront = locationManager.calculateDistance(from: location, to: hole.green.front) ?? 0
-            distanceToCenter = locationManager.calculateDistance(from: location, to: hole.green.center) ?? 0
-            distanceToBack = locationManager.calculateDistance(from: location, to: hole.green.back) ?? 0
-        }
-    }
-    
-    private func saveAndNavigate(to index: Int) {
-        saveCurrentHoleScore()
-        currentHoleIndex = index
-        if let newPar = round?.holes[safe: index]?.par {
-            score = newPar
-        }
-    }
-    
-    private func saveAndFinish() {
-        saveCurrentHoleScore()
-        onFinishRound()
-        presentationMode.wrappedValue.dismiss()
-    }
-    
-    private func saveCurrentHoleScore() {
-        guard var currentRound = round else { return }
-        if currentHoleIndex < currentRound.holes.count {
-            currentRound.holes[currentHoleIndex].score = score
-            round = currentRound
-        }
-    }
-}
-
-struct HoleInfoView: View {
-    let holeNumber: Int
-    let par: Int
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Hole \(holeNumber)")
-                    .font(.system(size: 36, weight: .bold, design: .rounded))
-                Text("Par \(par)")
-                    .font(.title3)
-                    .fontWeight(.medium)
-            }
-            Spacer()
-        }
-        .foregroundColor(.white)
-        .padding()
-        .background(Color.white.opacity(0.15))
-        .cornerRadius(15)
-    }
-}
-
-struct ScoreView: View {
-    @Binding var score: Int
-    
-    var body: some View {
-        VStack(spacing: 12) {
-            Text("Your Score")
-                .font(.headline)
-                .foregroundColor(.white.opacity(0.8))
-            
-            HStack(spacing: 20) {
-                Button(action: { score = max(1, score - 1) }) {
-                    Image(systemName: "minus.circle.fill")
-                        .font(.system(size: 32))
-                }
-                
-                Text("\(score)")
-                    .font(.system(size: 48, weight: .bold, design: .rounded))
-                    .frame(width: 80)
-                
-                Button(action: { score += 1 }) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 32))
-                }
-            }
-            .foregroundColor(.white)
-        }
-        .padding()
-        .background(Color.white.opacity(0.15))
-        .cornerRadius(15)
-    }
-}
-
-struct DistanceView: View {
-    let front: Double
-    let center: Double
-    let back: Double
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Distance to Green")
-                .font(.headline)
-                .foregroundColor(.white.opacity(0.8))
-            
-            HStack(spacing: 12) {
-                DistanceCard(label: "Front", distance: front)
-                DistanceCard(label: "Center", distance: center)
-                DistanceCard(label: "Back", distance: back)
-            }
-        }
-        .padding()
-        .background(Color.white.opacity(0.15))
-        .cornerRadius(15)
-    }
-}
-
-struct DistanceCard: View {
-    let label: String
-    let distance: Double
-    
-    var body: some View {
-        VStack(spacing: 4) {
-            Text(label)
-                .font(.caption)
-                .fontWeight(.medium)
-            Text("\(Int(distance * 1.09361))")
-                .font(.title2)
-                .fontWeight(.bold)
-            Text("yards")
-                .font(.caption2)
-        }
-        .foregroundColor(.white)
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 8)
-        .background(Color.white.opacity(0.1))
-        .cornerRadius(10)
-    }
-}
-
-struct NavigationButtons: View {
-    let currentHoleIndex: Int
-    let totalHoles: Int
-    let onPrevious: () -> Void
-    let onNext: () -> Void
-    
-    var body: some View {
-        HStack {
-            if currentHoleIndex > 0 {
-                Button(action: onPrevious) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Previous")
+                        VStack {
+                            Text("Center")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            Text("\(calculateDistance(to: hole.green.center)) yards")
+                                .font(.system(size: 40, weight: .bold))
+                                .foregroundColor(.white)
+                        }
+                        VStack {
+                            Text("Back")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            Text("\(calculateDistance(to: hole.green.back)) yards")
+                                .font(.system(size: 40, weight: .bold))
+                                .foregroundColor(.white)
+                        }
                     }
                 }
-                .buttonStyle(SecondaryButtonStyle())
-            }
-            
-            Spacer()
-            
-            Button(action: onNext) {
-                HStack {
-                    Text(currentHoleIndex == totalHoles - 1 ? "Finish Round" : "Next Hole")
-                    Image(systemName: "chevron.right")
+                .padding()
+                .background(Material.thin)
+                .cornerRadius(10)
+                
+                Spacer()
+
+                VStack(spacing: 10) {
+                    Text("Your Score")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                    HStack {
+                        Button("-") {
+                            if currentScore > 1 {
+                                currentScore -= 1
+                            }
+                        }
+                        .foregroundColor(.white)
+                        Text("\(currentScore)")
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
+                        Button("+") {
+                            currentScore += 1
+                        }
+                        .foregroundColor(.white)
+                    }
+                    .font(.largeTitle)
+                    .padding()
+                    .background(Material.thin)
+                    .cornerRadius(10)
                 }
+
+                HStack {
+                    if currentHoleIndex > 0 {
+                        Button("Previous Hole") {
+                            saveCurrentScore()
+                            currentHoleIndex -= 1
+                            updateCurrentScore()
+                        }
+                        .foregroundColor(.white)
+                    }
+                    Spacer()
+                    if currentHoleIndex < (viewModel.course?.holes.count ?? 0) - 1 {
+                        Button("Next Hole") {
+                            saveCurrentScore()
+                            currentHoleIndex += 1
+                            updateCurrentScore()
+                        }
+                        .foregroundColor(.white)
+                    }
+                }
+                .padding(.bottom)
             }
-            .buttonStyle(PrimaryButtonStyle())
+            .padding()
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .onDisappear {
+            saveCurrentScore()
         }
     }
-}
-
-struct BackButton: View {
-    let action: () -> Void
     
-    var body: some View {
-        Button(action: action) {
-            HStack {
-                Image(systemName: "chevron.left")
-                Text("Back")
-            }
-            .foregroundColor(.white)
-        }
+    private func saveCurrentScore() {
+        viewModel.updateScore(for: currentHoleIndex, score: currentScore)
     }
-}
-
-extension Array {
-    subscript(safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
+    
+    private func updateCurrentScore() {
+        currentScore = viewModel.round.scores[currentHoleIndex] ?? hole.par
     }
-}
-
-struct PrimaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding()
-            .background(Color.green)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1)
-    }
-}
-
-struct SecondaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1)
+    
+    func calculateDistance(to coordinate: Coordinate) -> Int {
+        guard let userLocation = viewModel.currentLocation else { return 0 }
+        let target = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        let distanceInMeters = userLocation.distance(from: target)
+        return Int(distanceInMeters * 1.09361) // Convert meters to yards
     }
 }

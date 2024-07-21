@@ -1,116 +1,84 @@
-//
-//  RoundInProgressView.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/12/24.
-//
-
 import SwiftUI
 
 struct RoundInProgressView: View {
-    @Binding var activeRound: GolfRound?
-    @ObservedObject var locationManager: LocationManager
-    @ObservedObject var dataController: DataController
-    @State private var currentHoleIndex = 0
-    @State private var showingRoundSummary = false
+    @StateObject private var viewModel: RoundInProgressViewModel
     @Environment(\.presentationMode) var presentationMode
-    
+    @State private var currentHoleIndex: Int = 0
+
+    init(round: GolfRound) {
+        _viewModel = StateObject(wrappedValue: RoundInProgressViewModel(round: round))
+    }
+
     var body: some View {
-        ZStack {
-            GolfAppBackground()
-            
-            VStack(spacing: 20) {
-                if let round = activeRound {
-                    Text(round.courseName)
-                        .font(.title)
-                        .fontWeight(.bold)
+        NavigationView {
+            ZStack {
+                MainMenuBackground()
+
+                VStack(spacing: 20) {
+                    Text("Course: \(viewModel.course?.name ?? "")")
+                        .font(.title2)
                         .foregroundColor(.white)
                     
-                    Text("Total Score: \(round.totalScore)")
+                    Text("Total Score: \(viewModel.round.totalScore)")
                         .font(.headline)
-                        .foregroundColor(.white.opacity(0.8))
-                    
+                        .foregroundColor(.white)
+
                     ScrollView {
                         LazyVStack(spacing: 10) {
-                            ForEach(round.holes.indices, id: \.self) { index in
-                                NavigationLink(destination: HoleDetailView(
-                                    round: $activeRound,
-                                    currentHoleIndex: $currentHoleIndex,
-                                    locationManager: locationManager,
-                                    onFinishRound: finishRound
-                                )) {
-                                    HoleRowView(hole: round.holes[index], currentHole: currentHoleIndex + 1)
+                            ForEach(viewModel.course?.holes.indices ?? 0..<18, id: \.self) { index in
+                                NavigationLink(destination: HoleDetailView(viewModel: viewModel, currentHoleIndex: $currentHoleIndex)) {
+                                    HoleRow(holeNumber: index + 1,
+                                            par: viewModel.course?.holes[index].par ?? 0,
+                                            score: viewModel.round.scores[index])
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .onTapGesture {
+                                    currentHoleIndex = index
                                 }
                             }
                         }
                         .padding(.horizontal)
                     }
-                    
+
                     Button("End Round") {
-                        finishRound()
+                        viewModel.finishRound()
+                        presentationMode.wrappedValue.dismiss()
                     }
-                    .buttonStyle(PrimaryButtonStyle())
                     .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
-            }
-        }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showingRoundSummary) {
-            if let round = activeRound {
-                RoundSummaryView(round: round)
-            }
-        }
-    }
-    
-    private func finishRound() {
-        if let round = activeRound {
-            dataController.saveRound(round)
-            showingRoundSummary = true
-            activeRound = nil
-            currentHoleIndex = 0
-        }
-    }
-    
-    struct HoleRowView: View {
-        let hole: Hole
-        let currentHole: Int
-        
-        var body: some View {
-            HStack {
-                Text("Hole \(hole.number)")
-                    .fontWeight(.medium)
-                Spacer()
-                Text("Par \(hole.par)")
-                    .foregroundColor(.white.opacity(0.8))
-                Spacer()
-                if let score = hole.score {
-                    Text("Score: \(score)")
-                        .fontWeight(.semibold)
-                } else {
-                    Text("Not played")
-                        .foregroundColor(.white.opacity(0.5))
-                }
-                if hole.number == currentHole {
-                    Image(systemName: "location.fill")
-                        .foregroundColor(.yellow)
-                }
-            }
-            .padding()
-            .background(Color.white.opacity(0.1))
-            .cornerRadius(10)
-        }
-    }
-    
-    struct PrimaryButtonStyle: ButtonStyle {
-        func makeBody(configuration: Configuration) -> some View {
-            configuration.label
                 .padding()
-                .background(Color.green)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                .scaleEffect(configuration.isPressed ? 0.95 : 1)
+            }
+            .navigationBarHidden(true)
         }
     }
 }
 
+struct HoleRow: View {
+    let holeNumber: Int
+    let par: Int
+    let score: Int?
+    
+    var body: some View {
+        HStack {
+            Text("Hole \(holeNumber)")
+                .foregroundColor(.orange)
+            Spacer()
+            Text("Par \(par)")
+                .foregroundColor(.white)
+            Spacer()
+            if let score = score {
+                Text("Score: \(score)")
+                    .foregroundColor(.orange)
+            } else {
+                Text("Not played")
+                    .foregroundColor(.gray)
+            }
+        }
+        .padding()
+        .background(Material.thin)
+        .cornerRadius(10)
+    }
+}

@@ -1,70 +1,103 @@
-//
-//  StartRoundView.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/11/24.
-//
-
 import SwiftUI
-import CoreLocation
 
 struct StartRoundView: View {
+    @StateObject private var viewModel = StartRoundViewModel()
+    @State private var showingRoundInProgress = false
     @State private var activeRound: GolfRound?
-    @State private var showingCourseSelection = false
-    @State private var showingRoundSummary = false
-    @StateObject private var locationManager = LocationManager.shared
-    @EnvironmentObject var courseManager: CourseManager
-    @EnvironmentObject var dataController: DataController
-    
+
     var body: some View {
         ZStack {
-            GolfAppBackground()
-            
-            if let round = activeRound {
-                RoundInProgressView(
-                    activeRound: $activeRound,
-                    locationManager: locationManager,
-                    dataController: dataController
-                )
-            } else {
-                VStack(spacing: 30) {
-                    Image(systemName: "flag.fill")
-                        .font(.system(size: 60))
+            MainMenuBackground()
+
+            VStack(spacing: 20) {
+                Text("Select a Course")
+                    .font(.title)
+                    .foregroundColor(.white)
+
+                SearchBar(text: $viewModel.searchText, onCommit: viewModel.fetchCourses)
+
+                if viewModel.isLoading {
+                    ProgressView()
+                } else if !viewModel.filteredCourses.isEmpty {
+                    List(viewModel.filteredCourses) { course in
+                        StartRoundCourseRow(course: course, isSelected: viewModel.selectedCourse?.id == course.id) {
+                            viewModel.selectedCourse = course
+                        }
+                        .listRowBackground(Color.clear)  // Ensure background is clear
+                    }
+                    .listStyle(PlainListStyle())
+                    .background(Color.clear)
+                } else if let error = viewModel.error {
+                    Text(error)
+                        .foregroundColor(.red)
+                } else {
+                    Text("No courses available")
                         .foregroundColor(.white)
-                    
-                    Text("Ready to start a new round?")
-                        .font(.title2)
-                        .fontWeight(.medium)
-                        .foregroundColor(.white)
-                    
-                    Button(action: {
-                        showingCourseSelection = true
-                    }) {
-                        Text("Start New Round")
-                            .font(.headline)
-                            .foregroundColor(.green)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.white)
-                            .cornerRadius(10)
+                }
+
+                Button("Start Round") {
+                    viewModel.startRound { result in
+                        switch result {
+                        case .success(let round):
+                            activeRound = round
+                            print("About to show RoundInProgressView for round ID: \(round.id)")
+                            showingRoundInProgress = true
+                        case .failure(let error):
+                            viewModel.error = error.localizedDescription
+                        }
                     }
                 }
+                .disabled(viewModel.selectedCourse == nil)
                 .padding()
-                .background(Color.white.opacity(0.1))
-                .cornerRadius(20)
-                .padding()
-                .padding()
+                .background(viewModel.selectedCourse == nil ? Color.gray : Color.green)
+                .foregroundColor(.white)
+                .cornerRadius(10)
             }
+            .padding()
         }
-        .navigationTitle("Start Round")
-        .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showingCourseSelection) {
-            CourseSelectionView(activeRound: $activeRound)
+        .onAppear {
+            viewModel.fetchCourses()
         }
-        .sheet(isPresented: $showingRoundSummary) {
+        .fullScreenCover(isPresented: $showingRoundInProgress) {
             if let round = activeRound {
-                RoundSummaryView(round: round)
+                RoundInProgressView(round: round)
+            } else {
+                Text("Error: No active round")
+                    .foregroundColor(.red)
             }
+        }
+        .onChange(of: showingRoundInProgress) { newValue in
+            print("showingRoundInProgress changed to: \(newValue)")
+        }
+    }
+}
+
+struct StartRoundCourseRow: View {
+    var course: Course
+    var isSelected: Bool
+    var action: () -> Void
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(course.name)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                Text("\(course.holes.count) holes")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+            if isSelected {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+            }
+        }
+        .padding()
+        .background(isSelected ? Color.green.opacity(0.3) : Color.clear)
+        .cornerRadius(10)
+        .onTapGesture {
+            action()
         }
     }
 }
