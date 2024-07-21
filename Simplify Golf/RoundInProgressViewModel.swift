@@ -1,19 +1,25 @@
 import Foundation
 import Firebase
+import CoreLocation
 
-class RoundInProgressViewModel: ObservableObject {
+class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var round: GolfRound
     @Published var currentHoleIndex: Int = 0
     @Published var course: Course?
     @Published var isLoading = false
     @Published var error: String?
-    @Published var selectedHoleIndex: Int?
+    @Published var currentLocation: CLLocation?
 
     private let db = Firestore.firestore()
+    private var locationManager: CLLocationManager
 
     init(round: GolfRound) {
         self.round = round
-        print("RoundInProgressViewModel initialized with round ID: \(round.id), CourseID: \(round.courseId)")
+        self.locationManager = CLLocationManager()
+        super.init()
+        self.locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
         fetchCourse()
     }
 
@@ -32,6 +38,7 @@ class RoundInProgressViewModel: ObservableObject {
             print("Course fetch result: Failure - Course not found in local storage")
         }
     }
+
     func finishRound() {
         round.isCompleted = true
         saveRound()
@@ -67,23 +74,23 @@ class RoundInProgressViewModel: ObservableObject {
     }
 
     func updateScore(for holeIndex: Int, score: Int) {
-            round.scores[holeIndex] = score
-            objectWillChange.send()
-            saveRound()
-        }
+        round.scores[holeIndex] = score
+        objectWillChange.send()
+        saveRound()
+    }
 
-        private func saveRound() {
-            LocalStorageManager.shared.saveRound(round)
-            
-            db.collection("rounds").document(round.id).setData(round.toFirestore()) { [weak self] error in
-                if let error = error {
-                    self?.error = "Error saving round: \(error.localizedDescription)"
-                    print("Error saving round to Firestore: \(error.localizedDescription)")
-                } else {
-                    print("Round successfully saved to Firestore")
-                }
+    private func saveRound() {
+        LocalStorageManager.shared.saveRound(round)
+        
+        db.collection("rounds").document(round.id).setData(round.toFirestore()) { [weak self] error in
+            if let error = error {
+                self?.error = "Error saving round: \(error.localizedDescription)"
+                print("Error saving round to Firestore: \(error.localizedDescription)")
+            } else {
+                print("Round successfully saved to Firestore")
             }
         }
+    }
 
     func moveToNextHole() {
         if currentHoleIndex < (course?.holes.count ?? 0) - 1 {
@@ -95,5 +102,15 @@ class RoundInProgressViewModel: ObservableObject {
         if currentHoleIndex > 0 {
             currentHoleIndex -= 1
         }
+    }
+
+    // CLLocationManagerDelegate methods
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        currentLocation = location
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to get user location: \(error.localizedDescription)")
     }
 }

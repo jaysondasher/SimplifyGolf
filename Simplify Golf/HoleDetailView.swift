@@ -23,50 +23,77 @@ struct HoleDetailView: View {
             MainMenuBackground()
             
             VStack(spacing: 20) {
-                Text("Hole \(hole.number)")
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                Text("Par \(hole.par)")
-                    .font(.title)
-                    .foregroundColor(.white)
-                Text("Your Score")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                HStack {
-                    Button("-") {
-                        if currentScore > 1 {
-                            currentScore -= 1
-                        }
-                    }
-                    .foregroundColor(.white)
-                    Text("\(currentScore)")
+                VStack(spacing: 5) {
+                    Text("Hole \(hole.number)")
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                    Text("Par \(hole.par)")
                         .font(.title)
                         .foregroundColor(.white)
-                    Button("+") {
-                        currentScore += 1
-                    }
-                    .foregroundColor(.white)
                 }
-                .font(.largeTitle)
-                .padding()
-                .background(Material.thin)
-                .cornerRadius(10)
-                
-                VStack(alignment: .leading, spacing: 10) {
+
+                VStack(alignment: .center, spacing: 30) {
                     Text("Distances to Green")
-                        .font(.headline)
+                        .font(.title)
                         .foregroundColor(.white)
-                    Text("Front: \(calculateDistance(to: hole.green.front)) yards")
-                        .foregroundColor(.white)
-                    Text("Center: \(calculateDistance(to: hole.green.center)) yards")
-                        .foregroundColor(.white)
-                    Text("Back: \(calculateDistance(to: hole.green.back)) yards")
-                        .foregroundColor(.white)
+                    VStack(spacing: 20) {
+                        VStack {
+                            Text("Front")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            Text("\(calculateDistance(to: hole.green.front)) yards")
+                                .font(.system(size: 40, weight: .bold))
+                                .foregroundColor(.white)
+                        }
+                        VStack {
+                            Text("Center")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            Text("\(calculateDistance(to: hole.green.center)) yards")
+                                .font(.system(size: 40, weight: .bold))
+                                .foregroundColor(.white)
+                        }
+                        VStack {
+                            Text("Back")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            Text("\(calculateDistance(to: hole.green.back)) yards")
+                                .font(.system(size: 40, weight: .bold))
+                                .foregroundColor(.white)
+                        }
+                    }
                 }
                 .padding()
                 .background(Material.thin)
                 .cornerRadius(10)
                 
+                Spacer()
+
+                VStack(spacing: 10) {
+                    Text("Your Score")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                    HStack {
+                        Button("-") {
+                            if currentScore > 1 {
+                                currentScore -= 1
+                            }
+                        }
+                        .foregroundColor(.white)
+                        Text("\(currentScore)")
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
+                        Button("+") {
+                            currentScore += 1
+                        }
+                        .foregroundColor(.white)
+                    }
+                    .font(.largeTitle)
+                    .padding()
+                    .background(Material.thin)
+                    .cornerRadius(10)
+                }
+
                 HStack {
                     if currentHoleIndex > 0 {
                         Button("Previous Hole") {
@@ -86,7 +113,7 @@ struct HoleDetailView: View {
                         .foregroundColor(.white)
                     }
                 }
-                .padding()
+                .padding(.bottom)
             }
             .padding()
         }
@@ -105,9 +132,9 @@ struct HoleDetailView: View {
     }
     
     func calculateDistance(to coordinate: Coordinate) -> Int {
-        let teeBox = CLLocation(latitude: hole.teeBox.latitude, longitude: hole.teeBox.longitude)
+        guard let userLocation = viewModel.currentLocation else { return 0 }
         let target = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        let distanceInMeters = teeBox.distance(from: target)
+        let distanceInMeters = userLocation.distance(from: target)
         return Int(distanceInMeters * 1.09361) // Convert meters to yards
     }
 }

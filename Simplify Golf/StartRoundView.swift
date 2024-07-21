@@ -20,23 +20,10 @@ struct StartRoundView: View {
                     ProgressView()
                 } else if !viewModel.filteredCourses.isEmpty {
                     List(viewModel.filteredCourses) { course in
-                        CourseRow(course: course, isDownloaded: viewModel.isCourseDownloaded(course)) {
-                            if viewModel.isCourseDownloaded(course) {
-                                // Do nothing or show an alert that the course is already downloaded
-                            } else {
-                                viewModel.downloadCourse(course) { result in
-                                    switch result {
-                                    case .success:
-                                        print("Course downloaded successfully")
-                                    case .failure(let error):
-                                        print("Error downloading course: \(error.localizedDescription)")
-                                    }
-                                }
-                            }
-                        }
-                        .onTapGesture {
+                        StartRoundCourseRow(course: course, isSelected: viewModel.selectedCourse?.id == course.id) {
                             viewModel.selectedCourse = course
                         }
+                        .listRowBackground(Color.clear)  // Ensure background is clear
                     }
                     .listStyle(PlainListStyle())
                     .background(Color.clear)
@@ -81,6 +68,36 @@ struct StartRoundView: View {
         }
         .onChange(of: showingRoundInProgress) { newValue in
             print("showingRoundInProgress changed to: \(newValue)")
+        }
+    }
+}
+
+struct StartRoundCourseRow: View {
+    var course: Course
+    var isSelected: Bool
+    var action: () -> Void
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(course.name)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                Text("\(course.holes.count) holes")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+            if isSelected {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+            }
+        }
+        .padding()
+        .background(isSelected ? Color.green.opacity(0.3) : Color.clear)
+        .cornerRadius(10)
+        .onTapGesture {
+            action()
         }
     }
 }

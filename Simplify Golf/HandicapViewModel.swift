@@ -1,10 +1,3 @@
-//
-//  HandicapViewModel.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/18/24.
-//
-
 import Foundation
 import Firebase
 
@@ -27,7 +20,6 @@ class HandicapViewModel: ObservableObject {
         
         db.collection("rounds")
             .whereField("userId", isEqualTo: userId)
-            .whereField("isCompleted", isEqualTo: true)
             .order(by: "date", descending: true)
             .limit(to: 20)
             .getDocuments { [weak self] (querySnapshot, error) in
@@ -41,14 +33,42 @@ class HandicapViewModel: ObservableObject {
                     return
                 }
                 
-                let rounds = querySnapshot?.documents.compactMap { document -> (id: String, score: Int, courseId: String)? in
-                    if let score = document.data()["totalScore"] as? Int,
+                guard let documents = querySnapshot?.documents else {
+                    print("No documents found")
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.error = "No rounds found"
+                    }
+                    return
+                }
+                
+                print("Fetched documents: \(documents.count)")
+                
+                for document in documents {
+                    print("Document data: \(document.data())")
+                }
+                
+                let rounds = documents.compactMap { document -> (id: String, score: Int, courseId: String)? in
+                    if let scores = document.data()["scores"] as? [Int],
                        let courseId = document.data()["courseId"] as? String {
-                        return (document.documentID, score, courseId)
+                        let totalScore = scores.reduce(0, +)
+                        return (document.documentID, totalScore, courseId)
                     }
                     return nil
-                } ?? []
+                }
                 
+                print("Parsed rounds: \(rounds)")
+                
+                if rounds.isEmpty {
+                    print("No rounds parsed")
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.error = "No rounds found"
+                    }
+                    return
+                }
+                
+                print("Fetched rounds: \(rounds)")
                 self.fetchCourseData(for: rounds)
             }
     }
@@ -79,6 +99,7 @@ class HandicapViewModel: ObservableObject {
                 return (round.score, courseData.rating, courseData.slope)
             }
             
+            print("Complete rounds with course data: \(completeRounds)")
             self.calculateHandicap(rounds: completeRounds)
             self.isLoading = false
         }
@@ -91,15 +112,23 @@ class HandicapViewModel: ObservableObject {
         }
         
         let differentials = rounds.map { (113.0 / Double($0.slope)) * (Double($0.score) - $0.rating) }
+        print("Differentials: \(differentials)")
+        
         let sortedDifferentials = differentials.sorted()
+        print("Sorted differentials: \(sortedDifferentials)")
         
         let numberOfDifferentialsToUse: Int
         switch rounds.count {
-        case 5...10: numberOfDifferentialsToUse = 1
-        case 11...14: numberOfDifferentialsToUse = 2
-        case 15...16: numberOfDifferentialsToUse = 3
-        case 17...18: numberOfDifferentialsToUse = 4
-        case 19...20: numberOfDifferentialsToUse = 5
+        case 5...6: numberOfDifferentialsToUse = 1
+        case 7...8: numberOfDifferentialsToUse = 2
+        case 9...10: numberOfDifferentialsToUse = 3
+        case 11...12: numberOfDifferentialsToUse = 4
+        case 13...14: numberOfDifferentialsToUse = 5
+        case 15...16: numberOfDifferentialsToUse = 6
+        case 17: numberOfDifferentialsToUse = 7
+        case 18: numberOfDifferentialsToUse = 8
+        case 19: numberOfDifferentialsToUse = 9
+        case 20: numberOfDifferentialsToUse = 10
         default: numberOfDifferentialsToUse = 0
         }
         
@@ -109,10 +138,14 @@ class HandicapViewModel: ObservableObject {
         }
         
         let relevantDifferentials = Array(sortedDifferentials.prefix(numberOfDifferentialsToUse))
+        print("Relevant differentials: \(relevantDifferentials)")
+        
         let averageDifferential = relevantDifferentials.reduce(0, +) / Double(relevantDifferentials.count)
+        print("Average differential: \(averageDifferential)")
         
         handicapIndex = (averageDifferential * 0.96).rounded(to: 1)
         recentScores = rounds.prefix(5).map { $0.score }
+        print("Handicap index: \(String(describing: handicapIndex)), Recent scores: \(recentScores)")
     }
 }
 

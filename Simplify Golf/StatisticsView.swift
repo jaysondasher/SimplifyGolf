@@ -1,25 +1,17 @@
-//
-//  StatisticsView.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/18/24.
-//
-
-
 import SwiftUI
 
 struct StatisticsView: View {
     @StateObject private var viewModel = StatisticsViewModel()
-    
+
     var body: some View {
         ZStack {
             MainMenuBackground()
-            
+
             VStack(spacing: 20) {
                 Text("Your Golf Statistics")
                     .font(.title)
                     .foregroundColor(.white)
-                
+
                 if viewModel.isLoading {
                     ProgressView()
                 } else {
@@ -28,7 +20,7 @@ struct StatisticsView: View {
                     StatCard(title: "Best Score", value: "\(viewModel.bestScore)")
                     StatCard(title: "Worst Score", value: "\(viewModel.worstScore)")
                 }
-                
+
                 if let error = viewModel.error {
                     Text(error)
                         .foregroundColor(.red)
@@ -46,7 +38,7 @@ struct StatisticsView: View {
 struct StatCard: View {
     let title: String
     let value: String
-    
+
     var body: some View {
         VStack {
             Text(title)

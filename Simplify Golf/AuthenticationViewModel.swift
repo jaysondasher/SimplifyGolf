@@ -1,15 +1,9 @@
-//
-//  AuthenticationViewModel.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/18/24.
-//
-
 import Foundation
 import Firebase
 import Combine
+import AuthenticationServices
 
-class AuthenticationViewModel: ObservableObject {
+class AuthenticationViewModel: NSObject, ObservableObject {
     @Published var isAuthenticated = false
     @Published var user: User?
     @Published var email = ""
@@ -20,7 +14,8 @@ class AuthenticationViewModel: ObservableObject {
     private let authService = AuthenticationService.shared
     private var cancellables = Set<AnyCancellable>()
     
-    init() {
+    override init() {
+        super.init()
         setupFirebaseAuthStateListener()
     }
     
@@ -75,5 +70,53 @@ class AuthenticationViewModel: ObservableObject {
         } catch {
             self.error = error.localizedDescription
         }
+    }
+    
+    func signInWithApple() {
+        let request = authService.startSignInWithAppleFlow()
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+}
+
+extension AuthenticationViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let nonce = authService.currentNonce else {
+                self.error = "Invalid state: A login callback was received, but no login request was sent."
+                return
+            }
+            guard let appleIDToken = appleIDCredential.identityToken else {
+                self.error = "Unable to fetch identity token"
+                return
+            }
+            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                self.error = "Unable to serialize token string from data: \(appleIDToken.debugDescription)"
+                return
+            }
+            
+            let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
+            authService.signIn(with: credential) { [weak self] result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let user):
+                        self?.user = user
+                        self?.isAuthenticated = true
+                    case .failure(let error):
+                        self?.error = error.localizedDescription
+                    }
+                }
+            }
+        }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        self.error = "Sign in with Apple failed: \(error.localizedDescription)"
+    }
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return UIApplication.shared.windows.first!
     }
 }

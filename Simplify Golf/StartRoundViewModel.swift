@@ -20,9 +20,19 @@ class StartRoundViewModel: ObservableObject {
         isLoading = true
         error = nil
         
-        DispatchQueue.main.async {
-            self.courses = LocalStorageManager.shared.getAllCourses()
-            self.isLoading = false
+        let db = Firestore.firestore()
+        db.collection("courses").getDocuments { [weak self] (querySnapshot, err) in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                if let err = err {
+                    self?.error = "Error fetching courses: \(err.localizedDescription)"
+                    return
+                }
+                
+                self?.courses = querySnapshot?.documents.compactMap { document -> Course? in
+                    Course.fromFirestore(document.data())
+                } ?? []
+            }
         }
     }
 
@@ -59,16 +69,6 @@ class StartRoundViewModel: ObservableObject {
             return
         }
         
-        print("Starting round for course: \(course.name), ID: \(course.id)")
-        
-        // Check if the course is in local storage
-        if let storedCourse = LocalStorageManager.shared.getCourse(by: course.id) {
-            print("Course found in local storage: \(storedCourse.name), ID: \(storedCourse.id)")
-        } else {
-            print("Warning: Course not found in local storage. Saving it now.")
-            LocalStorageManager.shared.saveCourse(course)
-        }
-        
         let newRound = GolfRound(
             id: UUID().uuidString,
             date: Date(),
@@ -77,9 +77,13 @@ class StartRoundViewModel: ObservableObject {
             scores: Array(repeating: nil, count: course.holes.count)
         )
         
-        print("New round created: ID: \(newRound.id), CourseID: \(newRound.courseId)")
-        
-        LocalStorageManager.shared.saveRound(newRound)
-        completion(.success(newRound))
+        let db = Firestore.firestore()
+        db.collection("rounds").document(newRound.id).setData(newRound.toFirestore()) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(newRound))
+            }
+        }
     }
 }

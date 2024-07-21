@@ -24,7 +24,6 @@ struct SimplifyGolfApp: App {
     // State objects for our view models
     @StateObject private var authViewModel = AuthenticationViewModel()
     @StateObject private var courseViewModel = CourseViewModel()
-    @StateObject private var roundViewModel = RoundViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -32,7 +31,7 @@ struct SimplifyGolfApp: App {
                 ContentView()
                     .environmentObject(authViewModel)
                     .environmentObject(courseViewModel)
-                    .environmentObject(roundViewModel)
+            
             } else {
                 AuthenticationView()
                     .environmentObject(authViewModel)

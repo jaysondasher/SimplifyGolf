@@ -1,60 +1,62 @@
-//
-//  AuthenticationView.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/18/24.
-//
-
-
 import SwiftUI
+import AuthenticationServices
 
 struct AuthenticationView: View {
     @EnvironmentObject var viewModel: AuthenticationViewModel
-    @State private var isSignUp = false
     
     var body: some View {
-        VStack(spacing: 20) {
-            Image("AppIcon") // Changed from AppLogo to AppIcon
-                .resizable()
-                .scaledToFit()
-                .frame(width: 150, height: 150)
+        ZStack {
+            MainMenuBackground() // Assuming this is your custom background view
             
-            Text("Simplify Golf")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
-            TextField("Email", text: $viewModel.email)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .autocapitalization(.none)
-                .keyboardType(.emailAddress)
-            
-            SecureField("Password", text: $viewModel.password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-            Button(isSignUp ? "Sign Up" : "Sign In") {
-                if isSignUp {
-                    viewModel.signUp()
-                } else {
-                    viewModel.signIn()
+            VStack(spacing: 40) {
+                Image("simplifygolf")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 150, height: 150)
+                    .cornerRadius(10)
+                    .padding(.top, 100)
+                    
+                
+                Text("Simplify Golf")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                
+                Spacer()
+                
+                SignInWithAppleButton(
+                    .signIn,
+                    onRequest: { request in
+                        viewModel.signInWithApple()
+                    },
+                    onCompletion: { result in
+                        switch result {
+                        case .success(let authResults):
+                            print("Authorization successful.")
+                        case .failure(let error):
+                            print("Authorization failed: \(error.localizedDescription)")
+                        }
+                    }
+                )
+                .signInWithAppleButtonStyle(.white) // Use .white to match the background
+                .frame(width: 280, height: 60) // Larger button
+                .cornerRadius(10)
+                .padding()
+                
+                if viewModel.isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 }
+                
+                if let error = viewModel.error {
+                    Text(error)
+                        .foregroundColor(.red)
+                }
+                
+                Spacer()
             }
-            .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
-            
-            Button(isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up") {
-                isSignUp.toggle()
-            }
-            
-            if viewModel.isLoading {
-                ProgressView()
-            }
-            
-            if let error = viewModel.error {
-                Text(error)
-                    .foregroundColor(.red)
-            }
+            .padding()
         }
-        .padding()
-        .background(Color.gray.opacity(0.1).edgesIgnoringSafeArea(.all))
     }
 }
 
@@ -62,5 +64,16 @@ struct AuthenticationView_Previews: PreviewProvider {
     static var previews: some View {
         AuthenticationView()
             .environmentObject(AuthenticationViewModel())
+    }
+}
+
+
+extension SignInWithAppleButton {
+    func signInWithAppleButtonStyle(_ colorScheme: ColorScheme) -> some View {
+        self
+            .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
+            .frame(height: 50)
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .shadow(radius: 10)
     }
 }

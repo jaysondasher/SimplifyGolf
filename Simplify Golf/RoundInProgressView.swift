@@ -6,7 +6,6 @@ struct RoundInProgressView: View {
     @State private var currentHoleIndex: Int = 0
 
     init(round: GolfRound) {
-        print("RoundInProgressView init with round ID: \(round.id)")
         _viewModel = StateObject(wrappedValue: RoundInProgressViewModel(round: round))
     }
 

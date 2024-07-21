@@ -1,7 +1,6 @@
 import SwiftUI
 import Firebase
 
-
 struct CourseManagementView: View {
     @StateObject private var viewModel = CourseManagementViewModel()
     @State private var searchText = ""
@@ -24,7 +23,7 @@ struct CourseManagementView: View {
                             LazyVStack {
                                 Section(header: Text("Downloaded Courses").font(.headline).foregroundColor(.white)) {
                                     ForEach(filteredDownloadedCourses) { course in
-                                        CourseRow(course: course, isDownloaded: true) {
+                                        CourseRow(course: course, isSelected: true) {
                                             viewModel.removeDownloadedCourse(course)
                                         }
                                     }
@@ -32,7 +31,7 @@ struct CourseManagementView: View {
                                 
                                 Section(header: Text("Available Courses").font(.headline).foregroundColor(.white)) {
                                     ForEach(filteredAvailableCourses) { course in
-                                        CourseRow(course: course, isDownloaded: false) {
+                                        CourseRow(course: course, isSelected: false) {
                                             viewModel.downloadCourse(course) { result in
                                                 switch result {
                                                 case .success:
@@ -91,42 +90,32 @@ struct CourseManagementView: View {
     }
 }
 
-
 struct CourseRow: View {
     var course: Course
-    var isDownloaded: Bool
+    var isSelected: Bool
     var action: () -> Void
-
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text(course.name)
                     .font(.headline)
+                    .foregroundColor(.primary)
                 Text("\(course.holes.count) holes")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.secondary)
             }
             Spacer()
-            if isDownloaded {
-                Text("Downloaded")
-                    .font(.caption)
-                    .foregroundColor(.green)
-            } else {
-                Button(action: action) {
-                    Image(systemName: "arrow.down.circle")
-                        .foregroundColor(.blue)
-                }
+            Button(action: action) {
+                Image(systemName: isSelected ? "trash" : "arrow.down.circle")
+                    .foregroundColor(isSelected ? .red : .blue)
             }
         }
         .padding()
-        .background(Material.thin)
+        .background(isSelected ? Color.green.opacity(0.3) : Color.clear)
         .cornerRadius(10)
-        .padding(.vertical, 4)
+        .onTapGesture {
+            action()
+        }
     }
 }
-
-
-
-
-
-
