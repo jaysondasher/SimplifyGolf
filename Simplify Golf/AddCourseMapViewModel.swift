@@ -72,9 +72,11 @@ class AddCourseMapViewModel: ObservableObject {
     
     func goToNextMarker() {
         if currentMarker == .backGreen {
-            currentHole += 1
-            currentMarker = .teeBox
             currentHoleMarkers = [:]
+            if currentHole < 18 {
+                currentHole += 1
+                currentMarker = .teeBox
+            }
         } else {
             currentMarker = HoleMarker.allCases[HoleMarker.allCases.firstIndex(of: currentMarker)! + 1]
         }
@@ -86,6 +88,13 @@ class AddCourseMapViewModel: ObservableObject {
             currentMarker = .backGreen
         } else if currentMarker != .teeBox {
             currentMarker = HoleMarker.allCases[HoleMarker.allCases.firstIndex(of: currentMarker)! - 1]
+        }
+        
+        // Re-populate the currentHoleMarkers dictionary with previously marked locations if available
+        if let previousHole = holes.first(where: { $0.number == currentHole }) {
+            currentHoleMarkers[.teeBox] = CLLocationCoordinate2D(latitude: previousHole.teeBox.latitude, longitude: previousHole.teeBox.longitude)
+            currentHoleMarkers[.frontGreen] = CLLocationCoordinate2D(latitude: previousHole.green.front.latitude, longitude: previousHole.green.front.longitude)
+            currentHoleMarkers[.backGreen] = CLLocationCoordinate2D(latitude: previousHole.green.back.latitude, longitude: previousHole.green.back.longitude)
         }
     }
     
@@ -104,7 +113,11 @@ class AddCourseMapViewModel: ObservableObject {
                                           center: calculateCenterGreen(front: frontGreen, back: backGreen),
                                           back: Coordinate(latitude: backGreen.latitude, longitude: backGreen.longitude)))
         
-        holes.append(hole)
+        if let existingHoleIndex = holes.firstIndex(where: { $0.number == currentHole }) {
+            holes[existingHoleIndex] = hole
+        } else {
+            holes.append(hole)
+        }
         
         if currentHole < 18 {
             currentHole += 1
@@ -219,4 +232,3 @@ struct MapView: UIViewRepresentable {
         }
     }
 }
-

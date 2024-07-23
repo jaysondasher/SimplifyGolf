@@ -81,4 +81,3 @@ struct AddCourseMapView: View {
         }
     }
 }
-

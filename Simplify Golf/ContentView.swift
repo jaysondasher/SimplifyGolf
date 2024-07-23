@@ -28,7 +28,7 @@ struct ContentView: View {
                         }
                         
                         NavigationLink(destination: CourseManagementView()) {
-                            MenuButton(title: "Manage Courses", icon: "list.bullet.indent")
+                            MenuButton(title: "Manage Courses", icon: "map")
                         }
                         
                         NavigationLink(destination: PastRoundsView()) {
