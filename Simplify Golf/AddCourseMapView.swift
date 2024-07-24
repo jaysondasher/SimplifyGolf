@@ -1,10 +1,3 @@
-//
-//  AddCourseMapView.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/20/24.
-//
-
 import SwiftUI
 import MapKit
 
@@ -18,7 +11,7 @@ struct AddCourseMapView: View {
     
     var body: some View {
         ZStack {
-            MapView(centerCoordinate: $viewModel.centerCoordinate, annotations: $viewModel.annotations, zoomLevel: $viewModel.zoomLevel)
+            MapView(centerCoordinate: $viewModel.centerCoordinate, annotations: $viewModel.annotations, zoomLevel: $viewModel.zoomLevel, mapType: $viewModel.mapType)
                 .edgesIgnoringSafeArea(.all)
             
             Image(systemName: "scope")
@@ -63,6 +56,26 @@ struct AddCourseMapView: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 .padding(.bottom)
+            }
+            
+            VStack {
+                HStack {
+                    Spacer()
+                    
+                    Button(action: {
+                        viewModel.toggleMapType()
+                    }) {
+                        Image(systemName: "map")
+                            .font(.system(size: 25))
+                            .padding()
+                            .background(Color.white.opacity(0.8))
+                            .cornerRadius(10)
+                    }
+                    .padding(.top, 100)
+                    .padding(.trailing)
+                }
+                
+                Spacer()
             }
         }
         .navigationTitle("Add Course Holes")

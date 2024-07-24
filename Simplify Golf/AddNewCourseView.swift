@@ -1,10 +1,3 @@
-//
-//  AddNewCourseView.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/20/24.
-//
-
 import Foundation
 import MapKit
 import Firebase
@@ -17,7 +10,7 @@ struct AddNewCourseView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                MapView(centerCoordinate: $viewModel.centerCoordinate, annotations: $viewModel.annotations, zoomLevel: $viewModel.zoomLevel)
+                MapView(centerCoordinate: $viewModel.centerCoordinate, annotations: $viewModel.annotations, zoomLevel: $viewModel.zoomLevel, mapType: $viewModel.mapType)
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
@@ -95,6 +88,7 @@ class AddNewCourseViewModel: NSObject, ObservableObject {
     @Published var searchResults: [SearchResult] = []
     @Published var annotations: [MKPointAnnotation] = []
     @Published var zoomLevel: Double = 0.02
+    @Published var mapType: MKMapType = .standard
     
     var courseRating: Double = 0
     var slopeRating: Int = 0

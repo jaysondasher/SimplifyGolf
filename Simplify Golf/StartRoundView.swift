@@ -49,8 +49,8 @@ struct StartRoundView: View {
                 }
                 .disabled(viewModel.selectedCourse == nil)
                 .padding()
-                .background(viewModel.selectedCourse == nil ? Color.gray : Color.green)
-                .foregroundColor(.white)
+                .background(viewModel.selectedCourse == nil ? Material.thin : Material.thin)
+                .foregroundColor(viewModel.selectedCourse == nil ? Color.gray : Color("AccentColor"))
                 .cornerRadius(10)
             }
             .padding()

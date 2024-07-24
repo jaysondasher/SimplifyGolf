@@ -20,46 +20,13 @@ class StartRoundViewModel: ObservableObject {
         isLoading = true
         error = nil
         
-        let db = Firestore.firestore()
-        db.collection("courses").getDocuments { [weak self] (querySnapshot, err) in
-            DispatchQueue.main.async {
-                self?.isLoading = false
-                if let err = err {
-                    self?.error = "Error fetching courses: \(err.localizedDescription)"
-                    return
-                }
-                
-                self?.courses = querySnapshot?.documents.compactMap { document -> Course? in
-                    Course.fromFirestore(document.data())
-                } ?? []
-            }
-        }
-    }
-
-    func isCourseDownloaded(_ course: Course) -> Bool {
-        return LocalStorageManager.shared.isCourseDownloaded(course.id)
-    }
-
-    func downloadCourse(_ course: Course, completion: @escaping (Result<Void, Error>) -> Void) {
-        let db = Firestore.firestore()
-        db.collection("courses").document(course.id).getDocument { (document, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            guard let document = document, document.exists, let courseData = document.data() else {
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Course not found"])))
-                return
-            }
-            
-            do {
-                let downloadedCourse = Course.fromFirestore(courseData)!
-                LocalStorageManager.shared.saveCourse(downloadedCourse)
-                completion(.success(()))
-            } catch {
-                completion(.failure(error))
-            }
+        let localCourses = LocalStorageManager.shared.getCourses().values
+        self.courses = Array(localCourses)
+        self.isLoading = false
+        
+        // Optionally, you can add an error message if no local courses are found
+        if courses.isEmpty {
+            self.error = "No downloaded courses found"
         }
     }
 
@@ -69,6 +36,10 @@ class StartRoundViewModel: ObservableObject {
             return
         }
         
+        createNewRound(course: course, completion: completion)
+    }
+
+    private func createNewRound(course: Course, completion: @escaping (Result<GolfRound, Error>) -> Void) {
         let newRound = GolfRound(
             id: UUID().uuidString,
             date: Date(),

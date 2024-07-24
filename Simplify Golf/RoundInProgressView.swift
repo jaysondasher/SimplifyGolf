@@ -19,7 +19,7 @@ struct RoundInProgressView: View {
                         .font(.title2)
                         .foregroundColor(.white)
                     
-                    Text("Total Score: \(viewModel.round.totalScore)")
+                    Text("Total Score: \(viewModel.round.totalScore) (\(calculateTotalScoreToPar()))")
                         .font(.headline)
                         .foregroundColor(.white)
 
@@ -54,7 +54,20 @@ struct RoundInProgressView: View {
             .navigationBarHidden(true)
         }
     }
+
+    private func calculateTotalScoreToPar() -> String {
+        guard let course = viewModel.course else { return "" }
+        let playedScores = viewModel.round.scores.prefix(currentHoleIndex).compactMap { $0 }
+        let playedPars = course.holes.prefix(currentHoleIndex).map { $0.par }
+        let totalPar = playedPars.reduce(0, +)
+        let totalScore = playedScores.reduce(0, +)
+        let difference = totalScore - totalPar
+        return difference == 0 ? "E" : (difference > 0 ? "+\(difference)" : "\(difference)")
+    }
 }
+
+
+
 
 struct HoleRow: View {
     let holeNumber: Int
@@ -70,7 +83,9 @@ struct HoleRow: View {
                 .foregroundColor(.white)
             Spacer()
             if let score = score {
-                Text("Score: \(score)")
+                let difference = score - par
+                let scoreString = difference == 0 ? "E" : (difference > 0 ? "+\(difference)" : "\(difference)")
+                Text("Score: \(score) (\(scoreString))")
                     .foregroundColor(.orange)
             } else {
                 Text("Not played")

@@ -46,6 +46,8 @@ struct PastRoundsView: View {
                     }
                 }
                 .navigationTitle("Past Rounds")
+                .navigationBarTitleDisplayMode(.large)
+                .foregroundColor(.white) // Ensure the title is white
             }
             .onAppear {
                 viewModel.fetchPastRounds()
@@ -58,6 +60,7 @@ struct PastRoundsView: View {
                 }
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
@@ -66,18 +69,22 @@ struct PastRoundRow: View {
     let courseName: String
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(courseName)
-                .font(.headline)
-            Text("Date: \(formatDate(round.date))")
-                .font(.subheadline)
-            Text("Total Score: \(round.totalScore)")
-                .font(.subheadline)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(courseName)
+                    .font(.headline)
+                Text("Date: \(formatDate(round.date))")
+                    .font(.subheadline)
+                Text("Total Score: \(round.totalScore)")
+                    .font(.subheadline)
+            }
+            .padding()
+            .foregroundColor(.white)
+            Spacer()
         }
-        .foregroundColor(.white)
-        .padding(.vertical, 8)
-        .background(Material.thin)
+        .background(Color.black.opacity(0.2))
         .cornerRadius(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     private func formatDate(_ date: Date) -> String {
@@ -85,5 +92,12 @@ struct PastRoundRow: View {
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
         return formatter.string(from: date)
+    }
+}
+
+struct PastRoundsView_Previews: PreviewProvider {
+    static var previews: some View {
+        PastRoundsView()
+            .environmentObject(AuthenticationViewModel())
     }
 }

@@ -23,6 +23,14 @@ struct HoleDetailView: View {
             MainMenuBackground()
             
             VStack(spacing: 20) {
+                HStack {
+                    Spacer()
+                    Text("Round: \(calculateTotalScoreToPar())")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding(.trailing)
+                }
+                
                 VStack(spacing: 5) {
                     Text("Hole \(hole.number)")
                         .font(.largeTitle)
@@ -31,7 +39,8 @@ struct HoleDetailView: View {
                         .font(.title)
                         .foregroundColor(.white)
                 }
-
+                .padding(.top, -20)
+                
                 VStack(alignment: .center, spacing: 30) {
                     Text("Distances to Green")
                         .font(.title)
@@ -136,5 +145,15 @@ struct HoleDetailView: View {
         let target = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         let distanceInMeters = userLocation.distance(from: target)
         return Int(distanceInMeters * 1.09361) // Convert meters to yards
+    }
+    
+    private func calculateTotalScoreToPar() -> String {
+        guard let course = viewModel.course else { return "" }
+        let playedScores = viewModel.round.scores.prefix(currentHoleIndex).compactMap { $0 }
+        let playedPars = course.holes.prefix(currentHoleIndex).map { $0.par }
+        let totalPar = playedPars.reduce(0, +)
+        let totalScore = playedScores.reduce(0, +)
+        let difference = totalScore - totalPar
+        return difference == 0 ? "E" : (difference > 0 ? "+\(difference)" : "\(difference)")
     }
 }

@@ -45,6 +45,16 @@ class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDel
         updateUserStatistics()
     }
 
+    func totalScoreRelativeToPar() -> String {
+        guard let course = course else { return "N/A" }
+        
+        let totalPar = course.holes.reduce(0) { $0 + $1.par }
+        let totalScore = round.scores.compactMap { $0 }.reduce(0, +)
+        let relativeScore = totalScore - totalPar
+        
+        return "\(totalScore) (\(relativeScore >= 0 ? "+" : "")\(relativeScore))"
+    }
+
     private func updateUserStatistics() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
 
