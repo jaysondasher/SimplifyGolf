@@ -3,34 +3,42 @@ import CoreLocation
 
 struct HoleDetailView: View {
     @ObservedObject var viewModel: RoundInProgressViewModel
-    @Binding var currentHoleIndex: Int
+    @Environment(\.presentationMode) var presentationMode
     @State private var currentScore: Int
-    
+    @State private var currentHoleIndex: Int
+
     var hole: Hole {
         viewModel.course?.holes[currentHoleIndex] ?? Hole(number: 0, par: 0, yardage: 0, teeBox: Coordinate(latitude: 0, longitude: 0), green: Hole.Green(front: Coordinate(latitude: 0, longitude: 0), center: Coordinate(latitude: 0, longitude: 0), back: Coordinate(latitude: 0, longitude: 0)))
     }
-    
-    init(viewModel: RoundInProgressViewModel, currentHoleIndex: Binding<Int>) {
+
+    init(viewModel: RoundInProgressViewModel, holeIndex: Int) {
         self.viewModel = viewModel
-        self._currentHoleIndex = currentHoleIndex
-        let holeIndex = currentHoleIndex.wrappedValue
+        self._currentHoleIndex = State(initialValue: holeIndex)
         let initialScore = viewModel.round.scores[holeIndex] ?? viewModel.course?.holes[holeIndex].par ?? 0
         self._currentScore = State(initialValue: initialScore)
     }
-    
+
     var body: some View {
         ZStack {
             MainMenuBackground()
-            
+
             VStack(spacing: 20) {
                 HStack {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.white)
+                        Text("Back to Scorecard")
+                            .foregroundColor(.accentColor)
+                    }
                     Spacer()
                     Text("Round: \(calculateTotalScoreToPar())")
                         .font(.title2)
                         .foregroundColor(.white)
-                        .padding(.trailing)
                 }
-                
+                .padding(.top)
+
                 VStack(spacing: 5) {
                     Text("Hole \(hole.number)")
                         .font(.largeTitle)
@@ -39,8 +47,7 @@ struct HoleDetailView: View {
                         .font(.title)
                         .foregroundColor(.white)
                 }
-                .padding(.top, -20)
-                
+
                 VStack(alignment: .center, spacing: 30) {
                     Text("Distances to Green")
                         .font(.title)
@@ -75,7 +82,7 @@ struct HoleDetailView: View {
                 .padding()
                 .background(Material.thin)
                 .cornerRadius(10)
-                
+
                 Spacer()
 
                 VStack(spacing: 10) {
@@ -110,7 +117,10 @@ struct HoleDetailView: View {
                             currentHoleIndex -= 1
                             updateCurrentScore()
                         }
-                        .foregroundColor(.white)
+                        .padding()
+                        .background(Material.thin)
+                        .foregroundColor(Color("AccentColor"))
+                        .cornerRadius(10)
                     }
                     Spacer()
                     if currentHoleIndex < (viewModel.course?.holes.count ?? 0) - 1 {
@@ -119,38 +129,51 @@ struct HoleDetailView: View {
                             currentHoleIndex += 1
                             updateCurrentScore()
                         }
-                        .foregroundColor(.white)
+                        .padding()
+                        .background(Material.thin)
+                        .foregroundColor(Color("AccentColor"))
+                        .cornerRadius(10)
+                    } else {
+                        Button("Finish") {
+                            saveCurrentScore()
+                            viewModel.finishRound()
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                        .padding()
+                        .background(Material.thin)
+                        .foregroundColor(Color("AccentColor"))
+                        .cornerRadius(10)
                     }
                 }
                 .padding(.bottom)
             }
             .padding()
         }
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(true)
         .onDisappear {
             saveCurrentScore()
         }
     }
-    
+
     private func saveCurrentScore() {
         viewModel.updateScore(for: currentHoleIndex, score: currentScore)
     }
-    
+
     private func updateCurrentScore() {
         currentScore = viewModel.round.scores[currentHoleIndex] ?? hole.par
     }
-    
+
     func calculateDistance(to coordinate: Coordinate) -> Int {
         guard let userLocation = viewModel.currentLocation else { return 0 }
         let target = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         let distanceInMeters = userLocation.distance(from: target)
         return Int(distanceInMeters * 1.09361) // Convert meters to yards
     }
-    
+
     private func calculateTotalScoreToPar() -> String {
         guard let course = viewModel.course else { return "" }
-        let playedScores = viewModel.round.scores.prefix(currentHoleIndex).compactMap { $0 }
-        let playedPars = course.holes.prefix(currentHoleIndex).map { $0.par }
+        let playedScores = viewModel.round.scores.prefix(currentHoleIndex + 1).compactMap { $0 }
+        let playedPars = course.holes.prefix(currentHoleIndex + 1).map { $0.par }
         let totalPar = playedPars.reduce(0, +)
         let totalScore = playedScores.reduce(0, +)
         let difference = totalScore - totalPar

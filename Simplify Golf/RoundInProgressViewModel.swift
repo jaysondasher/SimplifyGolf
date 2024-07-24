@@ -102,19 +102,13 @@ class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDel
         }
     }
 
-    func moveToNextHole() {
-        if currentHoleIndex < (course?.holes.count ?? 0) - 1 {
-            currentHoleIndex += 1
+    func moveToHole(index: Int) {
+        if index >= 0 && index < (course?.holes.count ?? 0) {
+            currentHoleIndex = index
+            objectWillChange.send()
         }
     }
 
-    func moveToPreviousHole() {
-        if currentHoleIndex > 0 {
-            currentHoleIndex -= 1
-        }
-    }
-
-    // CLLocationManagerDelegate methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         currentLocation = location
