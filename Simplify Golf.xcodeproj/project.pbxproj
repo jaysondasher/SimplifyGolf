@@ -12,6 +12,8 @@
 		3065A1082C4C2AF100028D15 /* HoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A1072C4C2AF100028D15 /* HoleDetailView.swift */; };
 		3065A10A2C4C2AF800028D15 /* HoleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A1092C4C2AF800028D15 /* HoleDetailViewModel.swift */; };
 		3065A10C2C4C2C6A00028D15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B2C4C2C6A00028D15 /* SearchBar.swift */; };
+		307F26352C51C844004171E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 307F26342C51C844004171E3 /* GoogleService-Info.plist */; };
+		307F26362C51C844004171E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 307F26342C51C844004171E3 /* GoogleService-Info.plist */; };
 		308BE26C2BF534F200C3246C /* Simplify_GolfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BE26B2BF534F200C3246C /* Simplify_GolfApp.swift */; };
 		308BE26E2BF534F200C3246C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BE26D2BF534F200C3246C /* ContentView.swift */; };
 		308BE2702BF534F300C3246C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 308BE26F2BF534F300C3246C /* Assets.xcassets */; };
@@ -26,7 +28,6 @@
 		30E67CCD2C4C7BF600219B9F /* EditRoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E67CCC2C4C7BF600219B9F /* EditRoundView.swift */; };
 		30F9ED6C2C499DE000F3AC55 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED6B2C499DDF00F3AC55 /* Course.swift */; };
 		30F9ED702C499E1600F3AC55 /* GolfRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED6F2C499E1600F3AC55 /* GolfRound.swift */; };
-		30F9ED722C499F5800F3AC55 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30F9ED712C499F5800F3AC55 /* GoogleService-Info.plist */; };
 		30F9ED752C49A00900F3AC55 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED742C49A00900F3AC55 /* FirebaseAnalytics */; };
 		30F9ED772C49A00900F3AC55 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED762C49A00900F3AC55 /* FirebaseAuth */; };
 		30F9ED792C49A00900F3AC55 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED782C49A00900F3AC55 /* FirebaseFirestore */; };
@@ -85,6 +86,7 @@
 		3065A1072C4C2AF100028D15 /* HoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailView.swift; sourceTree = "<group>"; };
 		3065A1092C4C2AF800028D15 /* HoleDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailViewModel.swift; sourceTree = "<group>"; };
 		3065A10B2C4C2C6A00028D15 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		307F26342C51C844004171E3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		308BE2682BF534F200C3246C /* Simplify Golf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simplify Golf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		308BE26B2BF534F200C3246C /* Simplify_GolfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simplify_GolfApp.swift; sourceTree = "<group>"; };
 		308BE26D2BF534F200C3246C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -102,7 +104,6 @@
 		30F9ED6A2C43337A00F3AC55 /* Simplify-Golf-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Simplify-Golf-Info.plist"; sourceTree = SOURCE_ROOT; };
 		30F9ED6B2C499DDF00F3AC55 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		30F9ED6F2C499E1600F3AC55 /* GolfRound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfRound.swift; sourceTree = "<group>"; };
-		30F9ED712C499F5800F3AC55 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		30F9ED7E2C49A0DB00F3AC55 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		30F9ED802C49A0EB00F3AC55 /* CourseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseViewModel.swift; sourceTree = "<group>"; };
 		30F9ED882C49A14800F3AC55 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
@@ -187,9 +188,9 @@
 				30C97FF12C408AD5009BF89E /* courses.json */,
 				30F9ED802C49A0EB00F3AC55 /* CourseViewModel.swift */,
 				30F9ED6F2C499E1600F3AC55 /* GolfRound.swift */,
-				30F9ED712C499F5800F3AC55 /* GoogleService-Info.plist */,
 				30F9ED942C49A43C00F3AC55 /* HandicapView.swift */,
 				30F9EDA12C49DD4E00F3AC55 /* HandicapViewModel.swift */,
+				307F26342C51C844004171E3 /* GoogleService-Info.plist */,
 				3065A1072C4C2AF100028D15 /* HoleDetailView.swift */,
 				3065A1092C4C2AF800028D15 /* HoleDetailViewModel.swift */,
 				30E67CCC2C4C7BF600219B9F /* EditRoundView.swift */,
@@ -331,7 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				308BE2732BF534F300C3246C /* Preview Assets.xcassets in Resources */,
-				30F9ED722C499F5800F3AC55 /* GoogleService-Info.plist in Resources */,
+				307F26362C51C844004171E3 /* GoogleService-Info.plist in Resources */,
 				30C97FF22C408AE1009BF89E /* courses.json in Resources */,
 				308BE2702BF534F300C3246C /* Assets.xcassets in Resources */,
 			);
@@ -343,6 +344,7 @@
 			files = (
 				308BE2872BF536AD00C3246C /* Preview Assets.xcassets in Resources */,
 				308BE2842BF536AD00C3246C /* Assets.xcassets in Resources */,
+				307F26352C51C844004171E3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
