@@ -10,6 +10,8 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     @Published var password = ""
     @Published var isLoading = false
     @Published var error: String?
+    @Published var appleSignInEmail: String?
+    @Published var userIdentifier: String?
     
     private let authService = AuthenticationService.shared
     private var cancellables = Set<AnyCancellable>()
@@ -24,6 +26,7 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             DispatchQueue.main.async {
                 self?.isAuthenticated = user != nil
                 self?.user = user
+                self?.appleSignInEmail = user?.email
             }
         }
     }
@@ -67,6 +70,8 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             try authService.signOut()
             isAuthenticated = false
             user = nil
+            appleSignInEmail = nil
+            userIdentifier = nil
         } catch {
             self.error = error.localizedDescription
         }
@@ -78,6 +83,68 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
+    }
+    
+    func deleteAccount(completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let user = Auth.auth().currentUser else {
+            completion(.failure(NSError(domain: "AuthenticationError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user is currently signed in"])))
+            return
+        }
+        
+        deleteUserData(userId: user.uid) { [weak self] result in
+            switch result {
+            case .success:
+                user.delete { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        self?.isAuthenticated = false
+                        self?.user = nil
+                        self?.appleSignInEmail = nil
+                        if let identifier = self?.userIdentifier {
+                            UserDefaults.standard.removeObject(forKey: "AppleSignInEmail_\(identifier)")
+                        }
+                        self?.userIdentifier = nil
+                        completion(.success(()))
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    private func deleteUserData(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let db = Firestore.firestore()
+        
+        db.collection("rounds").whereField("userId", isEqualTo: userId).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            let batch = db.batch()
+            snapshot?.documents.forEach { document in
+                batch.deleteDocument(document.reference)
+            }
+            
+            batch.commit { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(()))
+                }
+            }
+        }
+    }
+    
+    func getCurrentUserEmail() -> String? {
+        if let email = Auth.auth().currentUser?.email {
+            return email
+        } else if let identifier = userIdentifier {
+            return UserDefaults.standard.string(forKey: "AppleSignInEmail_\(identifier)")
+        }
+        return nil
     }
 }
 
@@ -97,6 +164,14 @@ extension AuthenticationViewModel: ASAuthorizationControllerDelegate, ASAuthoriz
                 return
             }
             
+            self.userIdentifier = appleIDCredential.user
+            if let email = appleIDCredential.email {
+                self.appleSignInEmail = email
+                UserDefaults.standard.set(email, forKey: "AppleSignInEmail_\(appleIDCredential.user)")
+            } else {
+                self.appleSignInEmail = UserDefaults.standard.string(forKey: "AppleSignInEmail_\(appleIDCredential.user)")
+            }
+            
             let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
             authService.signIn(with: credential) { [weak self] result in
                 DispatchQueue.main.async {
@@ -104,6 +179,9 @@ extension AuthenticationViewModel: ASAuthorizationControllerDelegate, ASAuthoriz
                     case .success(let user):
                         self?.user = user
                         self?.isAuthenticated = true
+                        if self?.appleSignInEmail == nil {
+                            self?.appleSignInEmail = user.email
+                        }
                     case .failure(let error):
                         self?.error = error.localizedDescription
                     }

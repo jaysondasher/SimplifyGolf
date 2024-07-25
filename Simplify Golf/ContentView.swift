@@ -42,6 +42,10 @@ struct ContentView: View {
                         NavigationLink(destination: HandicapView()) {
                             MenuButton(title: "Handicap", icon: "number")
                         }
+                        
+                        NavigationLink(destination: AccountView()) {
+                            MenuButton(title: "Account", icon: "person.circle")
+                        }
                     }
                     .padding()
                     .background(Color.white.opacity(0.1))
@@ -92,6 +96,8 @@ struct MenuButton: View {
         .cornerRadius(10)
     }
 }
+
+
 
 struct MainMenuBackground: View {
     var body: some View {
