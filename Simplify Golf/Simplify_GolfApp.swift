@@ -31,6 +31,7 @@ struct SimplifyGolfApp: App {
                 ContentView()
                     .environmentObject(authViewModel)
                     .environmentObject(courseViewModel)
+                    .preferredColorScheme(.dark)
             
             } else {
                 AuthenticationView()
