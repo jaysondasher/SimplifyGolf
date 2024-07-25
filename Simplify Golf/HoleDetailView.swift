@@ -33,9 +33,7 @@ struct HoleDetailView: View {
                             .foregroundColor(.accentColor)
                     }
                     Spacer()
-                    Text("Round: \(calculateTotalScoreToPar())")
-                        .font(.title2)
-                        .foregroundColor(.white)
+                    
                 }
                 .padding(.top)
 
@@ -54,10 +52,10 @@ struct HoleDetailView: View {
                         .foregroundColor(.white)
                     VStack(spacing: 20) {
                         VStack {
-                            Text("Front")
+                            Text("Back")
                                 .font(.headline)
                                 .foregroundColor(.white)
-                            Text("\(calculateDistance(to: hole.green.front)) yards")
+                            Text("\(calculateDistance(to: hole.green.back)) yards")
                                 .font(.system(size: 40, weight: .bold))
                                 .foregroundColor(.white)
                         }
@@ -70,10 +68,10 @@ struct HoleDetailView: View {
                                 .foregroundColor(.white)
                         }
                         VStack {
-                            Text("Back")
+                            Text("Front")
                                 .font(.headline)
                                 .foregroundColor(.white)
-                            Text("\(calculateDistance(to: hole.green.back)) yards")
+                            Text("\(calculateDistance(to: hole.green.front)) yards")
                                 .font(.system(size: 40, weight: .bold))
                                 .foregroundColor(.white)
                         }
@@ -90,25 +88,39 @@ struct HoleDetailView: View {
                         .font(.title2)
                         .foregroundColor(.white)
                     HStack {
-                        Button("-") {
+                        Button(action: {
                             if currentScore > 1 {
                                 currentScore -= 1
                             }
+                        }) {
+                            Image(systemName: "minus.circle.fill")
+                                .font(.system(size: 44))
+                                .foregroundColor(.white)
                         }
-                        .foregroundColor(.white)
+                        
+                        Spacer()
+                        
                         Text("\(currentScore)")
-                            .font(.largeTitle)
+                            .font(.system(size: 60, weight: .bold))
                             .foregroundColor(.white)
-                        Button("+") {
+                            .frame(minWidth: 80)
+                        
+                        Spacer()
+                        
+                        Button(action: {
                             currentScore += 1
+                        }) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 44))
+                                .foregroundColor(.white)
                         }
-                        .foregroundColor(.white)
                     }
-                    .font(.largeTitle)
-                    .padding()
+                    .padding(.horizontal, 40)
+                    .padding(.vertical, 20)
                     .background(Material.thin)
-                    .cornerRadius(10)
+                    .cornerRadius(15)
                 }
+                .padding(.horizontal)
 
                 HStack {
                     if currentHoleIndex > 0 {

@@ -1,25 +1,14 @@
-//
-//  RoundDetailView.swift
-//  Simplify Golf
-//
-//  Created by Jayson Dasher on 7/20/24.
-//
-
-
 import SwiftUI
 
 struct RoundDetailView: View {
     let round: GolfRound
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         ZStack {
             MainMenuBackground()
             
-            VStack {
-                Text("Round Details")
-                    .font(.title)
-                    .foregroundColor(.white)
-                
+            VStack(spacing: 20) {
                 Text("Date: \(formatDate(round.date))")
                     .foregroundColor(.white)
                 
@@ -39,6 +28,9 @@ struct RoundDetailView: View {
             }
             .padding()
         }
+        .navigationTitle("Round Details")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
     }
     
     private func formatDate(_ date: Date) -> String {

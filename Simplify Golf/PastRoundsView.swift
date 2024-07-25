@@ -45,22 +45,11 @@ struct PastRoundsView: View {
                             .foregroundColor(.white)
                     }
                 }
-                .navigationTitle("Past Rounds")
-                .navigationBarTitleDisplayMode(.large)
-                .foregroundColor(.white) // Ensure the title is white
             }
             .onAppear {
                 viewModel.fetchPastRounds()
             }
-            .sheet(isPresented: $viewModel.showingEditRound) {
-                if let round = viewModel.editingRound {
-                    EditRoundView(round: round) { updatedRound in
-                        viewModel.updateRound(updatedRound)
-                    }
-                }
-            }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
