@@ -10,7 +10,6 @@
 		3062D6492C4C3A0500F8AD34 /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062D6482C4C3A0500F8AD34 /* LocalStorageManager.swift */; };
 		3062D64B2C4C57C400F8AD34 /* Hole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062D64A2C4C57C400F8AD34 /* Hole.swift */; };
 		3065A1082C4C2AF100028D15 /* HoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A1072C4C2AF100028D15 /* HoleDetailView.swift */; };
-		3065A10A2C4C2AF800028D15 /* HoleDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A1092C4C2AF800028D15 /* HoleDetailViewModel.swift */; };
 		3065A10C2C4C2C6A00028D15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B2C4C2C6A00028D15 /* SearchBar.swift */; };
 		307F26352C51C844004171E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 307F26342C51C844004171E3 /* GoogleService-Info.plist */; };
 		307F26362C51C844004171E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 307F26342C51C844004171E3 /* GoogleService-Info.plist */; };
@@ -29,6 +28,8 @@
 		30C97FF22C408AE1009BF89E /* courses.json in Resources */ = {isa = PBXBuildFile; fileRef = 30C97FF12C408AD5009BF89E /* courses.json */; };
 		30E67CCB2C4C72B800219B9F /* RoundDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E67CCA2C4C72B800219B9F /* RoundDetailView.swift */; };
 		30E67CCD2C4C7BF600219B9F /* EditRoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E67CCC2C4C7BF600219B9F /* EditRoundView.swift */; };
+		30F1E46E2CB174B3004E8517 /* HoleDetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F1E46D2CB174B3004E8517 /* HoleDetailMapView.swift */; };
+		30F1E4722CB182F3004E8517 /* RotatableMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F1E4712CB182E5004E8517 /* RotatableMapView.swift */; };
 		30F9ED6C2C499DE000F3AC55 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED6B2C499DDF00F3AC55 /* Course.swift */; };
 		30F9ED702C499E1600F3AC55 /* GolfRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED6F2C499E1600F3AC55 /* GolfRound.swift */; };
 		30F9ED752C49A00900F3AC55 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED742C49A00900F3AC55 /* FirebaseAnalytics */; };
@@ -87,7 +88,6 @@
 		3062D6482C4C3A0500F8AD34 /* LocalStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
 		3062D64A2C4C57C400F8AD34 /* Hole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hole.swift; sourceTree = "<group>"; };
 		3065A1072C4C2AF100028D15 /* HoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailView.swift; sourceTree = "<group>"; };
-		3065A1092C4C2AF800028D15 /* HoleDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailViewModel.swift; sourceTree = "<group>"; };
 		3065A10B2C4C2C6A00028D15 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		307F26342C51C844004171E3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		307F26392C52FBA9004171E3 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -106,6 +106,8 @@
 		30C97FF12C408AD5009BF89E /* courses.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = courses.json; sourceTree = "<group>"; };
 		30E67CCA2C4C72B800219B9F /* RoundDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundDetailView.swift; sourceTree = "<group>"; };
 		30E67CCC2C4C7BF600219B9F /* EditRoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRoundView.swift; sourceTree = "<group>"; };
+		30F1E46D2CB174B3004E8517 /* HoleDetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailMapView.swift; sourceTree = "<group>"; };
+		30F1E4712CB182E5004E8517 /* RotatableMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatableMapView.swift; sourceTree = "<group>"; };
 		30F9ED672C42012200F3AC55 /* Simplify Golf.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Simplify Golf.entitlements"; sourceTree = "<group>"; };
 		30F9ED6A2C43337A00F3AC55 /* Simplify-Golf-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Simplify-Golf-Info.plist"; sourceTree = SOURCE_ROOT; };
 		30F9ED6B2C499DDF00F3AC55 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 		308BE26A2BF534F200C3246C /* Simplify Golf */ = {
 			isa = PBXGroup;
 			children = (
+				30F1E4712CB182E5004E8517 /* RotatableMapView.swift */,
 				3082BE8F2CB0FE87003AED37 /* UserViewModel.swift */,
 				30F9EDA72C4BECC100F3AC55 /* AddCourseMapView.swift */,
 				30F9EDA92C4BECD100F3AC55 /* AddCourseMapViewModel.swift */,
@@ -200,7 +203,7 @@
 				30F9EDA12C49DD4E00F3AC55 /* HandicapViewModel.swift */,
 				307F26342C51C844004171E3 /* GoogleService-Info.plist */,
 				3065A1072C4C2AF100028D15 /* HoleDetailView.swift */,
-				3065A1092C4C2AF800028D15 /* HoleDetailViewModel.swift */,
+				30F1E46D2CB174B3004E8517 /* HoleDetailMapView.swift */,
 				30E67CCC2C4C7BF600219B9F /* EditRoundView.swift */,
 				30F9ED902C49A42E00F3AC55 /* PastRoundsView.swift */,
 				3062D6482C4C3A0500F8AD34 /* LocalStorageManager.swift */,
@@ -369,7 +372,6 @@
 				30F9ED8F2C49A42800F3AC55 /* StartRoundView.swift in Sources */,
 				30F9ED9A2C49ABEB00F3AC55 /* RoundInProgressView.swift in Sources */,
 				30F9ED7F2C49A0DB00F3AC55 /* AuthenticationViewModel.swift in Sources */,
-				3065A10A2C4C2AF800028D15 /* HoleDetailViewModel.swift in Sources */,
 				30E67CCB2C4C72B800219B9F /* RoundDetailView.swift in Sources */,
 				30F9EDAE2C4BF0E200F3AC55 /* CourseRatingInputView.swift in Sources */,
 				30F9EDA02C49DC4500F3AC55 /* StatisticsViewModel.swift in Sources */,
@@ -378,9 +380,11 @@
 				30F9ED932C49A43600F3AC55 /* StatisticsView.swift in Sources */,
 				30F9ED9C2C49D97B00F3AC55 /* RoundInProgressViewModel.swift in Sources */,
 				30F9ED812C49A0EB00F3AC55 /* CourseViewModel.swift in Sources */,
+				30F1E46E2CB174B3004E8517 /* HoleDetailMapView.swift in Sources */,
 				30F9EDA42C49DEE500F3AC55 /* CourseManagementViewModel.swift in Sources */,
 				307F263A2C52FBA9004171E3 /* AccountView.swift in Sources */,
 				30F9EDA62C49DEEE00F3AC55 /* CourseManagementView.swift in Sources */,
+				30F1E4722CB182F3004E8517 /* RotatableMapView.swift in Sources */,
 				30F9EDA22C49DD4E00F3AC55 /* HandicapViewModel.swift in Sources */,
 				3062D64B2C4C57C400F8AD34 /* Hole.swift in Sources */,
 				30F9ED982C49AA4700F3AC55 /* StartRoundViewModel.swift in Sources */,
