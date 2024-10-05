@@ -1,20 +1,26 @@
-import Firebase
+//
+//  RoundDetailViewModel.swift
+//  Simplify Golf
+//
+//  Created by Jayson Dasher on 10/5/24.
+//
+
 import Foundation
+import Firebase
 
 class RoundDetailViewModel: ObservableObject {
     @Published var course: Course?
     private let db = Firestore.firestore()
-
+    
     init(round: GolfRound) {
         fetchCourse(for: round.courseId)
     }
-
+    
     private func fetchCourse(for courseId: String) {
         db.collection("courses").document(courseId).getDocument { [weak self] (document, error) in
             if let document = document, document.exists,
-                let courseData = document.data(),
-                let course = Course.fromFirestore(courseData)
-            {
+               let courseData = document.data(),
+               let course = Course.fromFirestore(courseData) {
                 DispatchQueue.main.async {
                     self?.course = course
                 }
@@ -23,10 +29,9 @@ class RoundDetailViewModel: ObservableObject {
             }
         }
     }
-
+    
     func updateRound(_ updatedRound: GolfRound) {
-        db.collection("rounds").document(updatedRound.id).setData(updatedRound.toFirestore()) {
-            error in
+        db.collection("rounds").document(updatedRound.id).setData(updatedRound.toFirestore()) { error in
             if let error = error {
                 print("Error updating round: \(error.localizedDescription)")
             } else {

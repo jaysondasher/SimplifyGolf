@@ -1,14 +1,13 @@
 import SwiftUI
 
 struct RoundDetailView: View {
-    let round: GolfRound
+    @State private var round: GolfRound
     @State private var showingEditRound = false
     @StateObject private var viewModel: RoundDetailViewModel
     @Environment(\.presentationMode) var presentationMode
-    @State private var editedRound: GolfRound
 
     init(round: GolfRound) {
-        self.round = round
+        _round = State(initialValue: round)
         _viewModel = StateObject(wrappedValue: RoundDetailViewModel(round: round))
     }
 
@@ -49,13 +48,10 @@ struct RoundDetailView: View {
             }
         )
         .sheet(isPresented: $showingEditRound) {
-            EditRoundView(round: $editedRound) { updatedRound in
+            EditRoundView(round: $round) { updatedRound in
                 viewModel.updateRound(updatedRound)
-                round = updatedRound  // Update the local round with the edited version
+                round = updatedRound  // This should now work as round is @State
             }
-        }
-        .onAppear {
-            editedRound = round  // Initialize editedRound with the current round
         }
     }
 

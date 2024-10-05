@@ -13,7 +13,8 @@ struct PastRoundsView: View {
                         ProgressView()
                     } else if !viewModel.rounds.isEmpty {
                         List {
-                            ForEach(viewModel.rounds) { round in
+                            ForEach(viewModel.rounds.indices, id: \.self) { index in
+                                let round = viewModel.rounds[index]
                                 if let courseName = viewModel.courseNames[round.courseId] {
                                     NavigationLink(destination: RoundDetailView(round: round)) {
                                         PastRoundRow(round: round, courseName: courseName)
@@ -26,7 +27,7 @@ struct PastRoundsView: View {
                                         }
 
                                         Button {
-                                            viewModel.editingRound = round
+                                            viewModel.editingRoundIndex = index
                                             viewModel.showingEditRound = true
                                         } label: {
                                             Label("Edit", systemImage: "pencil")
@@ -50,8 +51,8 @@ struct PastRoundsView: View {
                 viewModel.fetchPastRounds()
             }
             .sheet(isPresented: $viewModel.showingEditRound) {
-                if let editingRound = viewModel.editingRound {
-                    EditRoundView(round: editingRound) { updatedRound in
+                if let editingIndex = viewModel.editingRoundIndex {
+                    EditRoundView(round: $viewModel.rounds[editingIndex]) { updatedRound in
                         viewModel.updateRound(updatedRound)
                     }
                 }
