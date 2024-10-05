@@ -2,12 +2,12 @@ import SwiftUI
 
 struct PastRoundsView: View {
     @StateObject private var viewModel = PastRoundsViewModel()
-    
+
     var body: some View {
         NavigationView {
             ZStack {
                 MainMenuBackground()
-                
+
                 VStack {
                     if viewModel.isLoading {
                         ProgressView()
@@ -24,7 +24,7 @@ struct PastRoundsView: View {
                                         } label: {
                                             Label("Delete", systemImage: "trash")
                                         }
-                                        
+
                                         Button {
                                             viewModel.editingRound = round
                                             viewModel.showingEditRound = true
@@ -49,6 +49,13 @@ struct PastRoundsView: View {
             .onAppear {
                 viewModel.fetchPastRounds()
             }
+            .sheet(isPresented: $viewModel.showingEditRound) {
+                if let editingRound = viewModel.editingRound {
+                    EditRoundView(round: editingRound) { updatedRound in
+                        viewModel.updateRound(updatedRound)
+                    }
+                }
+            }
         }
     }
 }
@@ -56,7 +63,7 @@ struct PastRoundsView: View {
 struct PastRoundRow: View {
     let round: GolfRound
     let courseName: String
-    
+
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -75,7 +82,7 @@ struct PastRoundRow: View {
         .cornerRadius(10)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-    
+
     private func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

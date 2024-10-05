@@ -2,27 +2,40 @@ import SwiftUI
 
 struct RoundDetailView: View {
     let round: GolfRound
+    @State private var showingEditRound = false
+    @StateObject private var viewModel: RoundDetailViewModel
     @Environment(\.presentationMode) var presentationMode
-    
+    @State private var editedRound: GolfRound
+
+    init(round: GolfRound) {
+        self.round = round
+        _viewModel = StateObject(wrappedValue: RoundDetailViewModel(round: round))
+    }
+
     var body: some View {
         ZStack {
             MainMenuBackground()
-            
+
             VStack(spacing: 20) {
                 Text("Date: \(formatDate(round.date))")
                     .foregroundColor(.white)
-                
-                Text("Total Score: \(round.totalScore)")
+
+                Text("Total Score: \(round.totalScore) (\(scoreDifferenceToPar()))")
                     .foregroundColor(.white)
-                
-                List(round.scores.indices, id: \.self) { index in
-                    HStack {
-                        Text("Hole \(index + 1)")
-                        Spacer()
-                        Text("Score: \(round.scores[index] ?? 0)")
+
+                List {
+                    ForEach(
+                        Array(zip(round.scores.indices, viewModel.course?.holes ?? [])), id: \.0
+                    ) { index, hole in
+                        HStack {
+                            Text("Hole \(index + 1)")
+                            Spacer()
+                            Text("Par: \(hole.par)")
+                            Text("Score: \(round.scores[index] ?? 0)")
+                        }
+                        .foregroundColor(.white)
+                        .listRowBackground(Color.clear)
                     }
-                    .foregroundColor(.white)
-                    .listRowBackground(Color.clear)
                 }
                 .listStyle(PlainListStyle())
             }
@@ -30,13 +43,33 @@ struct RoundDetailView: View {
         }
         .navigationTitle("Round Details")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(
+            trailing: Button("Edit") {
+                showingEditRound = true
+            }
+        )
+        .sheet(isPresented: $showingEditRound) {
+            EditRoundView(round: $editedRound) { updatedRound in
+                viewModel.updateRound(updatedRound)
+                round = updatedRound  // Update the local round with the edited version
+            }
+        }
+        .onAppear {
+            editedRound = round  // Initialize editedRound with the current round
+        }
     }
-    
+
     private func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
         return formatter.string(from: date)
+    }
+
+    private func scoreDifferenceToPar() -> String {
+        guard let course = viewModel.course else { return "" }
+        let totalPar = course.holes.reduce(0) { $0 + $1.par }
+        let difference = round.totalScore - totalPar
+        return difference == 0 ? "E" : (difference > 0 ? "+\(difference)" : "\(difference)")
     }
 }
