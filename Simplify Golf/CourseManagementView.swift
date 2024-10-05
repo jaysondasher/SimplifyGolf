@@ -1,35 +1,52 @@
-import SwiftUI
 import Firebase
+import SwiftUI
 
 struct CourseManagementView: View {
     @StateObject private var viewModel = CourseManagementViewModel()
     @State private var searchText = ""
     @State private var showingAddCourse = false
-    
+
     var body: some View {
         NavigationView {
             ZStack {
                 MainMenuBackground()
                     .edgesIgnoringSafeArea(.all)
-                
+
                 VStack {
                     SearchBar(text: $searchText, onCommit: {})
                         .padding(.horizontal)
-                    
+
                     if viewModel.isLoading {
                         ProgressView()
+                            .padding()
+
                     } else {
                         ScrollView {
                             LazyVStack {
-                                Section(header: Text("Downloaded Courses").font(.headline).foregroundColor(.white)) {
-                                    ForEach(filteredDownloadedCourses) { course in
-                                        CourseRow(course: course, isSelected: true) {
-                                            viewModel.removeDownloadedCourse(course)
+                                Section(
+                                    header: Text("Downloaded Courses").font(.headline)
+                                        .foregroundColor(.white)
+                                ) {
+                                    if filteredDownloadedCourses.isEmpty {
+                                        Text("Add / Download courses by clicking on the blue download icons below.")
+                                            .foregroundColor(.gray)
+                                            .italic()
+                                            .padding()
+                                    } else {
+                                        ForEach(filteredDownloadedCourses) { course in
+                                            CourseRow(course: course, isSelected: true) {
+                                                viewModel.removeDownloadedCourse(course)
+                                            }
                                         }
                                     }
                                 }
-                                
-                                Section(header: Text("Available Courses").font(.headline).foregroundColor(.white)) {
+
+                                Spacer(minLength: 20)
+
+                                Section(
+                                    header: Text("Available Courses").font(.headline)
+                                        .foregroundColor(.white)
+                                ) {
                                     ForEach(filteredAvailableCourses) { course in
                                         CourseRow(course: course, isSelected: false) {
                                             viewModel.downloadCourse(course) { result in
@@ -50,7 +67,7 @@ struct CourseManagementView: View {
                             viewModel.fetchCourses()
                         }
                     }
-                    
+
                     Button(action: {
                         showingAddCourse = true
                     }) {
@@ -72,20 +89,24 @@ struct CourseManagementView: View {
             }
         }
     }
-    
+
     var filteredDownloadedCourses: [Course] {
         if searchText.isEmpty {
             return viewModel.downloadedCourses
         } else {
-            return viewModel.downloadedCourses.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return viewModel.downloadedCourses.filter {
+                $0.name.lowercased().contains(searchText.lowercased())
+            }
         }
     }
-    
+
     var filteredAvailableCourses: [Course] {
         if searchText.isEmpty {
             return viewModel.availableCourses
         } else {
-            return viewModel.availableCourses.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return viewModel.availableCourses.filter {
+                $0.name.lowercased().contains(searchText.lowercased())
+            }
         }
     }
 }
@@ -94,7 +115,7 @@ struct CourseRow: View {
     var course: Course
     var isSelected: Bool
     var action: () -> Void
-    
+
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
