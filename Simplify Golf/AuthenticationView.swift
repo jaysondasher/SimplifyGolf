@@ -1,13 +1,13 @@
-import SwiftUI
 import AuthenticationServices
+import SwiftUI
 
 struct AuthenticationView: View {
     @EnvironmentObject var viewModel: AuthenticationViewModel
-    
+
     var body: some View {
         ZStack {
-            MainMenuBackground() // Assuming this is your custom background view
-            
+            MainMenuBackground()  // Assuming this is your custom background view
+
             VStack(spacing: 40) {
                 Image("simplifygolf")
                     .resizable()
@@ -15,44 +15,38 @@ struct AuthenticationView: View {
                     .frame(width: 150, height: 150)
                     .cornerRadius(10)
                     .padding(.top, 100)
-                    
-                
+
                 Text("Simplify Golf")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
-                
+
                 Spacer()
-                
+
                 SignInWithAppleButton(
                     .signIn,
                     onRequest: { request in
-                        viewModel.signInWithApple()
+                        viewModel.handleSignInWithAppleRequest(request)
                     },
                     onCompletion: { result in
-                        switch result {
-                        case .success(let authResults):
-                            print("Authorization successful.")
-                        case .failure(let error):
-                            print("Authorization failed: \(error.localizedDescription)")
-                        }
+                        viewModel.handleSignInWithAppleCompletion(result)
                     }
                 )
-                .signInWithAppleButtonStyle(.white) // Use .white to match the background
-                .frame(width: 280, height: 60) // Larger button
+                .signInWithAppleButtonStyle(.white)  // Use .white to match the background
+                .frame(width: 280, height: 60)  // Larger button
                 .cornerRadius(10)
                 .padding()
-                
+
                 if viewModel.isLoading {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 }
-                
+
                 if let error = viewModel.error {
                     Text(error)
                         .foregroundColor(.red)
                 }
-                
+
                 Spacer()
             }
             .padding()
@@ -66,7 +60,6 @@ struct AuthenticationView_Previews: PreviewProvider {
             .environmentObject(AuthenticationViewModel())
     }
 }
-
 
 extension SignInWithAppleButton {
     func signInWithAppleButtonStyle(_ colorScheme: ColorScheme) -> some View {
