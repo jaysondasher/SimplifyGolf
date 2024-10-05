@@ -7,6 +7,7 @@ struct HoleDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var currentScore: Int
     @State private var mapType: MKMapType = .standard
+    @State private var layupPosition: CLLocationCoordinate2D?
 
     var hole: Hole {
         viewModel.currentHole
@@ -31,9 +32,11 @@ struct HoleDetailView: View {
 
     var body: some View {
         ZStack {
-            HoleDetailMapView(viewModel: viewModel, hole: hole, mapType: $mapType)
-                .id(hole.id)
-                .edgesIgnoringSafeArea(.all)
+            HoleDetailMapView(
+                viewModel: viewModel, hole: hole, mapType: $mapType, layupPosition: $layupPosition
+            )
+            .id(hole.id)
+            .edgesIgnoringSafeArea(.all)
 
             VStack {
                 HStack {
