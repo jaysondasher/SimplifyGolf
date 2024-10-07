@@ -43,25 +43,6 @@ struct HoleDetailView: View {
                 }
 
             VStack {
-                HStack {
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        HStack {
-                            Image(systemName: "arrow.left")
-                            Text("Scorecard")
-                        }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(.ultraThinMaterial)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                    }
-
-                    Spacer()
-                }
-                .padding()
-
                 Spacer()
 
                 HStack(alignment: .center) {
@@ -129,7 +110,7 @@ struct HoleDetailView: View {
 
                     HStack {
                         NavigationButton(
-                            text: "Previous Hole",
+                            text: "Last Hole",
                             action: {
                                 saveCurrentScore()
                                 viewModel.moveToHole(index: viewModel.currentHoleIndex - 1)
@@ -169,7 +150,8 @@ struct HoleDetailView: View {
                 .padding(.bottom, 20)
             }
         }
-        .navigationBarHidden(true)
+        .navigationBarTitle("Scorecard", displayMode: .inline)
+        .navigationBarBackButtonHidden(false)
         .onDisappear {
             saveCurrentScore()
         }
