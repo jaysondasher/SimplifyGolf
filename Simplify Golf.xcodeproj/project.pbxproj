@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -135,6 +135,10 @@
 		30F9EDAD2C4BF0E200F3AC55 /* CourseRatingInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseRatingInputView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		306A781B2CB411DB0031358A /* Screenshots */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screenshots; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		308BE2652BF534F200C3246C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -179,6 +183,7 @@
 		308BE26A2BF534F200C3246C /* Simplify Golf */ = {
 			isa = PBXGroup;
 			children = (
+				306A781B2CB411DB0031358A /* Screenshots */,
 				30F1E4712CB182E5004E8517 /* RotatableMapView.swift */,
 				3082BE8F2CB0FE87003AED37 /* UserViewModel.swift */,
 				30F9EDA72C4BECC100F3AC55 /* AddCourseMapView.swift */,
@@ -268,6 +273,9 @@
 			);
 			dependencies = (
 				308BE2892BF536AD00C3246C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				306A781B2CB411DB0031358A /* Screenshots */,
 			);
 			name = "Simplify Golf";
 			packageProductDependencies = (

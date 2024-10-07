@@ -9,6 +9,16 @@ Simplify Golf is a free golf GPS app and rangefinder designed to help golfers si
 - **Community-Driven Course Database**: Add new courses to the database and share them with the community.
 - **Battery Efficient**: Designed to use minimal battery so you can focus on your game.
 
+## Screenshots
+
+<div align="center">
+  <img src="Screenshots/screenshot1.png" alt="Simplify Golf Main Menu" width="18%">
+  <img src="Screenshots/screenshot2.png" alt="Simplify Golf Course View" width="18%">
+  <img src="Screenshots/screenshot3.png" alt="Simplify Golf Scorecard" width="18%">
+  <img src="Screenshots/screenshot4.png" alt="Simplify Golf Statistics" width="18%">
+  <img src="Screenshots/screenshot5.png" alt="Simplify Golf Round Details" width="18%">
+</div>
+
 ## Getting Started
 
 ### Prerequisites
