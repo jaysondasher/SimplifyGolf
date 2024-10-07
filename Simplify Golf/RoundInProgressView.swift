@@ -3,6 +3,7 @@ import SwiftUI
 struct RoundInProgressView: View {
     @StateObject private var viewModel: RoundInProgressViewModel
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var appState: AppState
 
     init(round: GolfRound) {
         _viewModel = StateObject(wrappedValue: RoundInProgressViewModel(round: round))
@@ -50,6 +51,7 @@ struct RoundInProgressView: View {
 
                         EndRoundButton {
                             viewModel.finishRound()
+                            appState.activeScreen = .mainMenu  // Add this line
                             presentationMode.wrappedValue.dismiss()
                         }
                     }

@@ -11,6 +11,7 @@
 		3062D64B2C4C57C400F8AD34 /* Hole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062D64A2C4C57C400F8AD34 /* Hole.swift */; };
 		3065A1082C4C2AF100028D15 /* HoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A1072C4C2AF100028D15 /* HoleDetailView.swift */; };
 		3065A10C2C4C2C6A00028D15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B2C4C2C6A00028D15 /* SearchBar.swift */; };
+		306A783B2CB45B8A0031358A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306A783A2CB45B8A0031358A /* AppState.swift */; };
 		307F26352C51C844004171E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 307F26342C51C844004171E3 /* GoogleService-Info.plist */; };
 		307F26362C51C844004171E3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 307F26342C51C844004171E3 /* GoogleService-Info.plist */; };
 		307F263A2C52FBA9004171E3 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307F26392C52FBA9004171E3 /* AccountView.swift */; };
@@ -89,6 +90,7 @@
 		3062D64A2C4C57C400F8AD34 /* Hole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hole.swift; sourceTree = "<group>"; };
 		3065A1072C4C2AF100028D15 /* HoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailView.swift; sourceTree = "<group>"; };
 		3065A10B2C4C2C6A00028D15 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		306A783A2CB45B8A0031358A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		307F26342C51C844004171E3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		307F26392C52FBA9004171E3 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		3082BE8D2CB0FB9E003AED37 /* RoundDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundDetailViewModel.swift; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				30F9ED9F2C49DC4500F3AC55 /* StatisticsViewModel.swift */,
 				3082BE8D2CB0FB9E003AED37 /* RoundDetailViewModel.swift */,
 				308BE2712BF534F300C3246C /* Preview Content */,
+				306A783A2CB45B8A0031358A /* AppState.swift */,
 			);
 			path = "Simplify Golf";
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				30F9ED8D2C49A40F00F3AC55 /* ContentViewModel.swift in Sources */,
 				308BE26E2BF534F200C3246C /* ContentView.swift in Sources */,
 				3082BE8E2CB0FB9E003AED37 /* RoundDetailViewModel.swift in Sources */,
+				306A783B2CB45B8A0031358A /* AppState.swift in Sources */,
 				30F9ED9E2C49DA8000F3AC55 /* PastRoundsViewModel.swift in Sources */,
 				30F9EDA82C4BECC100F3AC55 /* AddCourseMapView.swift in Sources */,
 				308BE26C2BF534F200C3246C /* Simplify_GolfApp.swift in Sources */,

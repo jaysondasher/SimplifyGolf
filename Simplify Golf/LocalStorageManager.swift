@@ -2,7 +2,7 @@ import Foundation
 
 class LocalStorageManager {
     static let shared = LocalStorageManager()
-    
+
     private let coursesKey = "downloadedCourses"
     private let roundsKey = "rounds"
 
@@ -18,7 +18,8 @@ class LocalStorageManager {
 
     func getCourses() -> [String: Course] {
         guard let data = UserDefaults.standard.data(forKey: coursesKey),
-              let courses = try? JSONDecoder().decode([String: Course].self, from: data) else {
+            let courses = try? JSONDecoder().decode([String: Course].self, from: data)
+        else {
             return [:]
         }
         return courses
@@ -50,7 +51,8 @@ class LocalStorageManager {
 
     func getRounds() -> [String: GolfRound] {
         guard let data = UserDefaults.standard.data(forKey: roundsKey),
-              let rounds = try? JSONDecoder().decode([String: GolfRound].self, from: data) else {
+            let rounds = try? JSONDecoder().decode([String: GolfRound].self, from: data)
+        else {
             return [:]
         }
         return rounds
