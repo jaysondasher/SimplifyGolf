@@ -1,6 +1,7 @@
 import CoreLocation
 import Firebase
 import Foundation
+import MapKit  // Add this import
 
 class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var round: GolfRound
@@ -11,6 +12,8 @@ class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDel
     @Published var currentLocation: CLLocation?
     @Published var currentHole: Hole?
     @Published var layupPositions: [String: CLLocationCoordinate2D] = [:]
+    // Remove this line:
+    // @Published var cameraPosition: MKMapCamera?
 
     private let db = Firestore.firestore()
     private var locationManager: CLLocationManager
@@ -169,8 +172,13 @@ class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDel
     func setLayupPosition(_ position: CLLocationCoordinate2D?, for hole: Hole) {
         if let position = position {
             layupPositions[hole.id] = position
+            print(
+                "RoundInProgressViewModel: Setting layup position for hole \(hole.id) to \(position)"
+            )
         } else {
             layupPositions.removeValue(forKey: hole.id)
+            print("RoundInProgressViewModel: Removing layup position for hole \(hole.id)")
         }
+        objectWillChange.send()
     }
 }

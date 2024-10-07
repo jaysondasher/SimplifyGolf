@@ -1,5 +1,4 @@
-import CoreLocation
-import MapKit  // Ensure this import is present
+import MapKit
 import SwiftUI
 
 struct HoleDetailView: View {
@@ -15,9 +14,7 @@ struct HoleDetailView: View {
                 green: Hole.Green(
                     front: Coordinate(latitude: 0, longitude: 0),
                     center: Coordinate(latitude: 0, longitude: 0),
-                    back: Coordinate(latitude: 0, longitude: 0)
-                )
-            )
+                    back: Coordinate(latitude: 0, longitude: 0)))
     }
 
     init(viewModel: RoundInProgressViewModel) {
@@ -31,21 +28,19 @@ struct HoleDetailView: View {
 
     var body: some View {
         ZStack {
-            HoleDetailMapView(
-                viewModel: viewModel,
-                hole: hole,
-                mapType: $mapType,
-                layupPosition: Binding(
-                    get: {
-                        viewModel.getLayupPosition(for: hole)
-                    },
-                    set: { newValue in
-                        viewModel.setLayupPosition(newValue, for: hole)
+            HoleDetailMapView(viewModel: viewModel, hole: hole, mapType: $mapType)
+                .id(hole.id)
+                .edgesIgnoringSafeArea(.all)
+                .onAppear {
+                    // Reset the initialSetupDone flag when the view appears
+                    if let mapView =
+                        (UIApplication.shared.windows.first?.rootViewController
+                        as? UIHostingController<HoleDetailView>)?.view.subviews.first as? MKMapView,
+                        let coordinator = mapView.delegate as? HoleDetailMapView.Coordinator
+                    {
+                        coordinator.initialSetupDone = false
                     }
-                )
-            )
-            .id(hole.id)
-            .edgesIgnoringSafeArea(.all)
+                }
 
             VStack {
                 HStack {
@@ -175,14 +170,11 @@ struct HoleDetailView: View {
             }
         }
         .navigationBarHidden(true)
-        // **Removed the .onChange modifier to prevent automatic layupPosition reset**
-        /*
-        .onChange(of: hole) { newHole in
-            layupPosition = viewModel.getLayupPosition(for: newHole)  // Reset layupPosition when hole changes
-        }
-        */
         .onDisappear {
             saveCurrentScore()
+        }
+        .onChange(of: viewModel.currentHoleIndex) { _ in
+            updateCurrentScore()
         }
     }
 
