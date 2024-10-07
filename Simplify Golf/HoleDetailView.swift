@@ -1,5 +1,5 @@
 import CoreLocation
-import MapKit  // Add this line
+import MapKit  // Ensure this import is present
 import SwiftUI
 
 struct HoleDetailView: View {
@@ -7,7 +7,6 @@ struct HoleDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var currentScore: Int
     @State private var mapType: MKMapType = .standard
-    @State private var layupPosition: CLLocationCoordinate2D?
 
     var hole: Hole {
         viewModel.currentHole
@@ -33,7 +32,17 @@ struct HoleDetailView: View {
     var body: some View {
         ZStack {
             HoleDetailMapView(
-                viewModel: viewModel, hole: hole, mapType: $mapType, layupPosition: $layupPosition
+                viewModel: viewModel,
+                hole: hole,
+                mapType: $mapType,
+                layupPosition: Binding(
+                    get: {
+                        viewModel.getLayupPosition(for: hole)
+                    },
+                    set: { newValue in
+                        viewModel.setLayupPosition(newValue, for: hole)
+                    }
+                )
             )
             .id(hole.id)
             .edgesIgnoringSafeArea(.all)
@@ -166,6 +175,12 @@ struct HoleDetailView: View {
             }
         }
         .navigationBarHidden(true)
+        // **Removed the .onChange modifier to prevent automatic layupPosition reset**
+        /*
+        .onChange(of: hole) { newHole in
+            layupPosition = viewModel.getLayupPosition(for: newHole)  // Reset layupPosition when hole changes
+        }
+        */
         .onDisappear {
             saveCurrentScore()
         }

@@ -10,6 +10,7 @@ class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDel
     @Published var error: String?
     @Published var currentLocation: CLLocation?
     @Published var currentHole: Hole?
+    @Published var layupPositions: [String: CLLocationCoordinate2D] = [:]
 
     private let db = Firestore.firestore()
     private var locationManager: CLLocationManager
@@ -158,5 +159,18 @@ class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDel
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get user location: \(error.localizedDescription)")
+    }
+
+    // Methods to manage layup positions per hole
+    func getLayupPosition(for hole: Hole) -> CLLocationCoordinate2D? {
+        return layupPositions[hole.id]
+    }
+
+    func setLayupPosition(_ position: CLLocationCoordinate2D?, for hole: Hole) {
+        if let position = position {
+            layupPositions[hole.id] = position
+        } else {
+            layupPositions.removeValue(forKey: hole.id)
+        }
     }
 }

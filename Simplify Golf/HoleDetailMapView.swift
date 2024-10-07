@@ -35,21 +35,30 @@ struct HoleDetailMapView: UIViewRepresentable {
         // Remove existing annotations
         mapView.removeAnnotations(mapView.annotations)
 
-        // Add custom annotations
+        // Add green annotation
         let greenAnnotation = GreenAnnotation(coordinate: green)
         mapView.addAnnotation(greenAnnotation)
 
+        // Add layup annotation if layupPosition is set
         if let layupPosition = layupPosition {
             let layupAnnotation = LayupAnnotation(coordinate: layupPosition)
+            mapView.addAnnotation(layupAnnotation)
+
+            // Remove any existing layup annotations to prevent duplicates
             mapView.removeAnnotations(mapView.annotations.filter { $0 is LayupAnnotation })
             mapView.addAnnotation(layupAnnotation)
-        } else {
+        }
+        // **Removed the else block below to prevent default layupPosition**
+        /*
+        else {
             // Initialize layup position at the center of the green
             layupPosition = green
         }
+        */
 
-        // Add overlay for lines and distance labels
+        // Remove existing overlays before adding new ones
         mapView.removeOverlays(mapView.overlays)
+
         if let userLocation = mapView.userLocation.location?.coordinate,
             let layupPosition = layupPosition
         {
