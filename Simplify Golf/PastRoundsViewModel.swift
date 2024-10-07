@@ -3,7 +3,9 @@ import Foundation
 
 class PastRoundsViewModel: ObservableObject {
     @Published var rounds: [GolfRound] = []
+    @Published var filteredRounds: [GolfRound] = []
     @Published var courseNames: [String: String] = [:]
+    @Published var coursePars: [String: Int] = [:]  // New property
     @Published var isLoading = false
     @Published var error: String?
     @Published var showingEditRound = false
@@ -37,23 +39,28 @@ class PastRoundsViewModel: ObservableObject {
                         } ?? []
 
                     self?.rounds = rounds
-
-                    self?.fetchCourseNames(for: rounds)
+                    self?.fetchCourseDetails(for: rounds)  // Call this method instead of fetchCourseNames
+                    self?.filteredRounds = rounds
                 }
             }
     }
 
-    private func fetchCourseNames(for rounds: [GolfRound]) {
+    private func fetchCourseDetails(for rounds: [GolfRound]) {
         let courseIds = Set(rounds.map { $0.courseId })
 
         courseIds.forEach { courseId in
             db.collection("courses").document(courseId).getDocument {
                 [weak self] (document, error) in
-                if let document = document, document.exists, let courseData = document.data(),
-                    let courseName = courseData["name"] as? String
-                {
+                if let document = document, document.exists, let courseData = document.data() {
                     DispatchQueue.main.async {
-                        self?.courseNames[courseId] = courseName
+                        self?.courseNames[courseId] =
+                            courseData["name"] as? String ?? "Unknown Course"
+
+                        // Calculate and store the total par for the course
+                        if let holes = courseData["holes"] as? [[String: Any]] {
+                            let totalPar = holes.compactMap { $0["par"] as? Int }.reduce(0, +)
+                            self?.coursePars[courseId] = totalPar
+                        }
                     }
                 } else {
                     print(
@@ -86,5 +93,24 @@ class PastRoundsViewModel: ObservableObject {
                 self?.editingRoundIndex = nil
             }
         }
+    }
+
+    func filterRounds(searchText: String) {
+        if searchText.isEmpty {
+            filteredRounds = rounds
+        } else {
+            filteredRounds = rounds.filter { round in
+                let courseName = courseNames[round.courseId] ?? ""
+                let dateString = formatDate(round.date)
+                return courseName.lowercased().contains(searchText.lowercased())
+                    || dateString.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
+
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, M/d/yy"
+        return formatter.string(from: date)
     }
 }

@@ -15,7 +15,7 @@ struct CourseManagementView: View {
                     .edgesIgnoringSafeArea(.all)
 
                 VStack {
-                    SearchBar(text: $searchText, onCommit: {})
+                    SearchBar(text: $searchText, placeholder: "Search courses") {}
                         .padding(.horizontal)
 
                     if viewModel.isLoading {

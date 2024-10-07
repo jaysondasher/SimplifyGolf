@@ -14,13 +14,17 @@ struct StartRoundView: View {
                     .font(.title)
                     .foregroundColor(.white)
 
-                SearchBar(text: $viewModel.searchText, onCommit: viewModel.fetchCourses)
+                SearchBar(text: $viewModel.searchText, placeholder: "Search courses") {
+                    viewModel.fetchCourses()
+                }
 
                 if viewModel.isLoading {
                     ProgressView()
                 } else if !viewModel.filteredCourses.isEmpty {
                     List(viewModel.filteredCourses) { course in
-                        StartRoundCourseRow(course: course, isSelected: viewModel.selectedCourse?.id == course.id) {
+                        StartRoundCourseRow(
+                            course: course, isSelected: viewModel.selectedCourse?.id == course.id
+                        ) {
                             viewModel.selectedCourse = course
                         }
                         .listRowBackground(Color.clear)  // Ensure background is clear
@@ -50,7 +54,9 @@ struct StartRoundView: View {
                 .disabled(viewModel.selectedCourse == nil)
                 .padding()
                 .background(viewModel.selectedCourse == nil ? Material.thin : Material.thin)
-                .foregroundColor(viewModel.selectedCourse == nil ? Color.gray : Color("AccentColor"))
+                .foregroundColor(
+                    viewModel.selectedCourse == nil ? Color.gray : Color("AccentColor")
+                )
                 .cornerRadius(10)
             }
             .padding()
@@ -76,7 +82,7 @@ struct StartRoundCourseRow: View {
     var course: Course
     var isSelected: Bool
     var action: () -> Void
-    
+
     var body: some View {
         HStack {
             VStack(alignment: .leading) {

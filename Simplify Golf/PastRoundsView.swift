@@ -2,59 +2,71 @@ import SwiftUI
 
 struct PastRoundsView: View {
     @StateObject private var viewModel = PastRoundsViewModel()
+    @State private var searchText = ""
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                MainMenuBackground()
+        ZStack {
+            MainMenuBackground()
 
-                VStack {
-                    if viewModel.isLoading {
-                        ProgressView()
-                    } else if !viewModel.rounds.isEmpty {
-                        List {
-                            ForEach(viewModel.rounds.indices, id: \.self) { index in
-                                let round = viewModel.rounds[index]
-                                if let courseName = viewModel.courseNames[round.courseId] {
-                                    NavigationLink(destination: RoundDetailView(round: round)) {
-                                        PastRoundRow(round: round, courseName: courseName)
-                                    }
-                                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                        Button(role: .destructive) {
-                                            viewModel.deleteRound(round)
-                                        } label: {
-                                            Label("Delete", systemImage: "trash")
-                                        }
+            VStack {
+                SearchBar(text: $searchText, placeholder: "Search by course or date") {
+                    viewModel.filterRounds(searchText: searchText)
+                }
+                .padding()
 
-                                        Button {
-                                            viewModel.editingRoundIndex = index
-                                            viewModel.showingEditRound = true
-                                        } label: {
-                                            Label("Edit", systemImage: "pencil")
-                                        }
-                                    }
-                                    .listRowBackground(Color.clear)
+                if viewModel.isLoading {
+                    ProgressView()
+                } else if !viewModel.filteredRounds.isEmpty {
+                    List {
+                        ForEach(viewModel.filteredRounds.indices, id: \.self) { index in
+                            let round = viewModel.filteredRounds[index]
+                            if let courseName = viewModel.courseNames[round.courseId] {
+                                NavigationLink(destination: RoundDetailView(round: round)) {
+                                    PastRoundRow(
+                                        round: round, courseName: courseName,
+                                        coursePar: viewModel.coursePars[round.courseId] ?? 0)
                                 }
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    Button(role: .destructive) {
+                                        viewModel.deleteRound(round)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+
+                                    Button {
+                                        viewModel.editingRoundIndex = viewModel.rounds.firstIndex(
+                                            where: { $0.id == round.id })
+                                        viewModel.showingEditRound = true
+                                    } label: {
+                                        Label("Edit", systemImage: "pencil")
+                                    }
+                                }
+                                .listRowBackground(Color.clear)
                             }
                         }
-                        .listStyle(PlainListStyle())
-                    } else if let error = viewModel.error {
-                        Text(error)
-                            .foregroundColor(.red)
-                    } else {
-                        Text("No past rounds found")
-                            .foregroundColor(.white)
                     }
+                    .listStyle(PlainListStyle())
+                } else if let error = viewModel.error {
+                    Text(error)
+                        .foregroundColor(.red)
+                } else {
+                    Text("No past rounds found")
+                        .foregroundColor(.white)
                 }
             }
-            .onAppear {
-                viewModel.fetchPastRounds()
-            }
-            .sheet(isPresented: $viewModel.showingEditRound) {
-                if let editingIndex = viewModel.editingRoundIndex {
-                    EditRoundView(round: $viewModel.rounds[editingIndex]) { updatedRound in
-                        viewModel.updateRound(updatedRound)
-                    }
+        }
+        .navigationTitle("Past Rounds")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            viewModel.fetchPastRounds()
+        }
+        .onChange(of: searchText) { newValue in
+            viewModel.filterRounds(searchText: newValue)
+        }
+        .sheet(isPresented: $viewModel.showingEditRound) {
+            if let editingIndex = viewModel.editingRoundIndex {
+                EditRoundView(round: $viewModel.rounds[editingIndex]) { updatedRound in
+                    viewModel.updateRound(updatedRound)
                 }
             }
         }
@@ -64,16 +76,25 @@ struct PastRoundsView: View {
 struct PastRoundRow: View {
     let round: GolfRound
     let courseName: String
+    let coursePar: Int
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(courseName)
                     .font(.headline)
-                Text("Date: \(formatDate(round.date))")
+                Text(formatDate(round.date))
                     .font(.subheadline)
-                Text("Total Score: \(round.totalScore)")
-                    .font(.subheadline)
+                HStack {
+                    Text("Total Score:")
+                        .font(.subheadline)
+                    Text("\(round.totalScore)")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                    Text(scoreToPar())
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                }
             }
             .padding()
             .foregroundColor(.white)
@@ -86,9 +107,19 @@ struct PastRoundRow: View {
 
     private func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
+        formatter.dateFormat = "EEEE, M/d/yy"
         return formatter.string(from: date)
+    }
+
+    private func scoreToPar() -> String {
+        let difference = round.totalScore - coursePar
+        if difference == 0 {
+            return "(E)"
+        } else if difference > 0 {
+            return "(+\(difference))"
+        } else {
+            return "(\(difference))"
+        }
     }
 }
 
