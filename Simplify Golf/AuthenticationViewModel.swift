@@ -107,11 +107,10 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     func getCurrentUserEmail() -> String? {
         if let email = Auth.auth().currentUser?.email {
             return email
-        } else if let identifier = userIdentifier {
-            return UserDefaults.standard.string(forKey: "AppleSignInEmail_\(identifier)")
-        } else {
-            return UserViewModel.shared.getUserEmail()
+        } else if let user = Auth.auth().currentUser {
+            return UserViewModel.shared.getUserEmail(for: user.uid)
         }
+        return nil
     }
 
     func handleSignInWithAppleRequest(_ request: ASAuthorizationAppleIDRequest) {
@@ -145,6 +144,16 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                 let credential = OAuthProvider.credential(
                     withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
                 signInWithCredential(credential, appleIDCredential: appleIDCredential)
+
+                // Store the email (real or aliased) in UserDefaults
+                if let email = appleIDCredential.email {
+                    UserDefaults.standard.set(
+                        email, forKey: "AppleSignInEmail_\(appleIDCredential.user)")
+                } else if let emailFromIdentityToken = getEmailFromIdentityToken(idTokenString) {
+                    UserDefaults.standard.set(
+                        emailFromIdentityToken, forKey: "AppleSignInEmail_\(appleIDCredential.user)"
+                    )
+                }
             }
         case .failure(let error):
             self.error = error.localizedDescription
@@ -160,19 +169,29 @@ class AuthenticationViewModel: NSObject, ObservableObject {
                 case .success(let user):
                     self?.user = user
                     self?.isAuthenticated = true
+
+                    // Get the email (real or aliased)
+                    let email =
+                        appleIDCredential.email ?? UserDefaults.standard.string(
+                            forKey: "AppleSignInEmail_\(appleIDCredential.user)")
+                        ?? "No email provided"
+
+                    // Save the email to Firestore
+                    self?.saveEmailToFirestore(userId: user.uid, email: email)
+
                     self?.ensureUserDocument(for: user)
-                    if self?.appleSignInEmail == nil {
-                        self?.appleSignInEmail = appleIDCredential.email
-                        self?.userIdentifier = appleIDCredential.user
-                        if let email = self?.appleSignInEmail, let identifier = self?.userIdentifier
-                        {
-                            UserDefaults.standard.set(
-                                email, forKey: "AppleSignInEmail_\(identifier)")
-                        }
-                    }
                 case .failure(let error):
                     self?.error = error.localizedDescription
                 }
+            }
+        }
+    }
+
+    private func saveEmailToFirestore(userId: String, email: String) {
+        let db = Firestore.firestore()
+        db.collection("users").document(userId).setData(["email": email], merge: true) { error in
+            if let error = error {
+                print("Error saving email to Firestore: \(error.localizedDescription)")
             }
         }
     }
@@ -218,6 +237,27 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         }.joined()
 
         return hashString
+    }
+
+    private func getEmailFromIdentityToken(_ idToken: String) -> String? {
+        // Decode the JWT token to extract the email
+        // This is a simplified example, you might want to use a proper JWT decoding library
+        let segments = idToken.components(separatedBy: ".")
+        guard segments.count > 1 else { return nil }
+
+        let base64String = segments[1]
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+
+        let padded = base64String.padding(
+            toLength: ((base64String.count + 3) / 4) * 4,
+            withPad: "=",
+            startingAt: 0)
+
+        guard let data = Data(base64Encoded: padded) else { return nil }
+
+        let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        return json?["email"] as? String
     }
 }
 

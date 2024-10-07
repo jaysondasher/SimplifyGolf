@@ -32,11 +32,7 @@ class UserViewModel: ObservableObject {
         }
     }
 
-    func getUserEmail() -> String? {
-        guard let userId = Auth.auth().currentUser?.uid else {
-            return nil
-        }
-
+    func getUserEmail(for userId: String) -> String? {
         var email: String?
         let semaphore = DispatchSemaphore(value: 0)
 
