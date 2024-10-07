@@ -29,7 +29,7 @@
 		30E67CCD2C4C7BF600219B9F /* EditRoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E67CCC2C4C7BF600219B9F /* EditRoundView.swift */; };
 		30F1E46E2CB174B3004E8517 /* HoleDetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F1E46D2CB174B3004E8517 /* HoleDetailMapView.swift */; };
 		30F1E4722CB182F3004E8517 /* RotatableMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F1E4712CB182E5004E8517 /* RotatableMapView.swift */; };
-		30F6AF8B2CB46E17000BF27F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30F6AF8A2CB46E17000BF27F /* GoogleService-Info.plist */; };
+		30F6AF8D2CB47373000BF27F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30F6AF8C2CB47373000BF27F /* GoogleService-Info.plist */; };
 		30F9ED6C2C499DE000F3AC55 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED6B2C499DDF00F3AC55 /* Course.swift */; };
 		30F9ED702C499E1600F3AC55 /* GolfRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED6F2C499E1600F3AC55 /* GolfRound.swift */; };
 		30F9ED752C49A00900F3AC55 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED742C49A00900F3AC55 /* FirebaseAnalytics */; };
@@ -108,7 +108,7 @@
 		30E67CCC2C4C7BF600219B9F /* EditRoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRoundView.swift; sourceTree = "<group>"; };
 		30F1E46D2CB174B3004E8517 /* HoleDetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailMapView.swift; sourceTree = "<group>"; };
 		30F1E4712CB182E5004E8517 /* RotatableMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatableMapView.swift; sourceTree = "<group>"; };
-		30F6AF8A2CB46E17000BF27F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		30F6AF8C2CB47373000BF27F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		30F9ED672C42012200F3AC55 /* Simplify Golf.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Simplify Golf.entitlements"; sourceTree = "<group>"; };
 		30F9ED6A2C43337A00F3AC55 /* Simplify-Golf-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Simplify-Golf-Info.plist"; sourceTree = SOURCE_ROOT; };
 		30F9ED6B2C499DDF00F3AC55 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -200,11 +200,11 @@
 				30F9EDA52C49DEEE00F3AC55 /* CourseManagementView.swift */,
 				307F26392C52FBA9004171E3 /* AccountView.swift */,
 				30F9EDA32C49DEE500F3AC55 /* CourseManagementViewModel.swift */,
+				30F6AF8C2CB47373000BF27F /* GoogleService-Info.plist */,
 				3062D64A2C4C57C400F8AD34 /* Hole.swift */,
 				30F9EDAD2C4BF0E200F3AC55 /* CourseRatingInputView.swift */,
 				30C97FF12C408AD5009BF89E /* courses.json */,
 				30F9ED802C49A0EB00F3AC55 /* CourseViewModel.swift */,
-				30F6AF8A2CB46E17000BF27F /* GoogleService-Info.plist */,
 				30F9ED6F2C499E1600F3AC55 /* GolfRound.swift */,
 				30F9ED942C49A43C00F3AC55 /* HandicapView.swift */,
 				30F9EDA12C49DD4E00F3AC55 /* HandicapViewModel.swift */,
@@ -354,7 +354,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				308BE2732BF534F300C3246C /* Preview Assets.xcassets in Resources */,
-				30F6AF8B2CB46E17000BF27F /* GoogleService-Info.plist in Resources */,
+				30F6AF8D2CB47373000BF27F /* GoogleService-Info.plist in Resources */,
 				30C97FF22C408AE1009BF89E /* courses.json in Resources */,
 				308BE2702BF534F300C3246C /* Assets.xcassets in Resources */,
 			);
