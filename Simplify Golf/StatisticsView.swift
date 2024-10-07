@@ -16,9 +16,16 @@ struct StatisticsView: View {
                     ProgressView()
                 } else {
                     StatCard(title: "Rounds Played", value: "\(viewModel.roundsPlayed)")
-                    StatCard(title: "Average Score", value: String(format: "%.1f", viewModel.averageScore))
+                    StatCard(
+                        title: "Average Score",
+                        value: String(format: "%.1f", viewModel.averageScore))
                     StatCard(title: "Best Score", value: "\(viewModel.bestScore)")
                     StatCard(title: "Worst Score", value: "\(viewModel.worstScore)")
+
+                    Text("*Statistics based on completed 18-hole rounds only")
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.7))
+                        .padding(.top, 10)
                 }
 
                 if let error = viewModel.error {

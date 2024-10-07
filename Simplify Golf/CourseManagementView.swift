@@ -5,6 +5,8 @@ struct CourseManagementView: View {
     @StateObject private var viewModel = CourseManagementViewModel()
     @State private var searchText = ""
     @State private var showingAddCourse = false
+    @State private var courseToDelete: Course?
+    @State private var showingDeleteAlert = false
 
     var body: some View {
         NavigationView {
@@ -28,14 +30,17 @@ struct CourseManagementView: View {
                                         .foregroundColor(.white)
                                 ) {
                                     if filteredDownloadedCourses.isEmpty {
-                                        Text("Add / Download courses by clicking on the blue download icons below.")
-                                            .foregroundColor(.gray)
-                                            .italic()
-                                            .padding()
+                                        Text(
+                                            "Add / Download courses by clicking on the blue download icons below."
+                                        )
+                                        .foregroundColor(.gray)
+                                        .italic()
+                                        .padding()
                                     } else {
                                         ForEach(filteredDownloadedCourses) { course in
                                             CourseRow(course: course, isSelected: true) {
-                                                viewModel.removeDownloadedCourse(course)
+                                                courseToDelete = course
+                                                showingDeleteAlert = true
                                             }
                                         }
                                     }
@@ -86,6 +91,20 @@ struct CourseManagementView: View {
             }
             .sheet(isPresented: $showingAddCourse) {
                 AddNewCourseView()
+            }
+            .alert(isPresented: $showingDeleteAlert) {
+                Alert(
+                    title: Text("Delete Course"),
+                    message: Text(
+                        "Are you sure you want to delete this course?"
+                    ),
+                    primaryButton: .destructive(Text("Delete")) {
+                        if let course = courseToDelete {
+                            viewModel.removeDownloadedCourse(course)
+                        }
+                    },
+                    secondaryButton: .cancel()
+                )
             }
         }
     }

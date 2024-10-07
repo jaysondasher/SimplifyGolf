@@ -29,6 +29,11 @@ struct HandicapView: View {
                         .foregroundColor(.yellow)
                         .padding(.top, 5)
 
+                    Text("*Calculated using completed 18-hole rounds only")
+                        .font(.caption)
+                        .foregroundColor(.white.opacity(0.7))
+                        .padding(.top, 5)
+
                     Divider().background(Color.white)
 
                     Text("Recent Scores")
