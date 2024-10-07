@@ -24,7 +24,6 @@ Simplify Golf is a free golf GPS app and rangefinder designed to help golfers si
 ### Prerequisites
 
 - Xcode 15 or later
-- CocoaPods (for managing dependencies)
 - A Google Firebase account for using Firebase services like authentication and Firestore.
 
 ### Setup
@@ -36,27 +35,31 @@ Simplify Golf is a free golf GPS app and rangefinder designed to help golfers si
    cd simplify-golf
    ```
 
-2. **Install CocoaPods Dependencies**
+2. **Firebase Setup**
 
-   Run the following command to install the necessary dependencies:
+   This project uses Firebase for backend services. You need to create your own Firebase project and add the configuration to your Xcode project:
 
-   ```bash
-   pod install
-   ```
-
-3. **GoogleService-Info.plist**
-
-   - This project uses Firebase for backend services. You need to create your own Firebase project and download the `GoogleService-Info.plist` file.
+   - Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project.
+   - Add an iOS app to your Firebase project and follow the setup instructions.
+   - Download the `GoogleService-Info.plist` file.
    - Place the `GoogleService-Info.plist` file in the root of your Xcode project.
-   - Note: The `GoogleService-Info.plist` file has been added to the `.gitignore` to protect sensitive information. You need to import your own file.
+   - Note: The `GoogleService-Info.plist` file has been added to the `.gitignore` to protect sensitive information. You need to add your own file.
 
-4. **Open the Xcode Workspace**
+3. **Open the Xcode Project**
 
-   Open the project workspace:
+   Open the project in Xcode:
 
    ```bash
-   open SimplifyGolf.xcworkspace
+   open SimplifyGolf.xcodeproj
    ```
+
+4. **Swift Package Dependencies**
+
+   The project uses Swift Package Manager for dependencies. Xcode should automatically fetch the Firebase SDK. If it doesn't:
+   
+   - In Xcode, go to File > Swift Packages > Add Package Dependency
+   - Enter the Firebase iOS SDK URL: https://github.com/firebase/firebase-ios-sdk.git
+   - Select the Firebase products you need (e.g., FirebaseAuth, FirebaseFirestore)
 
 5. **Build and Run**
 
