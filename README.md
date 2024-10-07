@@ -12,11 +12,11 @@ Simplify Golf is a free golf GPS app and rangefinder designed to help golfers si
 ## Screenshots
 
 <div align="center">
-  <img src="https://imgur.com/QANOkZk" alt="Simplify Golf Main Menu" width="18%">
-  <img src="https://imgur.com/y8Uot13" alt="Simplify Golf Course View" width="18%">
-  <img src="https://imgur.com/HtcR2De" alt="Simplify Golf Scorecard" width="18%">
-  <img src="https://imgur.com/D1iojy4" alt="Simplify Golf Statistics" width="18%">
-  <img src="https://imgur.com/kDUwivc" alt="Simplify Golf Round Details" width="18%">
+  <img src="https://i.imgur.com/QANOkZk.png" alt="Simplify Golf Main Menu" width="18%">
+  <img src="https://i.imgur.com/y8Uot13.png" alt="Simplify Golf Course View" width="18%">
+  <img src="https://i.imgur.com/HtcR2De.png" alt="Simplify Golf Scorecard" width="18%">
+  <img src="https://i.imgur.com/D1iojy4.png" alt="Simplify Golf Statistics" width="18%">
+  <img src="https://i.imgur.com/kDUwivc.png" alt="Simplify Golf Round Details" width="18%">
 </div>
 
 ## Getting Started
