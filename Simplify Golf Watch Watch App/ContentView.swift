@@ -9,13 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Watch App Coming Soon!")
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
+
+            VStack {
+                Text("Simplify Golf")
+                    .font(.headline)
+                    .foregroundColor(.white)
+
+                Text("Coming Soon")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+            .padding()
         }
-        .padding()
     }
 }
 

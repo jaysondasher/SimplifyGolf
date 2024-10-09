@@ -13,7 +13,7 @@ struct ContentView: View {
     @EnvironmentObject var appState: AppState
 
     var body: some View {
-        NavigationView {
+        NavigationViewWithVersion {
             ZStack {
                 MainMenuBackground()
 
@@ -76,12 +76,13 @@ struct ContentView: View {
                             .background(Color.red)
                             .cornerRadius(10)
                     }
+
+                    Spacer()
                 }
                 .padding()
             }
             .navigationBarHidden(true)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
