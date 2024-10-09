@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import WatchConnectivity
+import Firebase
 
 @main
 struct Simplify_Golf_Watch_Watch_AppApp: App {
+    @StateObject private var viewModel = WatchViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WatchContentView()
+                .environmentObject(viewModel)
         }
     }
 }

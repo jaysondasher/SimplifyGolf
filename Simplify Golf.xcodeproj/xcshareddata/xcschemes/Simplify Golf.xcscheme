@@ -21,6 +21,20 @@
                ReferencedContainer = "container:Simplify Golf.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "308BE27C2BF536AC00C3246C"
+               BuildableName = "Simplify Golf Watch Watch App.app"
+               BlueprintName = "Simplify Golf Watch Watch App"
+               ReferencedContainer = "container:Simplify Golf.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

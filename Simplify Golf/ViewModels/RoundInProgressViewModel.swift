@@ -1,7 +1,7 @@
 import CoreLocation
 import Firebase
 import Foundation
-import MapKit  // Add this import
+import MapKit
 
 class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var round: GolfRound
@@ -12,8 +12,6 @@ class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDel
     @Published var currentLocation: CLLocation?
     @Published var currentHole: Hole?
     @Published var layupPositions: [String: CLLocationCoordinate2D] = [:]
-    // Remove this line:
-    // @Published var cameraPosition: MKMapCamera?
 
     private let db = Firestore.firestore()
     private var locationManager: CLLocationManager

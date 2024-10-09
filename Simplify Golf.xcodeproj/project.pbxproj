@@ -3,37 +3,30 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30337EED2CB701D600516886 /* WatchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30337EEC2CB701D200516886 /* WatchViewModel.swift */; };
+		30337EF82CB7032100516886 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 30337EF72CB7032100516886 /* FirebaseAuth */; };
+		30337F002CB7043C00516886 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 30337EFF2CB7043C00516886 /* FirebaseStorage */; };
 		306A783B2CB45B8A0031358A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306A783A2CB45B8A0031358A /* AppState.swift */; };
 		308BE26C2BF534F200C3246C /* Simplify_GolfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BE26B2BF534F200C3246C /* Simplify_GolfApp.swift */; };
 		308BE26E2BF534F200C3246C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BE26D2BF534F200C3246C /* ContentView.swift */; };
 		308BE2702BF534F300C3246C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 308BE26F2BF534F300C3246C /* Assets.xcassets */; };
 		308BE2732BF534F300C3246C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 308BE2722BF534F300C3246C /* Preview Assets.xcassets */; };
 		308BE2802BF536AC00C3246C /* Simplify_Golf_WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BE27F2BF536AC00C3246C /* Simplify_Golf_WatchApp.swift */; };
-		308BE2822BF536AC00C3246C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BE2812BF536AC00C3246C /* ContentView.swift */; };
+		308BE2822BF536AC00C3246C /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BE2812BF536AC00C3246C /* WatchContentView.swift */; };
 		308BE2842BF536AD00C3246C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 308BE2832BF536AD00C3246C /* Assets.xcassets */; };
 		308BE2872BF536AD00C3246C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 308BE2862BF536AD00C3246C /* Preview Assets.xcassets */; };
 		308BE28A2BF536AD00C3246C /* Simplify Golf Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 308BE27D2BF536AC00C3246C /* Simplify Golf Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		30B1CC182CB709EC000EE69E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30F6AF8C2CB47373000BF27F /* GoogleService-Info.plist */; };
 		30F6AF8D2CB47373000BF27F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30F6AF8C2CB47373000BF27F /* GoogleService-Info.plist */; };
 		30F9ED752C49A00900F3AC55 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED742C49A00900F3AC55 /* FirebaseAnalytics */; };
 		30F9ED772C49A00900F3AC55 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED762C49A00900F3AC55 /* FirebaseAuth */; };
 		30F9ED792C49A00900F3AC55 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED782C49A00900F3AC55 /* FirebaseFirestore */; };
 		30F9ED7B2C49A00900F3AC55 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED7A2C49A00900F3AC55 /* FirebaseFirestoreSwift */; };
-		30F9ED7D2C49A00900F3AC55 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED7C2C49A00900F3AC55 /* FirebaseStorage */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		308BE2882BF536AD00C3246C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 308BE2602BF534F200C3246C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 308BE27C2BF536AC00C3246C;
-			remoteInfo = "Simplify Golf Watch Watch App";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		308BE28E2BF536AD00C3246C /* Embed Watch Content */ = {
@@ -50,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		30337EEC2CB701D200516886 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
 		306A783A2CB45B8A0031358A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		308BE2682BF534F200C3246C /* Simplify Golf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simplify Golf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		308BE26B2BF534F200C3246C /* Simplify_GolfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simplify_GolfApp.swift; sourceTree = "<group>"; };
@@ -58,7 +52,7 @@
 		308BE2722BF534F300C3246C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		308BE27D2BF536AC00C3246C /* Simplify Golf Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simplify Golf Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		308BE27F2BF536AC00C3246C /* Simplify_Golf_WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simplify_Golf_WatchApp.swift; sourceTree = "<group>"; };
-		308BE2812BF536AC00C3246C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		308BE2812BF536AC00C3246C /* WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContentView.swift; sourceTree = "<group>"; };
 		308BE2832BF536AD00C3246C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		308BE2862BF536AD00C3246C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		30F6AF8C2CB47373000BF27F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -66,13 +60,52 @@
 		30F9ED6A2C43337A00F3AC55 /* Simplify-Golf-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Simplify-Golf-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		30337EF12CB7023400516886 /* Exceptions for "Models" folder in "Simplify Golf Watch Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Course.swift,
+				GolfRound.swift,
+				Hole.swift,
+			);
+			target = 308BE27C2BF536AC00C3246C /* Simplify Golf Watch Watch App */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		30337EE12CB6F92C00516886 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
-		30337EE22CB6F96A00516886 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
-		30337EE32CB6F98600516886 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
-		30337EE42CB6F9A300516886 /* Services */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Services; sourceTree = "<group>"; };
-		30337EE52CB6F9BD00516886 /* Utilities */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utilities; sourceTree = "<group>"; };
-		306A781B2CB411DB0031358A /* Screenshots */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screenshots; sourceTree = "<group>"; };
+		30337EE12CB6F92C00516886 /* Models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				30337EF12CB7023400516886 /* Exceptions for "Models" folder in "Simplify Golf Watch Watch App" target */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		30337EE22CB6F96A00516886 /* Views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		30337EE32CB6F98600516886 /* ViewModels */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		30337EE42CB6F9A300516886 /* Services */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Services;
+			sourceTree = "<group>";
+		};
+		30337EE52CB6F9BD00516886 /* Utilities */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		306A781B2CB411DB0031358A /* Screenshots */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Screenshots;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +116,7 @@
 				30F9ED752C49A00900F3AC55 /* FirebaseAnalytics in Frameworks */,
 				30F9ED772C49A00900F3AC55 /* FirebaseAuth in Frameworks */,
 				30F9ED792C49A00900F3AC55 /* FirebaseFirestore in Frameworks */,
-				30F9ED7D2C49A00900F3AC55 /* FirebaseStorage in Frameworks */,
+				30337F002CB7043C00516886 /* FirebaseStorage in Frameworks */,
 				30F9ED7B2C49A00900F3AC55 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30337EF82CB7032100516886 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,8 +182,9 @@
 		308BE27E2BF536AC00C3246C /* Simplify Golf Watch Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				30337EEC2CB701D200516886 /* WatchViewModel.swift */,
 				308BE27F2BF536AC00C3246C /* Simplify_Golf_WatchApp.swift */,
-				308BE2812BF536AC00C3246C /* ContentView.swift */,
+				308BE2812BF536AC00C3246C /* WatchContentView.swift */,
 				308BE2832BF536AD00C3246C /* Assets.xcassets */,
 				308BE2852BF536AD00C3246C /* Preview Content */,
 			);
@@ -179,7 +214,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				308BE2892BF536AD00C3246C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				30337EE12CB6F92C00516886 /* Models */,
@@ -195,7 +229,7 @@
 				30F9ED762C49A00900F3AC55 /* FirebaseAuth */,
 				30F9ED782C49A00900F3AC55 /* FirebaseFirestore */,
 				30F9ED7A2C49A00900F3AC55 /* FirebaseFirestoreSwift */,
-				30F9ED7C2C49A00900F3AC55 /* FirebaseStorage */,
+				30337EFF2CB7043C00516886 /* FirebaseStorage */,
 			);
 			productName = "Simplify Golf";
 			productReference = 308BE2682BF534F200C3246C /* Simplify Golf.app */;
@@ -237,7 +271,6 @@
 				};
 			};
 			buildConfigurationList = 308BE2632BF534F200C3246C /* Build configuration list for PBXProject "Simplify Golf" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -248,6 +281,7 @@
 			packageReferences = (
 				30F9ED732C49A00900F3AC55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 308BE2692BF534F200C3246C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -275,6 +309,7 @@
 			files = (
 				308BE2872BF536AD00C3246C /* Preview Assets.xcassets in Resources */,
 				308BE2842BF536AD00C3246C /* Assets.xcassets in Resources */,
+				30B1CC182CB709EC000EE69E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,20 +330,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				308BE2822BF536AC00C3246C /* ContentView.swift in Sources */,
+				308BE2822BF536AC00C3246C /* WatchContentView.swift in Sources */,
 				308BE2802BF536AC00C3246C /* Simplify_Golf_WatchApp.swift in Sources */,
+				30337EED2CB701D600516886 /* WatchViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		308BE2892BF536AD00C3246C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 308BE27C2BF536AC00C3246C /* Simplify Golf Watch Watch App */;
-			targetProxy = 308BE2882BF536AD00C3246C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		308BE2742BF534F300C3246C /* Debug */ = {
@@ -505,7 +533,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Simplify Golf Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = 65YK9B6FM6;
 				ENABLE_PREVIEWS = YES;
@@ -517,7 +545,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jaysondasher.Simplify-Golf.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -535,7 +563,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Simplify Golf Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = 65YK9B6FM6;
 				ENABLE_PREVIEWS = YES;
@@ -547,7 +575,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jaysondasher.Simplify-Golf.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -603,6 +631,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		30337EF72CB7032100516886 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30F9ED732C49A00900F3AC55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		30337EFF2CB7043C00516886 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30F9ED732C49A00900F3AC55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		30F9ED742C49A00900F3AC55 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 30F9ED732C49A00900F3AC55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -622,11 +660,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 30F9ED732C49A00900F3AC55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
-		};
-		30F9ED7C2C49A00900F3AC55 /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 30F9ED732C49A00900F3AC55 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
