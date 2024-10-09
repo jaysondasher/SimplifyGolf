@@ -7,14 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3062D6492C4C3A0500F8AD34 /* LocalStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062D6482C4C3A0500F8AD34 /* LocalStorageManager.swift */; };
-		3062D64B2C4C57C400F8AD34 /* Hole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3062D64A2C4C57C400F8AD34 /* Hole.swift */; };
-		3065A1082C4C2AF100028D15 /* HoleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A1072C4C2AF100028D15 /* HoleDetailView.swift */; };
-		3065A10C2C4C2C6A00028D15 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3065A10B2C4C2C6A00028D15 /* SearchBar.swift */; };
 		306A783B2CB45B8A0031358A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306A783A2CB45B8A0031358A /* AppState.swift */; };
-		307F263A2C52FBA9004171E3 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 307F26392C52FBA9004171E3 /* AccountView.swift */; };
-		3082BE8E2CB0FB9E003AED37 /* RoundDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3082BE8D2CB0FB9E003AED37 /* RoundDetailViewModel.swift */; };
-		3082BE902CB0FE94003AED37 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3082BE8F2CB0FE87003AED37 /* UserViewModel.swift */; };
 		308BE26C2BF534F200C3246C /* Simplify_GolfApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BE26B2BF534F200C3246C /* Simplify_GolfApp.swift */; };
 		308BE26E2BF534F200C3246C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BE26D2BF534F200C3246C /* ContentView.swift */; };
 		308BE2702BF534F300C3246C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 308BE26F2BF534F300C3246C /* Assets.xcassets */; };
@@ -24,40 +17,12 @@
 		308BE2842BF536AD00C3246C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 308BE2832BF536AD00C3246C /* Assets.xcassets */; };
 		308BE2872BF536AD00C3246C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 308BE2862BF536AD00C3246C /* Preview Assets.xcassets */; };
 		308BE28A2BF536AD00C3246C /* Simplify Golf Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 308BE27D2BF536AC00C3246C /* Simplify Golf Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		30C97FF22C408AE1009BF89E /* courses.json in Resources */ = {isa = PBXBuildFile; fileRef = 30C97FF12C408AD5009BF89E /* courses.json */; };
-		30E67CCB2C4C72B800219B9F /* RoundDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E67CCA2C4C72B800219B9F /* RoundDetailView.swift */; };
-		30E67CCD2C4C7BF600219B9F /* EditRoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E67CCC2C4C7BF600219B9F /* EditRoundView.swift */; };
-		30F1E46E2CB174B3004E8517 /* HoleDetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F1E46D2CB174B3004E8517 /* HoleDetailMapView.swift */; };
-		30F1E4722CB182F3004E8517 /* RotatableMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F1E4712CB182E5004E8517 /* RotatableMapView.swift */; };
 		30F6AF8D2CB47373000BF27F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30F6AF8C2CB47373000BF27F /* GoogleService-Info.plist */; };
-		30F9ED6C2C499DE000F3AC55 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED6B2C499DDF00F3AC55 /* Course.swift */; };
-		30F9ED702C499E1600F3AC55 /* GolfRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED6F2C499E1600F3AC55 /* GolfRound.swift */; };
 		30F9ED752C49A00900F3AC55 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED742C49A00900F3AC55 /* FirebaseAnalytics */; };
 		30F9ED772C49A00900F3AC55 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED762C49A00900F3AC55 /* FirebaseAuth */; };
 		30F9ED792C49A00900F3AC55 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED782C49A00900F3AC55 /* FirebaseFirestore */; };
 		30F9ED7B2C49A00900F3AC55 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED7A2C49A00900F3AC55 /* FirebaseFirestoreSwift */; };
 		30F9ED7D2C49A00900F3AC55 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 30F9ED7C2C49A00900F3AC55 /* FirebaseStorage */; };
-		30F9ED7F2C49A0DB00F3AC55 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED7E2C49A0DB00F3AC55 /* AuthenticationViewModel.swift */; };
-		30F9ED812C49A0EB00F3AC55 /* CourseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED802C49A0EB00F3AC55 /* CourseViewModel.swift */; };
-		30F9ED892C49A14800F3AC55 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED882C49A14800F3AC55 /* AuthenticationView.swift */; };
-		30F9ED8B2C49A32800F3AC55 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED8A2C49A32800F3AC55 /* AuthenticationService.swift */; };
-		30F9ED8D2C49A40F00F3AC55 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED8C2C49A40F00F3AC55 /* ContentViewModel.swift */; };
-		30F9ED8F2C49A42800F3AC55 /* StartRoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED8E2C49A42800F3AC55 /* StartRoundView.swift */; };
-		30F9ED912C49A42E00F3AC55 /* PastRoundsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED902C49A42E00F3AC55 /* PastRoundsView.swift */; };
-		30F9ED932C49A43600F3AC55 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED922C49A43600F3AC55 /* StatisticsView.swift */; };
-		30F9ED952C49A43C00F3AC55 /* HandicapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED942C49A43C00F3AC55 /* HandicapView.swift */; };
-		30F9ED982C49AA4700F3AC55 /* StartRoundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED972C49AA4700F3AC55 /* StartRoundViewModel.swift */; };
-		30F9ED9A2C49ABEB00F3AC55 /* RoundInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED992C49ABEB00F3AC55 /* RoundInProgressView.swift */; };
-		30F9ED9C2C49D97B00F3AC55 /* RoundInProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED9B2C49D97B00F3AC55 /* RoundInProgressViewModel.swift */; };
-		30F9ED9E2C49DA8000F3AC55 /* PastRoundsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED9D2C49DA8000F3AC55 /* PastRoundsViewModel.swift */; };
-		30F9EDA02C49DC4500F3AC55 /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9ED9F2C49DC4500F3AC55 /* StatisticsViewModel.swift */; };
-		30F9EDA22C49DD4E00F3AC55 /* HandicapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9EDA12C49DD4E00F3AC55 /* HandicapViewModel.swift */; };
-		30F9EDA42C49DEE500F3AC55 /* CourseManagementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9EDA32C49DEE500F3AC55 /* CourseManagementViewModel.swift */; };
-		30F9EDA62C49DEEE00F3AC55 /* CourseManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9EDA52C49DEEE00F3AC55 /* CourseManagementView.swift */; };
-		30F9EDA82C4BECC100F3AC55 /* AddCourseMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9EDA72C4BECC100F3AC55 /* AddCourseMapView.swift */; };
-		30F9EDAA2C4BECD100F3AC55 /* AddCourseMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9EDA92C4BECD100F3AC55 /* AddCourseMapViewModel.swift */; };
-		30F9EDAC2C4BF0BC00F3AC55 /* AddNewCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9EDAB2C4BF0BC00F3AC55 /* AddNewCourseView.swift */; };
-		30F9EDAE2C4BF0E200F3AC55 /* CourseRatingInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F9EDAD2C4BF0E200F3AC55 /* CourseRatingInputView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,14 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3062D6482C4C3A0500F8AD34 /* LocalStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageManager.swift; sourceTree = "<group>"; };
-		3062D64A2C4C57C400F8AD34 /* Hole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hole.swift; sourceTree = "<group>"; };
-		3065A1072C4C2AF100028D15 /* HoleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailView.swift; sourceTree = "<group>"; };
-		3065A10B2C4C2C6A00028D15 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		306A783A2CB45B8A0031358A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		307F26392C52FBA9004171E3 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
-		3082BE8D2CB0FB9E003AED37 /* RoundDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundDetailViewModel.swift; sourceTree = "<group>"; };
-		3082BE8F2CB0FE87003AED37 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		308BE2682BF534F200C3246C /* Simplify Golf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simplify Golf.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		308BE26B2BF534F200C3246C /* Simplify_GolfApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simplify_GolfApp.swift; sourceTree = "<group>"; };
 		308BE26D2BF534F200C3246C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -103,40 +61,17 @@
 		308BE2812BF536AC00C3246C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		308BE2832BF536AD00C3246C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		308BE2862BF536AD00C3246C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		30C97FF12C408AD5009BF89E /* courses.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = courses.json; sourceTree = "<group>"; };
-		30E67CCA2C4C72B800219B9F /* RoundDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundDetailView.swift; sourceTree = "<group>"; };
-		30E67CCC2C4C7BF600219B9F /* EditRoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRoundView.swift; sourceTree = "<group>"; };
-		30F1E46D2CB174B3004E8517 /* HoleDetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoleDetailMapView.swift; sourceTree = "<group>"; };
-		30F1E4712CB182E5004E8517 /* RotatableMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatableMapView.swift; sourceTree = "<group>"; };
 		30F6AF8C2CB47373000BF27F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		30F9ED672C42012200F3AC55 /* Simplify Golf.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Simplify Golf.entitlements"; sourceTree = "<group>"; };
 		30F9ED6A2C43337A00F3AC55 /* Simplify-Golf-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Simplify-Golf-Info.plist"; sourceTree = SOURCE_ROOT; };
-		30F9ED6B2C499DDF00F3AC55 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
-		30F9ED6F2C499E1600F3AC55 /* GolfRound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GolfRound.swift; sourceTree = "<group>"; };
-		30F9ED7E2C49A0DB00F3AC55 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
-		30F9ED802C49A0EB00F3AC55 /* CourseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseViewModel.swift; sourceTree = "<group>"; };
-		30F9ED882C49A14800F3AC55 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
-		30F9ED8A2C49A32800F3AC55 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
-		30F9ED8C2C49A40F00F3AC55 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
-		30F9ED8E2C49A42800F3AC55 /* StartRoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartRoundView.swift; sourceTree = "<group>"; };
-		30F9ED902C49A42E00F3AC55 /* PastRoundsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastRoundsView.swift; sourceTree = "<group>"; };
-		30F9ED922C49A43600F3AC55 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
-		30F9ED942C49A43C00F3AC55 /* HandicapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandicapView.swift; sourceTree = "<group>"; };
-		30F9ED972C49AA4700F3AC55 /* StartRoundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartRoundViewModel.swift; sourceTree = "<group>"; };
-		30F9ED992C49ABEB00F3AC55 /* RoundInProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundInProgressView.swift; sourceTree = "<group>"; };
-		30F9ED9B2C49D97B00F3AC55 /* RoundInProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundInProgressViewModel.swift; sourceTree = "<group>"; };
-		30F9ED9D2C49DA8000F3AC55 /* PastRoundsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastRoundsViewModel.swift; sourceTree = "<group>"; };
-		30F9ED9F2C49DC4500F3AC55 /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
-		30F9EDA12C49DD4E00F3AC55 /* HandicapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandicapViewModel.swift; sourceTree = "<group>"; };
-		30F9EDA32C49DEE500F3AC55 /* CourseManagementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseManagementViewModel.swift; sourceTree = "<group>"; };
-		30F9EDA52C49DEEE00F3AC55 /* CourseManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseManagementView.swift; sourceTree = "<group>"; };
-		30F9EDA72C4BECC100F3AC55 /* AddCourseMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseMapView.swift; sourceTree = "<group>"; };
-		30F9EDA92C4BECD100F3AC55 /* AddCourseMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseMapViewModel.swift; sourceTree = "<group>"; };
-		30F9EDAB2C4BF0BC00F3AC55 /* AddNewCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewCourseView.swift; sourceTree = "<group>"; };
-		30F9EDAD2C4BF0E200F3AC55 /* CourseRatingInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseRatingInputView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		30337EE12CB6F92C00516886 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
+		30337EE22CB6F96A00516886 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
+		30337EE32CB6F98600516886 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
+		30337EE42CB6F9A300516886 /* Services */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Services; sourceTree = "<group>"; };
+		30337EE52CB6F9BD00516886 /* Utilities */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utilities; sourceTree = "<group>"; };
 		306A781B2CB411DB0031358A /* Screenshots */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Screenshots; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -184,50 +119,20 @@
 		308BE26A2BF534F200C3246C /* Simplify Golf */ = {
 			isa = PBXGroup;
 			children = (
-				306A781B2CB411DB0031358A /* Screenshots */,
-				30F1E4712CB182E5004E8517 /* RotatableMapView.swift */,
-				3082BE8F2CB0FE87003AED37 /* UserViewModel.swift */,
-				30F9EDA72C4BECC100F3AC55 /* AddCourseMapView.swift */,
-				30F9EDA92C4BECD100F3AC55 /* AddCourseMapViewModel.swift */,
-				30F9EDAB2C4BF0BC00F3AC55 /* AddNewCourseView.swift */,
 				308BE26F2BF534F300C3246C /* Assets.xcassets */,
-				30F9ED8A2C49A32800F3AC55 /* AuthenticationService.swift */,
-				30F9ED882C49A14800F3AC55 /* AuthenticationView.swift */,
-				30F9ED7E2C49A0DB00F3AC55 /* AuthenticationViewModel.swift */,
-				308BE26D2BF534F200C3246C /* ContentView.swift */,
-				30F9ED8C2C49A40F00F3AC55 /* ContentViewModel.swift */,
-				30F9ED6B2C499DDF00F3AC55 /* Course.swift */,
-				30F9EDA52C49DEEE00F3AC55 /* CourseManagementView.swift */,
-				307F26392C52FBA9004171E3 /* AccountView.swift */,
-				30F9EDA32C49DEE500F3AC55 /* CourseManagementViewModel.swift */,
-				30F6AF8C2CB47373000BF27F /* GoogleService-Info.plist */,
-				3062D64A2C4C57C400F8AD34 /* Hole.swift */,
-				30F9EDAD2C4BF0E200F3AC55 /* CourseRatingInputView.swift */,
-				30C97FF12C408AD5009BF89E /* courses.json */,
-				30F9ED802C49A0EB00F3AC55 /* CourseViewModel.swift */,
-				30F9ED6F2C499E1600F3AC55 /* GolfRound.swift */,
-				30F9ED942C49A43C00F3AC55 /* HandicapView.swift */,
-				30F9EDA12C49DD4E00F3AC55 /* HandicapViewModel.swift */,
-				3065A1072C4C2AF100028D15 /* HoleDetailView.swift */,
-				30F1E46D2CB174B3004E8517 /* HoleDetailMapView.swift */,
-				30E67CCC2C4C7BF600219B9F /* EditRoundView.swift */,
-				30F9ED902C49A42E00F3AC55 /* PastRoundsView.swift */,
-				3062D6482C4C3A0500F8AD34 /* LocalStorageManager.swift */,
-				30F9ED9D2C49DA8000F3AC55 /* PastRoundsViewModel.swift */,
-				30E67CCA2C4C72B800219B9F /* RoundDetailView.swift */,
-				30F9ED992C49ABEB00F3AC55 /* RoundInProgressView.swift */,
-				30F9ED9B2C49D97B00F3AC55 /* RoundInProgressViewModel.swift */,
+				308BE2712BF534F300C3246C /* Preview Content */,
 				30F9ED672C42012200F3AC55 /* Simplify Golf.entitlements */,
 				308BE26B2BF534F200C3246C /* Simplify_GolfApp.swift */,
-				30F9ED6A2C43337A00F3AC55 /* Simplify-Golf-Info.plist */,
-				30F9ED8E2C49A42800F3AC55 /* StartRoundView.swift */,
-				30F9ED972C49AA4700F3AC55 /* StartRoundViewModel.swift */,
-				30F9ED922C49A43600F3AC55 /* StatisticsView.swift */,
-				3065A10B2C4C2C6A00028D15 /* SearchBar.swift */,
-				30F9ED9F2C49DC4500F3AC55 /* StatisticsViewModel.swift */,
-				3082BE8D2CB0FB9E003AED37 /* RoundDetailViewModel.swift */,
-				308BE2712BF534F300C3246C /* Preview Content */,
+				308BE26D2BF534F200C3246C /* ContentView.swift */,
 				306A783A2CB45B8A0031358A /* AppState.swift */,
+				30337EE12CB6F92C00516886 /* Models */,
+				30337EE22CB6F96A00516886 /* Views */,
+				30337EE32CB6F98600516886 /* ViewModels */,
+				30337EE42CB6F9A300516886 /* Services */,
+				30337EE52CB6F9BD00516886 /* Utilities */,
+				306A781B2CB411DB0031358A /* Screenshots */,
+				30F6AF8C2CB47373000BF27F /* GoogleService-Info.plist */,
+				30F9ED6A2C43337A00F3AC55 /* Simplify-Golf-Info.plist */,
 			);
 			path = "Simplify Golf";
 			sourceTree = "<group>";
@@ -277,6 +182,11 @@
 				308BE2892BF536AD00C3246C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				30337EE12CB6F92C00516886 /* Models */,
+				30337EE22CB6F96A00516886 /* Views */,
+				30337EE32CB6F98600516886 /* ViewModels */,
+				30337EE42CB6F9A300516886 /* Services */,
+				30337EE52CB6F9BD00516886 /* Utilities */,
 				306A781B2CB411DB0031358A /* Screenshots */,
 			);
 			name = "Simplify Golf";
@@ -355,7 +265,6 @@
 			files = (
 				308BE2732BF534F300C3246C /* Preview Assets.xcassets in Resources */,
 				30F6AF8D2CB47373000BF27F /* GoogleService-Info.plist in Resources */,
-				30C97FF22C408AE1009BF89E /* courses.json in Resources */,
 				308BE2702BF534F300C3246C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,43 +285,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30F9EDAA2C4BECD100F3AC55 /* AddCourseMapViewModel.swift in Sources */,
-				3065A1082C4C2AF100028D15 /* HoleDetailView.swift in Sources */,
-				30F9ED8F2C49A42800F3AC55 /* StartRoundView.swift in Sources */,
-				30F9ED9A2C49ABEB00F3AC55 /* RoundInProgressView.swift in Sources */,
-				30F9ED7F2C49A0DB00F3AC55 /* AuthenticationViewModel.swift in Sources */,
-				30E67CCB2C4C72B800219B9F /* RoundDetailView.swift in Sources */,
-				30F9EDAE2C4BF0E200F3AC55 /* CourseRatingInputView.swift in Sources */,
-				30F9EDA02C49DC4500F3AC55 /* StatisticsViewModel.swift in Sources */,
-				30F9ED702C499E1600F3AC55 /* GolfRound.swift in Sources */,
-				30E67CCD2C4C7BF600219B9F /* EditRoundView.swift in Sources */,
-				30F9ED932C49A43600F3AC55 /* StatisticsView.swift in Sources */,
-				30F9ED9C2C49D97B00F3AC55 /* RoundInProgressViewModel.swift in Sources */,
-				30F9ED812C49A0EB00F3AC55 /* CourseViewModel.swift in Sources */,
-				30F1E46E2CB174B3004E8517 /* HoleDetailMapView.swift in Sources */,
-				30F9EDA42C49DEE500F3AC55 /* CourseManagementViewModel.swift in Sources */,
-				307F263A2C52FBA9004171E3 /* AccountView.swift in Sources */,
-				30F9EDA62C49DEEE00F3AC55 /* CourseManagementView.swift in Sources */,
-				30F1E4722CB182F3004E8517 /* RotatableMapView.swift in Sources */,
-				30F9EDA22C49DD4E00F3AC55 /* HandicapViewModel.swift in Sources */,
-				3062D64B2C4C57C400F8AD34 /* Hole.swift in Sources */,
-				30F9ED982C49AA4700F3AC55 /* StartRoundViewModel.swift in Sources */,
-				3065A10C2C4C2C6A00028D15 /* SearchBar.swift in Sources */,
-				3062D6492C4C3A0500F8AD34 /* LocalStorageManager.swift in Sources */,
-				30F9ED6C2C499DE000F3AC55 /* Course.swift in Sources */,
-				30F9ED892C49A14800F3AC55 /* AuthenticationView.swift in Sources */,
-				30F9ED952C49A43C00F3AC55 /* HandicapView.swift in Sources */,
-				30F9EDAC2C4BF0BC00F3AC55 /* AddNewCourseView.swift in Sources */,
-				30F9ED8D2C49A40F00F3AC55 /* ContentViewModel.swift in Sources */,
 				308BE26E2BF534F200C3246C /* ContentView.swift in Sources */,
-				3082BE8E2CB0FB9E003AED37 /* RoundDetailViewModel.swift in Sources */,
 				306A783B2CB45B8A0031358A /* AppState.swift in Sources */,
-				30F9ED9E2C49DA8000F3AC55 /* PastRoundsViewModel.swift in Sources */,
-				30F9EDA82C4BECC100F3AC55 /* AddCourseMapView.swift in Sources */,
 				308BE26C2BF534F200C3246C /* Simplify_GolfApp.swift in Sources */,
-				30F9ED8B2C49A32800F3AC55 /* AuthenticationService.swift in Sources */,
-				3082BE902CB0FE94003AED37 /* UserViewModel.swift in Sources */,
-				30F9ED912C49A42E00F3AC55 /* PastRoundsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
