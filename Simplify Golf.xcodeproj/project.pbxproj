@@ -539,6 +539,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Simplify Golf Watch";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Simplify Golf needs your location to provide accurate distance measurements on the golf course.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.jaysondasher.Simplify-Golf";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -569,6 +570,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Simplify Golf Watch";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Simplify Golf needs your location to provide accurate distance measurements on the golf course.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.jaysondasher.Simplify-Golf";
 				LD_RUNPATH_SEARCH_PATHS = (
