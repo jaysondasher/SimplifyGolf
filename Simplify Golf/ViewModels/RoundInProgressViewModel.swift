@@ -179,4 +179,34 @@ class RoundInProgressViewModel: NSObject, ObservableObject, CLLocationManagerDel
         }
         objectWillChange.send()
     }
+
+    // Add the following functions:
+
+    func calculateTotalScoreToPar() -> String {
+        guard let course = course else { return "N/A" }
+        let playedScores = round.scores.compactMap { $0 }
+        let playedPars = course.holes.prefix(playedScores.count).map { $0.par }
+        let totalPar = playedPars.reduce(0, +)
+        let totalScore = playedScores.reduce(0, +)
+        let difference = totalScore - totalPar
+        return difference == 0 ? "E" : (difference > 0 ? "+\(difference)" : "\(difference)")
+    }
+
+    func saveCurrentScore(for holeIndex: Int, score: Int) {
+        updateScore(for: holeIndex, score: score)
+    }
+
+    func fetchCurrentScore(for holeIndex: Int, defaultPar: Int) -> Int {
+        return round.scores[holeIndex] ?? defaultPar
+    }
+
+    // Add the following function:
+
+    func calculateDistance(to coordinate: Coordinate) -> Int {
+        guard let userLocation = currentLocation else { return 0 }
+        let targetLocation = CLLocation(
+            latitude: coordinate.latitude, longitude: coordinate.longitude)
+        let distanceInMeters = userLocation.distance(from: targetLocation)
+        return Int(distanceInMeters * 1.09361)  // Convert meters to yards
+    }
 }

@@ -44,7 +44,7 @@ struct RoundInProgressView: View {
                         HeaderView(
                             courseName: course.name,
                             totalScore: viewModel.round.totalScore,
-                            totalScoreToPar: calculateTotalScoreToPar()
+                            totalScoreToPar: viewModel.calculateTotalScoreToPar()
                         )
 
                         HolesListView(course: course, viewModel: viewModel)
@@ -65,17 +65,6 @@ struct RoundInProgressView: View {
             .navigationBarHidden(true)
         }
         .navigationViewStyle(StackNavigationViewStyle())  // Ensures consistent appearance across devices
-    }
-
-    /// Calculates the total score relative to par
-    private func calculateTotalScoreToPar() -> String {
-        guard let course = viewModel.course else { return "N/A" }
-        let playedScores = viewModel.round.scores.compactMap { $0 }
-        let playedPars = course.holes.prefix(playedScores.count).map { $0.par }
-        let totalPar = playedPars.reduce(0, +)
-        let totalScore = playedScores.reduce(0, +)
-        let difference = totalScore - totalPar
-        return difference == 0 ? "E" : (difference > 0 ? "+\(difference)" : "\(difference)")
     }
 }
 

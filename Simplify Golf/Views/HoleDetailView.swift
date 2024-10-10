@@ -62,9 +62,9 @@ struct HoleDetailView: View {
                         }
 
                         DistancesView(
-                            back: calculateDistance(to: hole.green.back),
-                            center: calculateDistance(to: hole.green.center),
-                            front: calculateDistance(to: hole.green.front)
+                            back: viewModel.calculateDistance(to: hole.green.back),
+                            center: viewModel.calculateDistance(to: hole.green.center),
+                            front: viewModel.calculateDistance(to: hole.green.front)
                         )
                     }
                     .padding(.leading)
@@ -112,9 +112,7 @@ struct HoleDetailView: View {
                         NavigationButton(
                             text: "Last Hole",
                             action: {
-                                saveCurrentScore()
                                 viewModel.moveToHole(index: viewModel.currentHoleIndex - 1)
-                                updateCurrentScore()
                             },
                             disabled: viewModel.currentHoleIndex == 0
                         )
@@ -125,16 +123,13 @@ struct HoleDetailView: View {
                             NavigationButton(
                                 text: "Next Hole",
                                 action: {
-                                    saveCurrentScore()
                                     viewModel.moveToHole(index: viewModel.currentHoleIndex + 1)
-                                    updateCurrentScore()
                                 }
                             )
                         } else {
                             NavigationButton(
                                 text: "Finish",
                                 action: {
-                                    saveCurrentScore()
                                     viewModel.finishRound()
                                     presentationMode.wrappedValue.dismiss()
                                 }
@@ -153,30 +148,22 @@ struct HoleDetailView: View {
         .navigationBarTitle("Scorecard", displayMode: .inline)
         .navigationBarBackButtonHidden(false)
         .onDisappear {
-            saveCurrentScore()
+            viewModel.updateScore(for: viewModel.currentHoleIndex, score: currentScore)
         }
         .onChange(of: viewModel.currentHoleIndex) { _ in
-            updateCurrentScore()
+            currentScore = viewModel.round.scores[viewModel.currentHoleIndex] ?? hole.par
         }
     }
 
     // MARK: - Helper Methods
 
-    private func saveCurrentScore() {
-        viewModel.updateScore(for: viewModel.currentHoleIndex, score: currentScore)
-    }
-
-    private func updateCurrentScore() {
-        currentScore = viewModel.round.scores[viewModel.currentHoleIndex] ?? hole.par
-    }
-
-    private func calculateDistance(to coordinate: Coordinate) -> Int {
-        guard let userLocation = viewModel.currentLocation else { return 0 }
-        let targetLocation = CLLocation(
-            latitude: coordinate.latitude, longitude: coordinate.longitude)
-        let distanceInMeters = userLocation.distance(from: targetLocation)
-        return Int(distanceInMeters * 1.09361)  // Convert meters to yards
-    }
+    // private func calculateDistance(to coordinate: Coordinate) -> Int {
+    //     guard let userLocation = viewModel.currentLocation else { return 0 }
+    //     let targetLocation = CLLocation(
+    //         latitude: coordinate.latitude, longitude: coordinate.longitude)
+    //     let distanceInMeters = userLocation.distance(from: targetLocation)
+    //     return Int(distanceInMeters * 1.09361)  // Convert meters to yards
+    // }
 }
 
 struct DistancesView: View {
